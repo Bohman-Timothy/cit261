@@ -1,0 +1,35 @@
+body {
+	font-family: Verdana, Times New Roman, serif;
+	font-size: 1em;
+	color: #400020;
+	background-color: #fffff0;
+}
+
+#content {
+	min-width: 800px;
+	max-width: 1200px;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#portfolio th, #portfolio td {
+	padding: 4px;
+	text-align: left;
+}
+
+#portfolio {
+	min-width: 100%;
+}
+#notes {
+	min-width: 200px;
+}
+
+.headerRow th {
+	border-bottom: 2px solid #400020;
+}
+
+table caption {
+	font-weight: bold;
+}
