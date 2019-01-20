@@ -86,15 +86,35 @@ function enhanceTable() {
 
 function adjustBackground() {
 	var bg = document.getElementsByClassName("background");
+	var bodySetting;
 	for (var i = 0; i < bg.length; i++) {
-		bg[i].style.backgroundColor = "beige";
-		bg[i].style.maxWidth = "500px";
-		bg[i].style.marginLeft = "auto";
-		bg[i].style.marginRight = "auto";
-		bg[i].style.paddingLeft = "28px";
-		bg[i].style.paddingRight = "28px";
-		bg[i].style.paddingTop = "10px";
-		bg[i].style.paddingBottom = "20px";
+		if (bg[i].style.maxWidth === "500px") {
+			bg[i].style.backgroundColor = "white";
+			bg[i].style.maxWidth = "none";
+			bg[i].style.marginLeft = "0";
+			bg[i].style.marginRight = "0";
+			bg[i].style.paddingLeft = "0";
+			bg[i].style.paddingRight = "0";
+			bg[i].style.paddingTop = "0";
+			bg[i].style.paddingBottom = "0";
+			bodySetting = "empty";
+		}
+		else {
+			bg[i].style.backgroundColor = "beige";
+			bg[i].style.maxWidth = "500px";
+			bg[i].style.marginLeft = "auto";
+			bg[i].style.marginRight = "auto";
+			bg[i].style.paddingLeft = "28px";
+			bg[i].style.paddingRight = "28px";
+			bg[i].style.paddingTop = "10px";
+			bg[i].style.paddingBottom = "20px";
+			bodySetting = "enhanced";
+		}
 	}
-	document.body.style.backgroundColor = "#99ffcc";
+	if (bodySetting === "empty") {
+		document.body.style.backgroundColor = "white";
+	}
+	else {
+		document.body.style.backgroundColor = "#99ffcc";
+	}
 }
