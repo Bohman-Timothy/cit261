@@ -88,7 +88,7 @@ function adjustBackground() {
 	var bg = document.getElementsByClassName("background");
 	var bodySetting;
 	for (var i = 0; i < bg.length; i++) {
-		if (bg[i].style.maxWidth === "500px") {
+		if (bg[i].style.maxWidth === "550px") {
 			bg[i].style.backgroundColor = "white";
 			bg[i].style.maxWidth = "none";
 			bg[i].style.marginLeft = "0";
@@ -101,7 +101,7 @@ function adjustBackground() {
 		}
 		else {
 			bg[i].style.backgroundColor = "beige";
-			bg[i].style.maxWidth = "500px";
+			bg[i].style.maxWidth = "550px";
 			bg[i].style.marginLeft = "auto";
 			bg[i].style.marginRight = "auto";
 			bg[i].style.paddingLeft = "28px";
