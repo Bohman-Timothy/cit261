@@ -63,7 +63,7 @@ function enhanceTable() {
 	var infoTable = document.getElementsByClassName("infoTable");
 	for (var i = 0; i < infoTable.length; i++) {
 		infoTable[i].style.color = "#0066ff";
-		infoTable[i].style.fontSize = "1.5em";
+		infoTable[i].style.fontSize = "1.75em";
 		infoTable[i].style.fontFamily = '"Times New Roman", serif';
 		var headers = infoTable[i].getElementsByTagName("th");
 		for (var j = 0; j < headers.length; j++) {
