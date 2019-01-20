@@ -1,0 +1,24 @@
+body {
+	font-family: Verdana, sans-serif;
+}
+.background {
+	background-color: white;
+	min-height: 600px;
+}
+
+.list {
+	list-style-type: decimal;
+	margin-left: 2em;
+}
+
+p {
+	color: green;
+}
+
+.para {
+	color: #ff3399;
+}
+
+.para2 {
+	color: #ff6600;
+}
