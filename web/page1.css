@@ -7,7 +7,7 @@ body {
 	min-height: 600px;
 }
 
-.list {
+.listA {
 	list-style-type: decimal;
 	margin-left: 2em;
 }

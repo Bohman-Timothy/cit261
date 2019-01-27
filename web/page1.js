@@ -40,7 +40,7 @@ function toggleClassConditionally() {
 }
 
 function changeBullet() {
-	var list = document.getElementsByClassName("list");
+	var list = document.getElementsByClassName("listA");
 	for (var i = 0; i < list.length; i++) {
 		switch(list[i].style.listStyleType) {
 			case "decimal":
