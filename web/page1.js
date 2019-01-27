@@ -30,6 +30,15 @@ function toggleClass() {
 	}
 }
 
+function toggleClassConditionally() {
+	var p = document.getElementsByTagName("p");
+	for (var i = 0; i < p.length; i++) {
+		if (p[i].classList.contains('para3')) {
+			p[i].classList.toggle("italic");
+		}
+	}
+}
+
 function changeBullet() {
 	var list = document.getElementsByClassName("list");
 	for (var i = 0; i < list.length; i++) {

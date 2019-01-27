@@ -1,5 +1,6 @@
 body {
 	font-family: Verdana, sans-serif;
+	font-size: 1em;
 }
 .background {
 	background-color: white;
@@ -21,6 +22,7 @@ body {
 
 .para3 {
 	color: #ff3399;
+	font-size: 1.5em;
 }
 
 .bold {
