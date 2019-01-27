@@ -1,23 +1,33 @@
-function changeColor() {	
-	var p = document.getElementsByClassName("para");
+function changeClass() {
+	var p = document.getElementsByClassName("para1");
 	for (var i = 0; i < p.length; i++) {
-		p[i].style.color = "purple";
+		p[i].className = p[i].className.replace(/para1/, 'para3');
 	}
-	
-	/*var li = document.getElementsByTagName("li");
-	for (var i = 0; i < li.length; i++) {
-		li[i].style.color = "purple";
-	}*/
-	/*var p = document.getElementsByTagName("p");
+}
+
+//var parentDOM = document.getElementsByClassName("background");
+
+//p = Array.prototype.slice.call(document.getElementsByClassName("portfolio"));
+
+function addClass() {
+	var p = document.getElementsByTagName("p");
 	for (var i = 0; i < p.length; i++) {
-		p[i].style.color = "purple";
-	}*/
-	
-	//portfolio.className = portfolio.className.replace(/portfolio/, 'portfolio2');
-	
-	//var parentDOM = document.getElementsByClassName("background");
-	
-	//p = Array.prototype.slice.call(document.getElementsByClassName("portfolio"));
+		p[i].classList.add("bold");
+	}
+}
+
+function removeClass() {
+	var p = document.getElementsByTagName("p");
+	for (var i = 0; i < p.length; i++) {
+		p[i].classList.remove("bold");
+	}
+}
+
+function toggleClass() {
+	var p = document.getElementsByTagName("p");
+	for (var i = 0; i < p.length; i++) {
+		p[i].classList.toggle("italic");
+	}
 }
 
 function changeBullet() {
@@ -28,7 +38,7 @@ function changeBullet() {
 				list[i].style.listStyleType = "upper-roman";
 				list[i].style.color = "#cc0099";
 				list[i].style.marginLeft = "4em";
-				list[i].style.fontFamily = '"Times New Roman", serif';
+				list[i].style.fontFamily = "'Times New Roman', serif";
 				break;
 			case "upper-roman":
 				list[i].style.listStyleType = "lower-roman";
@@ -37,7 +47,7 @@ function changeBullet() {
 				list[i].style.listStyleType = "upper-alpha";
 				list[i].style.color = "red";
 				list[i].style.marginLeft = "3.5em";
-				list[i].style.fontFamily = '"Courier New", monospace';
+				list[i].style.fontFamily = "'Courier New', monospace";
 				break;
 			case "upper-alpha":
 				list[i].style.listStyleType = "lower-alpha";
@@ -51,10 +61,16 @@ function changeBullet() {
 			case "circle":
 				list[i].style.listStyleType = "square";
 				break;
-			default:
+			case "square":
 				list[i].style.listStyleType = "decimal";
 				list[i].style.color = "black";
 				list[i].style.marginLeft = "2em";
+				break;
+			default:
+				list[i].style.listStyleType = "upper-roman";
+				list[i].style.color = "#cc0099";
+				list[i].style.marginLeft = "4em";
+				list[i].style.fontFamily = "'Times New Roman', serif";
 		}
 	}
 }

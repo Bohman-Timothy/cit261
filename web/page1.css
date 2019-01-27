@@ -11,14 +11,22 @@ body {
 	margin-left: 2em;
 }
 
-p {
+.para1 {
 	color: green;
-}
-
-.para {
-	color: #ff3399;
 }
 
 .para2 {
 	color: #ff6600;
+}
+
+.para3 {
+	color: #ff3399;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.italic {
+	font-style: italic;
 }

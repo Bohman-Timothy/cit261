@@ -10,8 +10,8 @@
 <body>
 <div class="background">
 <h1>CSS Class Properties Manipulation Test Page</h1>
-<p class="para">This is to demonstrate what JavaScript can do when manipulating CSS class properties.</p>
-<p>Click the list below multiple times. It cycles through styles and then back to the original appearance.</p>
+<p class="para1">This is to demonstrate what JavaScript can do when manipulating CSS class properties.</p>
+<p class="para2">Click the list below multiple times. It cycles through styles and then back to the original appearance.</p>
 <ol id="listId" class="list" onclick="changeBullet();">
 <li>Item 1</li>
 <li>Item 2</li>
@@ -22,7 +22,11 @@
 <li>Item 7</li>
 <li>Item 8</li>
 </ol>
-<p class="para2">HTML elements can be selected by their classes, then have their styles modified on a per-element basis. A for loop can make desired style changes to all elements of the same class.</p>
+<p class="para3">HTML elements can be selected by their classes, then have their styles modified on a per-element basis. A for loop can make desired style changes to all elements of the same class.</p>
+<button type="button" onclick="changeClass();">Change Class</button>
+<button type="button" onclick="addClass();">Add Class</button>
+<button type="button" onclick="removeClass();">Remove Class</button>
+<button type="button" onclick="toggleClass();">Toggle Class</button>
 <table class="infoTable">
 <thead>
 <caption>CIT 261 Portfolio</caption>
@@ -63,7 +67,6 @@
 <td>ready for review</td>
 </tr>
 </table>
-<button type="button" onclick="changeColor();">Change Color</button>
 <button type="button" onclick="adjustBackground();">Adjust Background</button>
 <button type="button" onclick="enhanceTable();">Enhance Table</button>
 </div>
