@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CSS Class Properties Manipulation Test Page</title>
+<link rel="stylesheet" href="css-prop.css" title="css1">
+<link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
+<script src="css-prop.js" charset="UTF-8"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="background">
+<h1>CSS Class Properties Manipulation Test Page</h1>
+<p class="para1">This is to demonstrate what JavaScript can do when manipulating CSS class properties.</p>
+<p class="para2">Click the list below multiple times. It cycles through styles and then back to the original appearance.</p>
+<ol id="listId" class="listA" onclick="changeBullet();">
+<li>Item 1</li>
+<li>Item 2</li>
+<li>Item 3</li>
+<li>Item 4</li>
+<li>Item 5</li>
+<li>Item 6</li>
+<li>Item 7</li>
+<li>Item 8</li>
+</ol>
+<p class="para3">HTML elements can be selected by their classes, then have their styles modified on a per-element basis. A for loop can make desired style changes to all elements of the same class.</p>
+<button type="button" onclick="changeClass();">Change Class</button>
+<button type="button" onclick="addClass();">Add Class</button>
+<button type="button" onclick="removeClass();">Remove Class</button>
+<button type="button" onclick="toggleClass();">Toggle Class</button>
+<button type="button" onclick="toggleClassConditionally();">Toggle Class Conditionally</button>
+<table class="infoTable">
+<caption>CIT 261 Portfolio</caption>
+<thead>
+<tr class="headerRow">
+<th>Code Topics</th>
+<th>Last Updated</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tr>
+<td>JavaScript</td>
+<td>4/12/2018</td>
+<td>ready for review</td>
+</tr>
+<tr>
+<td>JSON</td>
+<td>4/12/2018</td>
+<td>ready for review</td>
+</tr>
+<tr>
+<td>AJAX</td>
+<td>4/12/2018</td>
+<td>ready for review</td>
+</tr>
+<tr>
+<td>Local Storage</td>
+<td>4/12/2018</td>
+<td>ready for review</td>
+</tr>
+<tr>
+<td>DOM</td>
+<td>4/12/2018</td>
+<td>ready for review</td>
+</tr>
+<tr>
+<td>CSS 3</td>
+<td>4/12/2018</td>
+<td>ready for review</td>
+</tr>
+</table>
+<button type="button" onclick="adjustBackground();">Adjust Background</button>
+<button type="button" onclick="enhanceTable();">Enhance Table</button>
+<p class="para2">Refresh the page to reset all styles.</p>
+<blockquote id="usMotto"><span id="unum">E pluribus unum</span> &mdash; "Out of many, one."</blockquote>
+<img src="https://upload.wikimedia.org/wikipedia/commons/e/e6/1_Dime_%28United_States%29.jpg" alt="front and back of a U.S. dime" id="usDime" height="100">
+<button type="button" onclick="enhanceQuotes();">Enhance Quotes</button>
+</div>
+</body>
+</html>
