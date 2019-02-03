@@ -25,7 +25,7 @@
 <li>Item 8</li>
 </ol>
 <p class="para3">HTML elements can be selected by their classes, then have their styles modified on a per-element basis. A for loop can make desired style changes to all elements of the same class.</p>
-<button type="button" onclick="changeClass();">Change Class</button>
+<button type="button" onclick="replaceClass();">Replace Class</button>
 <button type="button" onclick="addClass();">Add Class</button>
 <button type="button" onclick="removeClass();">Remove Class</button>
 <button type="button" onclick="toggleClass();">Toggle Class</button>
@@ -74,16 +74,42 @@
 <button type="button" onclick="enhanceTable();">Enhance Table</button>
 <p class="para2">Refresh the page to reset all styles.</p>
 <div id="quotes">
-<blockquote id="usMotto"><span id="unum">E pluribus unum</span> &mdash; &quot;Out of many, one.&quot;</blockquote>
-<img src="https://upload.wikimedia.org/wikipedia/commons/e/e6/1_Dime_%28United_States%29.jpg" alt="front and back of a U.S. dime" id="usDime" height="100">
+<blockquote id="usMotto" class="quote"><span id="unum">E pluribus unum</span> &mdash; &quot;Out of many, one.&quot;</blockquote>
+<img src="https://upload.wikimedia.org/wikipedia/commons/e/e6/1_Dime_%28United_States%29.jpg" alt="front and back of a U.S. dime" id="usDime" class="quoteImg" height="100">
 <blockquote id="speed" class="quote">&quot;Let's break that speed record.&quot; &mdash;Speed Racer</blockquote>
 <blockquote id="turtle" class="quote">&quot;Tonight I dine on turtle soup.&quot; &mdash;Shredder</blockquote>
 <button id="enhanceQuotesBtn" type="button" onclick="enhanceQuotes();">Enhance Quotes</button>
+<p>Click on a quote to select it or deselect it.</p>
 </div>
 <p>Enter a favorite quote:</p>
 <textarea id="newQuote" cols="50" rows="6"></textarea>
 <br />
-<button onclick="addQuote();">Add quote</button>
+<button onclick="addQuote();">Add Quote</button>
 </div>
+<script>
+var quotes = document.getElementById("quotes");
+quotes.addEventListener("click", function(e) {
+	console.log("function(e)");
+	if (e.target && ((e.target.nodeName === "BLOCKQUOTE") || (e.target.nodeName === "IMG") || (e.target.nodeName === "SPAN"))) {
+		console.log("target: blockquote");
+		if ((e.target.classList.contains("quote")) || (e.target.classList.contains("quoteImg"))) {
+			if (e.target.classList.contains("selected")) {
+				e.target.classList.remove("selected");
+			}
+			else {
+				e.target.classList.add("selected");
+			}
+		}
+		else if (e.target.parentElement.classList.contains("quote")) {
+			if (e.target.parentElement.classList.contains("selected")) {
+				e.target.parentElement.classList.remove("selected");
+			}
+			else {
+				e.target.parentElement.classList.add("selected");
+			}
+		}
+	}
+});
+</script>
 </body>
 </html>

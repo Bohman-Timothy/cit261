@@ -1,4 +1,4 @@
-function changeClass() {
+function replaceClass() {
 	var p = document.getElementsByClassName("para1");
 	for (var i = 0; i < p.length; i++) {
 		p[i].className = p[i].className.replace(/para1/, 'para3');
@@ -154,8 +154,10 @@ function enhanceQuotes() {
 	usDime.classList.add("patriotic");
 	var quotes = document.getElementsByClassName("quote");
 	for (var i = 0; i < quotes.length; i++) {
-		quotes[i].style.borderTop = "5px solid #ff6600";
-		quotes[i].style.borderBottom = "5px solid #ff6600";
+		if (i != 0) { //For the usMotto quote
+			quotes[i].style.borderTop = "5px solid #ff6600";
+			quotes[i].style.borderBottom = "5px solid #ff6600";
+		}
 		quotes[i].style.paddingTop = "5px";
 		quotes[i].style.paddingBottom = "5px";
 		quotes[i].style.fontFamily = "'Merienda One', sans-serif, serif";
@@ -183,12 +185,3 @@ function addQuote() {
 	newBlockquote.classList.add("quote");
 	quotesDiv.insertBefore(newBlockquote, enhanceQuotesBtn);
 }
-
-/*var quotes = document.getElementById("quotes");
-quotes.addEventListener("click", function(e) {
-	if (e.target && e.target.nodeName === "blockquote") {
-		if (e.target.classList.contains("quote")) {
-			e.target.classList.add("selected");
-		}
-	}
-});*/

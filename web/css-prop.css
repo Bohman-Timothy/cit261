@@ -42,6 +42,7 @@ body {
 blockquote {
 	border-top: 3px solid orange;
 	border-bottom: 3px solid orange;
+	padding-left: 0.5em;
 }
 
 .patriotic {
@@ -57,10 +58,13 @@ blockquote {
 
 #usDime {
 	display: none;
+}
+
+.quoteImg {
 	margin-left: 40px;
 }
 
 .selected {
 	margin-left: 80px;
-	background-color: grey;
+	background-color: #ccffff;
 }
