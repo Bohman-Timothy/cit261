@@ -152,4 +152,43 @@ function enhanceQuotes() {
 	var usDime = document.getElementById("usDime");
 	usDime.style.display = "block";
 	usDime.classList.add("patriotic");
+	var quotes = document.getElementsByClassName("quote");
+	for (var i = 0; i < quotes.length; i++) {
+		quotes[i].style.borderTop = "5px solid #ff6600";
+		quotes[i].style.borderBottom = "5px solid #ff6600";
+		quotes[i].style.paddingTop = "5px";
+		quotes[i].style.paddingBottom = "5px";
+		quotes[i].style.fontFamily = "'Merienda One', sans-serif, serif";
+		quotes[i].style.color = "#993300";
+		quotes[i].style.fontSize = "1.4em";
+		quotes[i].style.outline = "purple dashed medium";
+		quotes[i].style.maxWidth = "800px";
+	}
+	var speed = document.getElementById("speed");
+	speed.style.outline = "blue dotted medium";
+	speed.style.maxWidth = "500px";
+	speed.style.fontSize = "1.25em";
+	var turtle = document.getElementById("turtle");
+	turtle.style.outline = "green solid medium";
+	turtle.style.color = "purple";
+	turtle.style.maxWidth = "500px";
 }
+
+function addQuote() {
+	var newQuote = document.getElementById("newQuote").value;
+	var quotesDiv = document.getElementById("quotes");
+	var newBlockquote = document.createElement("blockquote");
+	var node = document.createTextNode(newQuote);
+	newBlockquote.appendChild(node);
+	newBlockquote.classList.add("quote");
+	quotesDiv.insertBefore(newBlockquote, enhanceQuotesBtn);
+}
+
+/*var quotes = document.getElementById("quotes");
+quotes.addEventListener("click", function(e) {
+	if (e.target && e.target.nodeName === "blockquote") {
+		if (e.target.classList.contains("quote")) {
+			e.target.classList.add("selected");
+		}
+	}
+});*/

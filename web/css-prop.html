@@ -5,6 +5,7 @@
 <title>CSS Class Properties Manipulation Test Page</title>
 <link rel="stylesheet" href="css-prop.css" title="css1">
 <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Merienda+One' rel='stylesheet' type='text/css'>
 <script src="css-prop.js" charset="UTF-8"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -72,9 +73,17 @@
 <button type="button" onclick="adjustBackground();">Adjust Background</button>
 <button type="button" onclick="enhanceTable();">Enhance Table</button>
 <p class="para2">Refresh the page to reset all styles.</p>
-<blockquote id="usMotto"><span id="unum">E pluribus unum</span> &mdash; "Out of many, one."</blockquote>
+<div id="quotes">
+<blockquote id="usMotto"><span id="unum">E pluribus unum</span> &mdash; &quot;Out of many, one.&quot;</blockquote>
 <img src="https://upload.wikimedia.org/wikipedia/commons/e/e6/1_Dime_%28United_States%29.jpg" alt="front and back of a U.S. dime" id="usDime" height="100">
-<button type="button" onclick="enhanceQuotes();">Enhance Quotes</button>
+<blockquote id="speed" class="quote">&quot;Let's break that speed record.&quot; &mdash;Speed Racer</blockquote>
+<blockquote id="turtle" class="quote">&quot;Tonight I dine on turtle soup.&quot; &mdash;Shredder</blockquote>
+<button id="enhanceQuotesBtn" type="button" onclick="enhanceQuotes();">Enhance Quotes</button>
+</div>
+<p>Enter a favorite quote:</p>
+<textarea id="newQuote" cols="50" rows="6"></textarea>
+<br />
+<button onclick="addQuote();">Add quote</button>
 </div>
 </body>
 </html>

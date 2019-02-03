@@ -49,13 +49,18 @@ blockquote {
 	border-bottom: 5px solid blue;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	max-width: 400px;
+	max-width: 450px;
 	font-family: "Lobster Two", serif;
-	font-size: 1.4em;
+	font-size: 1.6em;
 	background-color: white;
 }
 
 #usDime {
 	display: none;
 	margin-left: 40px;
+}
+
+.selected {
+	margin-left: 80px;
+	background-color: grey;
 }
