@@ -200,7 +200,7 @@ function addQuote() {
 		var node = document.createTextNode(newQuote);
 		newBlockquote.appendChild(node);
 		newBlockquote.classList.add("quote");
-		quotesDiv.insertBefore(newBlockquote, enhanceQuotesBtn);
+		quotesDiv.appendChild(newBlockquote);
 	}
 }
 
