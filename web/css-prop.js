@@ -146,41 +146,109 @@ function adjustBackground() {
 
 function enhanceQuotes() {
 	var usMotto = document.getElementById("usMotto");
-	usMotto.classList.add("patriotic");
-	var unum = document.getElementById("unum");
-	unum.classList.add("latin");
-	var usDime = document.getElementById("usDime");
-	usDime.style.display = "block";
-	usDime.classList.add("patriotic");
+	if (usMotto != null) {
+		usMotto.classList.add("patriotic");
+		var unum = document.getElementById("unum");
+		unum.classList.add("latin");
+		var usDime = document.getElementById("usDime");
+		if (usDime != null) {
+			if (!usDime.classList.contains("hidden")) {
+				if (!usMotto.classList.contains("hidden")) {
+					usDime.style.display = "block";
+				}
+				else {
+					usDime.classList.add("hidden");
+				}
+			}
+			usDime.classList.add("patriotic");
+		}
+	}
 	var quotes = document.getElementsByClassName("quote");
-	for (var i = 1; i < quotes.length; i++) {
-		//Skip 0 for the usMotto quote
-		quotes[i].style.borderTop = "5px solid #ff6600";
-		quotes[i].style.borderBottom = "5px solid #ff6600";
-		quotes[i].style.paddingTop = "5px";
-		quotes[i].style.paddingBottom = "5px";
-		quotes[i].style.fontFamily = "'Merienda One', sans-serif, serif";
-		quotes[i].style.color = "#993300";
-		quotes[i].style.fontSize = "1.4em";
-		quotes[i].style.outline = "purple dashed medium";
-		quotes[i].style.maxWidth = "800px";
+	for (var i = 0; i < quotes.length; i++) {
+		if (!quotes[i].classList.contains("patriotic")) {
+			//Skip the usMotto quote
+			quotes[i].style.borderTop = "5px solid #ff6600";
+			quotes[i].style.borderBottom = "5px solid #ff6600";
+			quotes[i].style.paddingTop = "5px";
+			quotes[i].style.paddingBottom = "5px";
+			quotes[i].style.fontFamily = "'Merienda One', sans-serif, serif";
+			quotes[i].style.color = "#993300";
+			quotes[i].style.fontSize = "1.4em";
+			quotes[i].style.outline = "purple dashed medium";
+			quotes[i].style.maxWidth = "800px";
+		}
 	}
 	var speed = document.getElementById("speed");
-	speed.style.outline = "blue dotted medium";
-	speed.style.maxWidth = "500px";
-	speed.style.fontSize = "1.25em";
+	if (speed != null) {
+		speed.style.outline = "blue dotted medium";
+		speed.style.maxWidth = "500px";
+		speed.style.fontSize = "1.25em";
+	}
 	var turtle = document.getElementById("turtle");
-	turtle.style.outline = "green solid medium";
-	turtle.style.color = "purple";
-	turtle.style.maxWidth = "500px";
+	if (turtle != null) {
+		turtle.style.outline = "green solid medium";
+		turtle.style.color = "purple";
+		turtle.style.maxWidth = "500px";
+	}
 }
 
 function addQuote() {
 	var newQuote = document.getElementById("newQuote").value;
+	if (newQuote != "") {
+		var quotesDiv = document.getElementById("quotes");
+		var newBlockquote = document.createElement("blockquote");
+		var node = document.createTextNode(newQuote);
+		newBlockquote.appendChild(node);
+		newBlockquote.classList.add("quote");
+		quotesDiv.insertBefore(newBlockquote, enhanceQuotesBtn);
+	}
+}
+
+function removeQuote() {
 	var quotesDiv = document.getElementById("quotes");
-	var newBlockquote = document.createElement("blockquote");
-	var node = document.createTextNode(newQuote);
-	newBlockquote.appendChild(node);
-	newBlockquote.classList.add("quote");
-	quotesDiv.insertBefore(newBlockquote, enhanceQuotesBtn);
+	var selectedQuotes = document.getElementsByClassName("selected");
+	for (var i = 0; i < selectedQuotes.length; i++) {
+		quotesDiv.removeChild(selectedQuotes[i]);
+	}
+}
+
+function replaceQuote() {
+	var selectedQuotes = document.getElementsByClassName("selected");
+	var newQuote = document.getElementById("newQuote").value;
+	if ((newQuote != "") && (selectedQuotes.length > 0)) {
+		var quotesDiv = document.getElementById("quotes");
+		var newBlockquote = document.createElement("blockquote");
+		var node = document.createTextNode(newQuote);
+		newBlockquote.appendChild(node);
+		newBlockquote.classList.add("quote");
+		//Replace the selected quote that is earliest in the list
+		quotesDiv.replaceChild(newBlockquote, selectedQuotes[0]);
+
+		//Remove the remaining selected quotes
+		var quotesDiv = document.getElementById("quotes");
+		for (var i = 0; i < selectedQuotes.length; i) {
+			quotesDiv.removeChild(selectedQuotes[i]);
+		}
+	}
+}
+
+function hideQuotes() {
+	var selectedQuotes = document.getElementsByClassName("selected");
+	for (var i = 0; i < selectedQuotes.length; i++) {
+		selectedQuotes[i].style.display = "none";
+		selectedQuotes[i].classList.add("hidden");
+	}
+	for (var i = 0; i < selectedQuotes.length; i) {
+		selectedQuotes[i].classList.remove("selected");
+	}
+}
+
+function unhideQuotes() {
+	var hiddenQuotes = document.getElementsByClassName("hidden");
+	for (var i = 0; i < hiddenQuotes.length; i++) {
+		hiddenQuotes[i].style.display = "block";
+	}
+	for (var i = 0; i < hiddenQuotes.length; i) {
+		hiddenQuotes[i].classList.remove("hidden");
+	}
 }

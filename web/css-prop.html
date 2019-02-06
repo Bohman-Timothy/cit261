@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>CSS Class Properties Manipulation Test Page</title>
+<title>CSS Class Properties Manipulation and DOM Manipulation Test Page</title>
 <link rel="stylesheet" href="css-prop.css" title="css1">
 <link href='https://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Merienda+One' rel='stylesheet' type='text/css'>
@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="background">
-<h1>CSS Class Properties Manipulation Test Page</h1>
+<h1>CSS Class Properties Manipulation and DOM Manipulation Test Page</h1>
 <p class="para1">This is to demonstrate what JavaScript can do when manipulating CSS class properties.</p>
 <p class="para2">Click the list below multiple times. It cycles through styles and then back to the original appearance.</p>
 <ol id="listId" class="listA" onclick="changeBullet();">
@@ -73,18 +73,25 @@
 <button type="button" onclick="adjustBackground();">Adjust Background</button>
 <button type="button" onclick="enhanceTable();">Enhance Table</button>
 <p class="para2">Refresh the page to reset all styles.</p>
+<br/>
+<p class="para1">This demonstrates CSS styles and DOM manipulation.</p>
 <div id="quotes">
 <blockquote id="usMotto" class="quote"><span id="unum">E pluribus unum</span> &mdash; &quot;Out of many, one.&quot;</blockquote>
 <img src="https://upload.wikimedia.org/wikipedia/commons/e/e6/1_Dime_%28United_States%29.jpg" alt="front and back of a U.S. dime" id="usDime" class="quoteImg" height="100">
 <blockquote id="speed" class="quote">&quot;Let's break that speed record.&quot; &mdash;Speed Racer</blockquote>
 <blockquote id="turtle" class="quote">&quot;Tonight I dine on turtle soup.&quot; &mdash;Shredder</blockquote>
-<button id="enhanceQuotesBtn" type="button" onclick="enhanceQuotes();">Enhance Quotes</button>
+<button id="enhanceQuotesBtn" type="button" onclick="enhanceQuotes();">Enhance All Quotes</button>
+<br/>
+<button onclick="hideQuotes();">Hide Selected Quote(s)</button>
+<button onclick="unhideQuotes();">Unhide All Quotes</button>
+<button onclick="removeQuotes();">Remove Selected Quote(s)</button>
 <p>Click on a quote to select it or deselect it.</p>
 </div>
 <p>Enter a favorite quote:</p>
 <textarea id="newQuote" cols="50" rows="6"></textarea>
-<br />
+<br/>
 <button onclick="addQuote();">Add Quote</button>
+<button onclick="replaceQuote();">Replace Selected Quote(s)</button>
 </div>
 <script>
 var quotes = document.getElementById("quotes");
