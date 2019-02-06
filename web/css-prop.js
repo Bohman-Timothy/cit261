@@ -243,6 +243,7 @@ function insertQuote() {
 			newBlockquote.appendChild(node);
 			newBlockquote.classList.add("quote");
 			quotesDiv.insertBefore(newBlockquote, selectedQuotes[0]);
+			deselectAllQuotes();
 		}
 		else {
 			addQuote();
