@@ -204,15 +204,15 @@ function addQuote() {
 	}
 }
 
-function removeQuote() {
+function removeQuotes() {
 	var quotesDiv = document.getElementById("quotes");
 	var selectedQuotes = document.getElementsByClassName("selected");
-	for (var i = 0; i < selectedQuotes.length; i++) {
+	for (var i = 0; i < selectedQuotes.length; i) {
 		quotesDiv.removeChild(selectedQuotes[i]);
 	}
 }
 
-function replaceQuote() {
+function replaceQuotes() {
 	var selectedQuotes = document.getElementsByClassName("selected");
 	var newQuote = document.getElementById("newQuote").value;
 	if ((newQuote != "") && (selectedQuotes.length > 0)) {
