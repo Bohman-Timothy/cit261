@@ -232,15 +232,31 @@ function replaceQuotes() {
 	}
 }
 
+function insertQuote() {
+	var newQuote = document.getElementById("newQuote").value;
+	var selectedQuotes = document.getElementsByClassName("selected");
+	if (newQuote != "") {
+		if (selectedQuotes[0] != null) {
+			var quotesDiv = document.getElementById("quotes");
+			var newBlockquote = document.createElement("blockquote");
+			var node = document.createTextNode(newQuote);
+			newBlockquote.appendChild(node);
+			newBlockquote.classList.add("quote");
+			quotesDiv.insertBefore(newBlockquote, selectedQuotes[0]);
+		}
+		else {
+			addQuote();
+		}
+	}
+}
+
 function hideQuotes() {
 	var selectedQuotes = document.getElementsByClassName("selected");
 	for (var i = 0; i < selectedQuotes.length; i++) {
 		selectedQuotes[i].style.display = "none";
 		selectedQuotes[i].classList.add("hidden");
 	}
-	for (var i = 0; i < selectedQuotes.length; i) {
-		selectedQuotes[i].classList.remove("selected");
-	}
+	deselectAllQuotes();
 }
 
 function unhideQuotes() {
@@ -250,5 +266,12 @@ function unhideQuotes() {
 	}
 	for (var i = 0; i < hiddenQuotes.length; i) {
 		hiddenQuotes[i].classList.remove("hidden");
+	}
+}
+
+function deselectAllQuotes() {
+	var selectedQuotes = document.getElementsByClassName("selected");
+	for (var i = 0; i < selectedQuotes.length; i) {
+		selectedQuotes[i].classList.remove("selected");
 	}
 }
