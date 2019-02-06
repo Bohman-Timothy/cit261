@@ -1,6 +1,6 @@
 function replaceClass() {
 	var p = document.getElementsByClassName("para1");
-	for (var i = 0; i < p.length; i++) {
+	for (var i = 0; i < p.length; i) {
 		p[i].className = p[i].className.replace(/para1/, 'para3');
 	}
 }
