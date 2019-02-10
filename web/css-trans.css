@@ -1,0 +1,153 @@
+body {
+	
+}
+
+.stretchBlock {
+	display: block;
+	width: 7em;
+	height: 6em;
+	color: #ffcc00;
+	background-color: #6a5acd;
+	transition: width 2s, height 2s;
+	text-align: center;
+	padding-top: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-bottom: 1em;
+}
+
+.stretchBlock:hover {
+	width: 24em;
+	height: 15em;
+}
+
+.progressBar {
+	display: block;
+	width: 20px;
+	height: 4em;
+	color: #ffcc00;
+	background-color: #888888;
+	transition: width 2s, background-color 2s;
+	transition-timing-function: linear;
+}
+
+.progressBar:hover {
+	background-color: #6a5acd;
+	width: 600px;
+}
+
+.progressBarBackground {
+	display: block;
+	width: 600px;
+	height: 4em;
+	color: #ffcc00;
+	background-color: #aaaaaa;
+}
+
+.blockSpace {
+	width: 250px;
+	height: 200px;
+}
+
+@keyframes aniBasic {
+	0% {
+		background-color: red;
+		color: #ffcc00;
+		width: 240px;
+		height: 200px;
+	}
+	50% {
+		background-color: purple;
+		color: #aaaaaa;
+		width: 120px;
+		height: 100px;
+		transform: translate(60px, 50px);
+	}
+	100% {
+		background-color: red;
+		color: #ffcc00;
+		width: 240px;
+		height: 200px;
+	}
+}
+
+.aniBasic {
+	width: 240px;
+	height: 200px;
+	animation-name: aniBasic;
+	animation-duration: 4s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes aniRainbow {
+	from {
+		width: 0px;
+	}
+	to {
+		width: 600px;
+	}
+	0% {
+		background-color: #aaaaaa;
+		color: purple;
+	}
+	8.325% {
+		background-color: red;
+		color: yellow;
+	}
+	16.65% {
+		background-color: red;
+		color: yellow;
+	}
+	24.975% {
+		background-color: #ff8000;
+		color: black;
+	}
+	33.3% {
+		background-color: #ff8000;
+		color: black;
+	}
+	41.625% {
+		background-color: yellow;
+		color: #505050;
+	}
+	49.95% {
+		background-color: yellow;
+		color: #505050;
+	}
+	58.275% {
+		background-color: green;
+		color: yellow;
+	}
+	66.6% {
+		background-color: green;
+		color: yellow;
+	}
+	74.925% {
+		background-color: blue;
+		color: white;
+	}
+	83.25% {
+		background-color: blue;
+		color: white;
+	}
+	91.575% {
+		background-color: purple;
+		color: #aaaaaa;
+	}
+	100% {
+		background-color: purple;
+		color: #aaaaaa;
+	}
+}
+
+.aniRainbow {
+	width: 0px;
+	height: 4em;
+	color: purple;
+	animation-name: aniRainbow;
+	animation-duration: 3s;
+	animation-iteration-count: 4;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+	animation-delay: 2s;
+}
