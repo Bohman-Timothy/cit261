@@ -2,6 +2,14 @@ body {
 	
 }
 
+.floatLeft {
+	float: left;
+}
+
+#pulsing2 {
+	margin-left: 300px;
+}
+
 .stretchBlock {
 	display: block;
 	width: 7em;
@@ -49,12 +57,13 @@ body {
 	height: 200px;
 }
 
-@keyframes aniBasic {
+@keyframes aniPulse1 {
 	0% {
 		background-color: red;
 		color: #ffcc00;
 		width: 240px;
 		height: 200px;
+		border-radius: 0px;
 	}
 	50% {
 		background-color: purple;
@@ -62,19 +71,54 @@ body {
 		width: 120px;
 		height: 100px;
 		transform: translate(60px, 50px);
+		border-radius: 50px;
 	}
 	100% {
 		background-color: red;
 		color: #ffcc00;
 		width: 240px;
 		height: 200px;
+		border-radius: 0px;
 	}
 }
 
-.aniBasic {
+.aniPulse1 {
 	width: 240px;
 	height: 200px;
-	animation-name: aniBasic;
+	animation-name: aniPulse1;
+	animation-duration: 4s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes aniPulse2 {
+	0% {
+		background-color: orange;
+		color: #ffcc00;
+		width: 240px;
+		height: 200px;
+		border-radius: 100px;
+	}
+	50% {
+		background-color: blue;
+		color: #aaaaaa;
+		width: 120px;
+		height: 100px;
+		transform: translate(60px, 50px);
+		border-radius: 0px;
+	}
+	100% {
+		background-color: orange;
+		color: #ffcc00;
+		width: 240px;
+		height: 200px;
+		border-radius: 100px;
+	}
+}
+
+.aniPulse2 {
+	width: 240px;
+	height: 200px;
+	animation-name: aniPulse2;
 	animation-duration: 4s;
 	animation-iteration-count: infinite;
 }
