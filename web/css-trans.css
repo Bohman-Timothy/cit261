@@ -29,11 +29,13 @@ body {
 	padding-left: 1em;
 	padding-right: 1em;
 	padding-bottom: 1em;
+	border: 3px solid #00ff00;
 }
 
 .stretchBlock:hover {
 	width: 24em;
 	height: 3em;
+	border: 6px solid #00ff00;
 }
 
 .progressBar {
