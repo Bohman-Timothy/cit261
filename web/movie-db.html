@@ -148,11 +148,17 @@ function viewSavedMoviesList() {
 	console.log("fullListOfMoviesObj: ");
 	console.log(fullListOfMoviesObj);
 	var savedMoviesList = document.getElementById("savedMoviesList");
-	savedMoviesList.innerHTML = "<h2>List of Saved Movies</h2> <ol>";
-	for (var i = 0; i < fullListOfMoviesObj.movies.length; i++) {
-	savedMoviesList.innerHTML += "<li>" + fullListOfMoviesObj.movies[i].Title + " <em>(" + fullListOfMoviesObj.movies[i].Year + ")</em> <button id='viewDetailsBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + fullListOfMoviesObj.movies[i].imdbID + "&quot;);'>View more details</button> <button id='removeFromListBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='removeFromList' onclick='removeFromList(" + i + ");'>Remove</button></li>";
+	savedMoviesList.innerHTML = "<h2>List of Saved Movies</h2> ";
+	if ((fullListOfMoviesObj != null) && (fullListOfMoviesObj.movies.length != 0)) {
+		savedMoviesList.innerHTML = "<ol>";
+		for (var i = 0; i < fullListOfMoviesObj.movies.length; i++) {
+		savedMoviesList.innerHTML += "<li>" + fullListOfMoviesObj.movies[i].Title + " <em>(" + fullListOfMoviesObj.movies[i].Year + ")</em> <button id='viewDetailsBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + fullListOfMoviesObj.movies[i].imdbID + "&quot;);'>View more details</button> <button id='removeFromListBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='removeFromList' onclick='removeFromList(" + i + ");'>Remove</button></li>";
+		}
+		savedMoviesList.innerHTML += "</ol>";
 	}
-	savedMoviesList.innerHTML += "</ol>";
+	else {
+		savedMoviesList.innerHTML += "<p><em>No saved movies found</em></p>";
+	}
 
 	window.scroll(0,2000);
 }
