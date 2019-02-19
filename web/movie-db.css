@@ -8,7 +8,7 @@ body {
 	color: #861006;
 }
 
-.poster {
+.poster, .posterNoImg {
 	height: 60px;
 }
 
