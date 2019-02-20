@@ -2,7 +2,7 @@ body {
 	font-family: serif;
 }
 
-.resultsTitle {
+.resultsTitle, .savedMovieTitle {
 	font-weight: bold;
 	font-size: 1.2em;
 	color: #861006;
@@ -29,8 +29,14 @@ body {
 	border-left: 6px solid rgb(240,196,0);
 }
 
-#searchResultsList li {
+#searchResultsList li, #savedMoviesList li {
 	margin-bottom: 1.5em;
+}
+
+#savedMoviesList {
+	border-top: 6px solid rgb(255,132,134);
+	border-left: 6px solid rgb(255,132,134);
+	padding-top: 1em;
 }
 
 #moreDetails {
