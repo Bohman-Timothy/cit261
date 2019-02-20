@@ -9,7 +9,7 @@ body {
 }
 
 .poster, .posterNoImg {
-	height: 60px;
+	height: 64px;
 }
 
 .poster:hover {

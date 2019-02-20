@@ -85,7 +85,7 @@ function displaySearchResults(searchResultsObj, searchResultsPage) {
 	var searchResults = "<h2>Search Results:</h2><ol id='searchResultsList' start='" + (searchResultsPage * 10 - 9) + "'>";
 	for (var i = 0; i < searchResultsObj.Search.length; i++) {
 		var imdbID = searchResultsObj.Search[i].imdbID;
-		searchResults += "<li><img class='poster' src='" + searchResultsObj.Search[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;;this.classList=&quot;posterNoImg&quot;;'><span class='resultsTitle'>" + searchResultsObj.Search[i].Title + "</span><br/>" + "<strong>Type:</strong> " + searchResultsObj.Search[i].Type + "<br/>" + "<strong>Year:</strong> " + searchResultsObj.Search[i].Year + "<br/>" + "<strong>IMDb ID:</strong> " + "<span class='imdbID'>" + imdbID + "</span><br/> <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + imdbID + "&quot;);'>View more details</button></li>";
+		searchResults += "<li><img class='poster' src='" + searchResultsObj.Search[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'><span class='resultsTitle'>" + searchResultsObj.Search[i].Title + "</span><br/>" + "<strong>Type:</strong> " + searchResultsObj.Search[i].Type + "<br/>" + "<strong>Year:</strong> " + searchResultsObj.Search[i].Year + "<br/>" + "<strong>IMDb ID:</strong> " + "<span class='imdbID'>" + imdbID + "</span><br/> <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + imdbID + "&quot;);'>View more details</button></li>";
 	}
 	searchResults += "</ol>";
 	searchResults += "<p>Page: " + searchResultsPage + "</p>";
@@ -144,13 +144,15 @@ function viewSavedMoviesList() {
 	fullListOfMoviesString = localStorage.getItem("fullListOfMovies");
 	console.log("fullListOfMoviesString: ");
 	console.log(fullListOfMoviesString);
-	fullListOfMoviesObj = JSON.parse(fullListOfMoviesString);
+	if (fullListOfMoviesString !== null) {
+		fullListOfMoviesObj = JSON.parse(fullListOfMoviesString);
+	}
 	console.log("fullListOfMoviesObj: ");
 	console.log(fullListOfMoviesObj);
 	var savedMoviesList = document.getElementById("savedMoviesList");
 	savedMoviesList.innerHTML = "<h2>List of Saved Movies</h2> ";
 	if ((fullListOfMoviesObj != null) && (fullListOfMoviesObj.movies.length != 0)) {
-		savedMoviesList.innerHTML = "<ol>";
+		savedMoviesList.innerHTML += "<ol>";
 		for (var i = 0; i < fullListOfMoviesObj.movies.length; i++) {
 		savedMoviesList.innerHTML += "<li>" + fullListOfMoviesObj.movies[i].Title + " <em>(" + fullListOfMoviesObj.movies[i].Year + ")</em> <button id='viewDetailsBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + fullListOfMoviesObj.movies[i].imdbID + "&quot;);'>View more details</button> <button id='removeFromListBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='removeFromList' onclick='removeFromList(" + i + ");'>Remove</button></li>";
 		}
@@ -164,11 +166,17 @@ function viewSavedMoviesList() {
 }
 
 function removeFromList(i) {
-	fullListOfMoviesObj.movies.splice(i,1);
-	fullListOfMoviesString = JSON.stringify(fullListOfMoviesObj);
-	console.log("fullListofMovies: ");
-	console.log(fullListOfMoviesString);
-	localStorage.setItem("fullListOfMovies", fullListOfMoviesString);
+	if (fullListOfMoviesObj.movies.length > i) {
+		fullListOfMoviesObj.movies.splice(i,1);
+		fullListOfMoviesString = JSON.stringify(fullListOfMoviesObj);
+		console.log("fullListofMovies: ");
+		console.log(fullListOfMoviesString);
+		localStorage.setItem("fullListOfMovies", fullListOfMoviesString);
+	}
+	else {
+		localStorage.removeItem("fullListOfMovies");
+		console.log("Removed 'fullListOfMovies' from localStorage");
+	}
 	viewSavedMoviesList();
 }
 </script>
