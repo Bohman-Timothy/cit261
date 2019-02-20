@@ -8,7 +8,7 @@ body {
 	color: #861006;
 }
 
-.poster, .posterNoImg {
+.poster, .posterNoImg, .detailsPosterNoImg {
 	height: 64px;
 }
 
@@ -57,4 +57,10 @@ body {
 
 #movieDataString {
 	display: none;
+}
+
+.error {
+	color: rgb(210,40,40);
+	font-weight: bold;
+	font-size: 1.4em;
 }

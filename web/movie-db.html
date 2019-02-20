@@ -16,6 +16,8 @@
 <!-- </form> -->
 <div id="moreDetails">
 </div>
+<div id="statusMessage">
+</div>
 <div id="searchResults">
 </div>
 <div id="savedMovies">
@@ -108,7 +110,7 @@ function searchID(imdbID) {
 function displayIDResult(searchResultsObj) {
 	var idResult = "<h2>More Details:<br/> <span class='idDetailsTitle'>" + searchResultsObj.Title +"</span></h2><p>";
 	var imdbID = searchResultsObj.imdbID;
-	idResult += "<img class='idDetailsPoster' src='" + searchResultsObj.Poster + "' onerror='this.src=&quot;&quot;'><br/>" + "<strong>Type:</strong> " + searchResultsObj.Type + "<br/>" + "<strong>Genre:</strong> " + searchResultsObj.Genre + "<br/>" + "<strong>Year:</strong> " + searchResultsObj.Year + "<br/>" + "<strong>Released:</strong> " + searchResultsObj.Released + "<br/>" + "<strong>Runtime:</strong> " + searchResultsObj.Runtime + "<br/>" + "<strong>Director:</strong> " + searchResultsObj.Director + "<br/>" + "<strong>Actors:</strong> " + searchResultsObj.Actors + "<br/>" + "<strong>IMDb ID:</strong> " + "<span class='imdbID'>" + imdbID + "</span><br/> <button id='addMovieBtn_" + imdbID + "' onclick='addMovie(&quot;" + imdbID + "&quot;);'>Add Movie to List</button>";
+	idResult += "<img class='idDetailsPoster' src='" + searchResultsObj.Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'><br/>" + "<strong>Type:</strong> " + searchResultsObj.Type + "<br/>" + "<strong>Genre:</strong> " + searchResultsObj.Genre + "<br/>" + "<strong>Year:</strong> " + searchResultsObj.Year + "<br/>" + "<strong>Released:</strong> " + searchResultsObj.Released + "<br/>" + "<strong>Runtime:</strong> " + searchResultsObj.Runtime + "<br/>" + "<strong>Director:</strong> " + searchResultsObj.Director + "<br/>" + "<strong>Actors:</strong> " + searchResultsObj.Actors + "<br/>" + "<strong>IMDb ID:</strong> " + "<span class='imdbID'>" + imdbID + "</span><br/> <button id='addMovieBtn_" + imdbID + "' onclick='addMovie(&quot;" + imdbID + "&quot;);'>Add Movie to List</button>";
 	var movieDataString = JSON.stringify(searchResultsObj);
 	console.log(movieDataString);
 	idResult += "<span id='movieDataString'>" + movieDataString + "</span></p>";
@@ -130,11 +132,15 @@ function addMovie(imdbID) {
 	console.log(savedMovieObj);
 
 	var isDuplicate = false;
-	//This for loop and if statement do not currently recognize when a duplicate is found
-	for (var i; i < fullListOfMoviesObj.movies.length; i++) {
+	for (var i = 0; i < fullListOfMoviesObj.movies.length; i++) {
 		if (fullListOfMoviesObj.movies[i].imdbID == savedMovieObj.imdbID)
 		{
+			console.log("It's a duplicate!");
 			isDuplicate = true;
+			var errorMessage = "<p class='error'>Error: This is already saved to your list.</p>";
+			var statusMessage = document.getElementById("statusMessage");
+			statusMessage.innerHTML = errorMessage;
+			statusMessage.scrollIntoView();
 			break;
 		}
 	}
@@ -186,7 +192,7 @@ function viewSavedMoviesList() {
 	console.log("savedMovies.innerHTML : ");
 	console.log(savedMovies.innerHTML);
 
-	window.scroll(0,2645);
+	savedMovies.scrollIntoView();
 }
 
 function removeFromList(i) {
