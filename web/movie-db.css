@@ -1,5 +1,7 @@
 body {
-	font-family: serif;
+	font-family: serif, cursive, sans-serif;
+	max-width: 800px;
+	background-color: rgb(216,220,255);
 }
 
 .resultsTitle, .savedMovieTitle {
@@ -8,40 +10,82 @@ body {
 	color: #861006;
 }
 
-.poster, .posterNoImg, .detailsPosterNoImg {
+.posterNoImg, .detailsPosterNoImg {
 	height: 64px;
+}
+
+.poster {
+	height: 64px;
+	transition: height 0.75s;
 }
 
 .poster:hover {
 	height: 300px;
+	transition: height 0.75s;
 }
 
-.idDetailsPoster {
+#idDetailsPoster {
 	height: 400px
 }
 
-.idDetailsTitle {
+#idDetailsTitle {
 	color: #cb1688;
 	font-size: 1.6em;
 }
 
-#searchResultsList {
+#searchResults {
 	border-left: 6px solid rgb(240,196,0);
+	background-color: rgb(255,228,171);
+	padding-top: 1em;
+	display: none;
+	margin-bottom: 1.5em;
+	padding-bottom: 1.5em;
+}
+
+#searchResultsTop, #searchResultsBottom {
+	padding-left: 1em;
+}
+
+#searchResultsTop h2 {
+	margin-top: 0;
 }
 
 #searchResultsList li, #savedMoviesList li {
 	margin-bottom: 1.5em;
 }
 
-#savedMoviesList {
+#savedMovies {
 	border-top: 6px solid rgb(255,132,134);
 	border-left: 6px solid rgb(255,132,134);
-	padding-top: 1em;
+	padding-bottom: 0.25em;
+	background-color: rgb(255,202,206);
+}
+
+#savedMoviesList {
+	padding-top: 1.5em;
+}
+
+#listRenameOptions {
+	display: none;
+}
+
+#listNameSuggestions {
+	font-style: italic;
+}
+
+#savedMoviesListName {
+	margin-top: 0.75em;
+}
+
+#savedMoviesListNameAndOptions, #noSavedMoviesMessage {
+	margin-left: 1em;
 }
 
 #moreDetails {
 	margin-top: 1em;
 	max-width: 800px;
+	padding-bottom: 0.5em;
+	margin-bottom: 1.5em;
 }
 
 .topBottomBorders {
@@ -50,6 +94,12 @@ body {
 	border-left: 6px solid rgb(16,143,153);
 	border-right: 6px solid rgb(16,143,153);
 	padding-left: 2em;
+	background-color: rgb(204,255,227);
+	background-color: rgb(199,240,255);
+}
+
+#addMovieBtn {
+	margin-top: 1em;
 }
 
 .viewDetailsBtn {
