@@ -25,7 +25,7 @@
 <div id="savedMovies">
 </div>
 <script>
-const maxResultsRetrieved = 10; //Max number of results that can be retrieved at once
+const maxResultsRetrievable = 10; //Max number of results that can be retrieved at once
 const savedMoviesListNameDefault = "Saved Movies";
 var savedMoviesListName = localStorage.getItem("savedMoviesListName");
 if (savedMoviesListName == null) {
@@ -39,15 +39,13 @@ if (fullListOfMoviesString === null) {
 else {
 	fullListOfMoviesObj = JSON.parse(fullListOfMoviesString);
 }
-	console.log("fullListOfMoviesString: ");
-	console.log(fullListOfMoviesString);
-	console.log("fullListOfMoviesObj: ");
-	console.log(fullListOfMoviesObj);
+	//console.log("fullListOfMoviesString: ", fullListOfMoviesString);
+	//console.log("fullListOfMoviesObj: ", fullListOfMoviesObj);
 	viewSavedMoviesList();
 
 function searchTitle(searchResultsPage = 1) {
 	var searchTitle = document.getElementById("searchTitle").value;
-	console.log(searchTitle);
+	//console.log(searchTitle);
 	var searchText = "s=" + searchTitle;
 	var searchType = "s";
 	search(searchText, searchType, searchResultsPage);
@@ -57,28 +55,30 @@ function search (searchText, searchType, searchResultsPage = 1) {
 	var apiKey = "ece24955";
 	var page;
 	page = "&page=" + searchResultsPage;
-	console.log(page);
+	//console.log(page);
 	var type = ""; //"&type=series"; //"&type=episode";
 	var url = "https://www.omdbapi.com/?" + searchText + type + page + "&apikey=" + apiKey;
 	var req = new XMLHttpRequest();
 	req.open("GET", url);
 	req.onreadystatechange = function() {
 		if ((this.readyState == 4) && (this.status == 200)) {
-			console.log(searchText);
+			//console.log(searchText);
 			var searchResultsText = this.responseText;
 			var searchResultsObj = JSON.parse(searchResultsText);
-			console.log(searchResultsObj);
-			console.log(typeof(searchResultsObj));
+			/*console.log(searchResultsObj);
+			console.log(typeof(searchResultsObj));*/
 			if (searchType == "s") {
 				var moreDetails = document.getElementById("moreDetails");
 				moreDetails.innerHTML = "";
 				moreDetails.classList.remove("topBottomBorders");
 				if (searchResultsObj.Response == "False") {
-					console.log("Failed to find movie");
-					document.getElementById("searchResults").innerHTML = "<h2>No results found!</h2>";
+					//console.log("Failed to find movie");
+					var searchResults = document.getElementById("searchResults");
+					searchResults.innerHTML = "<h2 id='noResultsError'>No results found!</h2>";
+					searchResults.scrollIntoView();
 				}
 				else {
-					console.log(searchResultsObj.Search.length);
+					//console.log(searchResultsObj.Search.length);
 					displaySearchResults(searchResultsObj, searchResultsPage, searchResultsObj.totalResults);
 				}
 			}
@@ -94,22 +94,45 @@ function displaySearchResults(searchResultsObj, searchResultsPage, searchResults
 	var searchResults = "<div id='searchResultsTop'><h2>Search Results</h2></div> <ol id='searchResultsList' start='" + (searchResultsPage * 10 - 9) + "'>";
 	for (var i = 0; i < searchResultsObj.Search.length; i++) {
 		var imdbID = searchResultsObj.Search[i].imdbID;
-		searchResults += "<li><img class='poster' src='" + searchResultsObj.Search[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'><span class='resultsTitle'>" + searchResultsObj.Search[i].Title + "</span><br/>" + "<strong>Type:</strong> " + searchResultsObj.Search[i].Type + "<br/>" + "<strong>Year:</strong> " + searchResultsObj.Search[i].Year + "<br/>" + "<strong>IMDb ID:</strong> " + "<span class='imdbID'>" + imdbID + "</span><br/> <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + imdbID + "&quot;);'>View more details</button></li>";
+		searchResults += "<li><img class='poster' src='" + searchResultsObj.Search[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='resultsTitle'>" + searchResultsObj.Search[i].Title + "</span><br/>" + "<strong>Type:</strong> " + searchResultsObj.Search[i].Type + "<br/>" + "<strong>Year:</strong> " + searchResultsObj.Search[i].Year + "<br/>" + "<strong>IMDb ID:</strong> " + "<span class='imdbID'>" + imdbID + "</span><br/> <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + imdbID + "&quot;);'>View more details</button></li>";
 	}
 	searchResults += "</ol>";
-	searchResults += "<div id='searchResultsBottom'><p>Page: " + searchResultsPage + " of " + (Number((Number(searchResultsTotalResults) / 10).toFixed()) + 1) + "</p>";
+
+	var totalResultsPagesIntermediateCalculation = (Number(searchResultsTotalResults) / 10);
+	var lastSearchResultPageHasLessThanMaxRetrievableResultsOnIt = false;
+	if (((Number(searchResultsTotalResults) / 10) % 1) > 0) {
+		lastSearchResultPageHasLessThanMaxRetrievableResultsOnIt = true;
+	}
+	var searchResultsTotalPages;
+	if (lastSearchResultPageHasLessThanMaxRetrievableResultsOnIt) {
+		searchResultsTotalPages = (Math.trunc(totalResultsPagesIntermediateCalculation) + 1);
+	}
+	else {
+		searchResultsTotalPages = Math.trunc(totalResultsPagesIntermediateCalculation);
+	}
+
+	searchResults += "<div id='searchResultsBottom'><p>Page: " + searchResultsPage + " of " + searchResultsTotalPages + " (" + searchResultsTotalResults + " total ";
+	if (Number(searchResultsTotalResults) > 1) {
+		searchResults += "results)";
+	}
+	else {
+		searchResults += "result)";
+	}
+	searchResults += "</p>";
 	if (searchResultsPage > 1) {
 		searchResults += "<button onclick='searchTitle(" + (searchResultsPage - 1) + ");'>Previous Page</button> ";
 	}
-	if (searchResultsObj.Search.length == maxResultsRetrieved) { //Max number of results that can be retrieved at once
-		searchResults += "<button onclick='searchTitle(" + (searchResultsPage + 1) + ");'>Next Page</button></div>";
+	if ((searchResultsObj.Search.length == maxResultsRetrievable) && (searchResultsPage < searchResultsTotalPages)) {
+		//Max number of results that can be retrieved at once
+		searchResults += "<button onclick='searchTitle(" + (searchResultsPage + 1) + ");'>Next Page</button>";
 	}
+	searchResults += "</div>";
 	document.getElementById("searchResults").innerHTML = searchResults;
 	unhideSearchResults();
 }
 
 function searchID(imdbID) {
-	console.log(imdbID);
+	//console.log(imdbID);
 	var searchText = "i=" + imdbID;
 	var searchType = "i";
 	search(searchText, searchType);
@@ -120,7 +143,7 @@ function displayIDResult(searchResultsObj) {
 	var imdbID = searchResultsObj.imdbID;
 	idResult += "<img id='idDetailsPoster' src='" + searchResultsObj.Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'><br/>" + "<strong>Type:</strong> " + searchResultsObj.Type + "<br/>" + "<strong>Genre:</strong> " + searchResultsObj.Genre + "<br/>" + "<strong>Year:</strong> " + searchResultsObj.Year + "<br/>" + "<strong>Released:</strong> " + searchResultsObj.Released + "<br/>" + "<strong>Runtime:</strong> " + searchResultsObj.Runtime + "<br/>" + "<strong>Director:</strong> " + searchResultsObj.Director + "<br/>" + "<strong>Actors:</strong> " + searchResultsObj.Actors + "<br/>" + "<strong>IMDb ID:</strong> " + "<span class='imdbID'>" + imdbID + "</span><br/> <button id='addMovieBtn' onclick='addMovie(&quot;" + imdbID + "&quot;);'>Add Movie to List</button>";
 	var movieDataString = JSON.stringify(searchResultsObj);
-	console.log(movieDataString);
+	//console.log(movieDataString);
 	idResult += "<span id='movieDataString'>" + movieDataString + "</span></p>";
 	document.getElementById("moreDetails").innerHTML = idResult;
 	document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -130,12 +153,11 @@ function displayIDResult(searchResultsObj) {
 }
 
 function addMovie(imdbID) {
-	console.log("Add Movie: " + imdbID);
+	//console.log("Add Movie: " + imdbID);
 	var movieDataString = document.getElementById("movieDataString").innerHTML;
 
 	var savedMovieObj = JSON.parse(movieDataString);
-	console.log("savedMovieObj: ");
-	console.log(savedMovieObj);
+	//console.log("savedMovieObj: ", savedMovieObj);
 
 	var isDuplicate = false;
 	for (var i = 0; i < fullListOfMoviesObj.movies.length; i++) {
@@ -152,47 +174,39 @@ function addMovie(imdbID) {
 	}
 	if (isDuplicate == false) {
 		fullListOfMoviesObj.movies.push(savedMovieObj);
-		console.log("fullListofMoviesObj: ");
-		console.log(fullListOfMoviesObj);
+		//console.log("fullListofMoviesObj: ", fullListOfMoviesObj);
 		saveCurrentMovieListData();
 	}
 }
 
 function viewSavedMoviesList() {
 	fullListOfMoviesString = localStorage.getItem("fullListOfMovies");
-	//console.log("fullListOfMoviesString: ");
-	//console.log(fullListOfMoviesString);
+	//console.log("fullListOfMoviesString: ", fullListOfMoviesString);
 	if (fullListOfMoviesString !== null) {
 		fullListOfMoviesObj = JSON.parse(fullListOfMoviesString);
 	}
-	//console.log("fullListOfMoviesObj: ");
-	//console.log(fullListOfMoviesObj);
+	//console.log("fullListOfMoviesObj: ", fullListOfMoviesObj);
 	var savedMovies = document.getElementById("savedMovies");
 	var savedMoviesString = "<div id='savedMoviesListNameAndOptions'><h2 id='savedMoviesListName'>";
 	savedMoviesString += savedMoviesListName;
 	savedMoviesString += "</h2> <div id='listRename'><button id='listRenameBtn' onclick='showListRenameOptions();'>Show List Renaming Options</button><span id='listRenameOptions'><input id='newListName' type='text'> <button onclick='saveNewListName();'>Save New List Name</button> <button onclick='resetListName();'>Reset to Default Name</button> <button onclick='closeRenameOptions();'>Cancel</button> <p>Suggestions: <span id='listNameSuggestions'>Favorite Movies / Movies to See / Movies Watched / Movies Owned</span></p></span></div></div> ";
 	if ((fullListOfMoviesObj != null) && (fullListOfMoviesObj.movies.length != 0)) {
 		savedMoviesString += "<ol id='savedMoviesList'>";
-		console.log("savedMoviesString : ");
-		console.log(savedMoviesString);
+		//console.log("savedMoviesString : ", savedMoviesString);
 		for (var i = 0; i < fullListOfMoviesObj.movies.length; i++) {
 			savedMoviesString += "<li><img class='poster' src='" + fullListOfMoviesObj.movies[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='savedMovieTitle'>" + fullListOfMoviesObj.movies[i].Title + "</span><br/> (" + fullListOfMoviesObj.movies[i].Year + ") [" + fullListOfMoviesObj.movies[i].Type + "] <button id='viewDetailsBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + fullListOfMoviesObj.movies[i].imdbID + "&quot;);'>View more details</button> <button id='removeFromListBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='removeFromList' onclick='removeFromList(" + i + ");'>Remove</button></li>";
 		}
 		savedMoviesString += "</ol>";
-		savedMovies.innerHTML = savedMoviesString;
-		console.log("savedMoviesString : ");
-		console.log(savedMoviesString);
-		console.log("savedMovies.innerHTML : ");
-		console.log(savedMovies.innerHTML);
+		//savedMovies.innerHTML = savedMoviesString;
+		//console.log("savedMoviesString : ", savedMoviesString);
+		//console.log("savedMovies.innerHTML : ", savedMovies.innerHTML);
 	}
 	else {
 		savedMoviesString += "<p id='noSavedMoviesMessage'><em>No saved movies found</em></p>";
 	}
 	savedMovies.innerHTML = savedMoviesString;
-	console.log("savedMoviesString : ");
-	console.log(savedMoviesString);
-	console.log("savedMovies.innerHTML : ");
-	console.log(savedMovies.innerHTML);
+	//console.log("savedMoviesString : ", savedMoviesString);
+	//console.log("savedMovies.innerHTML : ", savedMovies.innerHTML);
 
 	savedMovies.scrollIntoView();
 }
@@ -201,8 +215,7 @@ function removeFromList(i) {
 	if (fullListOfMoviesObj.movies.length > i) {
 		fullListOfMoviesObj.movies.splice(i,1);
 		fullListOfMoviesString = JSON.stringify(fullListOfMoviesObj);
-		console.log("fullListofMovies: ");
-		console.log(fullListOfMoviesString);
+		//console.log("fullListofMovies: ", fullListOfMoviesString);
 		localStorage.setItem("fullListOfMovies", fullListOfMoviesString);
 	}
 	else {
@@ -214,8 +227,7 @@ function removeFromList(i) {
 
 function saveCurrentMovieListData() {
 	var fullListOfMovies = JSON.stringify(fullListOfMoviesObj);
-	console.log("fullListofMovies: ");
-	console.log(fullListOfMovies);
+	//console.log("fullListofMovies: ", fullListOfMovies);
 	localStorage.setItem("fullListOfMovies", fullListOfMovies);
 	localStorage.setItem("savedMoviesListName", savedMoviesListName);
 
@@ -234,7 +246,7 @@ function closeRenameOptions() {
 
 function saveNewListName() {
 	var newListName = document.getElementById("newListName").value;
-	console.log(newListName);
+	//console.log(newListName);
 	var noChange = false;
 	if (savedMoviesListName == newListName)
 	{
@@ -243,8 +255,7 @@ function saveNewListName() {
 	}
 	if (noChange == false) {
 		savedMoviesListName = newListName;
-		console.log("savedMoviesListName: ");
-		console.log(savedMoviesListName);
+		//console.log("savedMoviesListName: ", savedMoviesListName);
 		saveCurrentMovieListData();
 	}
 }
@@ -262,6 +273,7 @@ function hideSearchResults() {
 	document.getElementById("searchResults").style.display = "none";
 }
 
+//Make an error message appear: if (savedMoviesListName == newListName) {	console.log("No change"); noChange = true; }
 //Add button to show plot summary in "more details" section
 //Add ability to mark a movie as "owned" in the saved movies list
 //Add ability to add a brief note about a movie in the saved movies list

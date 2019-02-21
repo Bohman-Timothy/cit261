@@ -42,7 +42,7 @@ body {
 	padding-bottom: 1.5em;
 }
 
-#searchResultsTop, #searchResultsBottom {
+#searchResultsTop, #searchResultsBottom, #noResultsError {
 	padding-left: 1em;
 }
 
@@ -52,6 +52,12 @@ body {
 
 #searchResultsList li, #savedMoviesList li {
 	margin-bottom: 1.5em;
+}
+
+.error {
+	color: rgb(210,40,40);
+	font-weight: bold;
+	font-size: 1.4em;
 }
 
 #savedMovies {
@@ -107,10 +113,4 @@ body {
 
 #movieDataString {
 	display: none;
-}
-
-.error {
-	color: rgb(210,40,40);
-	font-weight: bold;
-	font-size: 1.4em;
 }
