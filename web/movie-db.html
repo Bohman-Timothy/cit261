@@ -196,14 +196,16 @@ function viewSavedMoviesList() {
 		//console.log("savedMoviesString : ", savedMoviesString);
 		for (var i = 0; i < fullListOfMoviesObj.movies.length; i++) {
 			var imdbID = fullListOfMoviesObj.movies[i].imdbID;
+			savedMoviesString += "<li><img class='poster floatLeft' src='" + fullListOfMoviesObj.movies[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='savedMovieTitle'>" + fullListOfMoviesObj.movies[i].Title + "</span><br/> (" + fullListOfMoviesObj.movies[i].Year + ") [" + fullListOfMoviesObj.movies[i].Type + "] <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + imdbID + "&quot;);'>View more details</button> <button id='removeFromListBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='removeFromList' onclick='removeFromList(" + i + ");'>Remove</button><div  id='commentsSection_" + imdbID + "' class='savedMovieComments'>Comments: <textarea id='comments_" + imdbID + "' class='savedMovieCommentsArea'>";
 			var savedMoviesCommentsString = localStorage.getItem("savedMoviesComments");
 			savedMoviesCommentsObj = JSON.parse(savedMoviesCommentsString);
-			savedComments = savedMoviesCommentsObj[imdbID];
-			console.log("saved comments: ", savedComments);
-
-			savedMoviesString += "<li><img class='poster floatLeft' src='" + fullListOfMoviesObj.movies[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='savedMovieTitle'>" + fullListOfMoviesObj.movies[i].Title + "</span><br/> (" + fullListOfMoviesObj.movies[i].Year + ") [" + fullListOfMoviesObj.movies[i].Type + "] <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + imdbID + "&quot;);'>View more details</button> <button id='removeFromListBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='removeFromList' onclick='removeFromList(" + i + ");'>Remove</button><div  id='commentsSection_" + imdbID + "' class='savedMovieComments'>Comments: <textarea id='comments_" + imdbID + "' class='savedMovieCommentsArea'>";
-			if (savedComments != null) {
-				savedMoviesString += savedComments;
+			var savedComments;
+			if (savedMoviesCommentsObj != null) {
+				savedComments = savedMoviesCommentsObj[imdbID];
+				console.log("saved comments: ", savedComments);
+				if (savedComments != null) {
+					savedMoviesString += savedComments;
+				}
 			}
 			savedMoviesString += "</textarea> <button class='saveCommentsBtn' onclick='saveComments(&quot;" + imdbID + "&quot;);'>Save Comments</button> <span id='commentsStatus_" + imdbID + "' class='commentsStatus'></span></div></li>";
 		}
@@ -315,6 +317,7 @@ function saveComments(imdbID) {
 //Add ability to mark a movie as "owned" in the saved movies list
 //Add transition/transformation/animation to the comments' status message, to make it disappear after a few or several seconds
 //Add character limit to comments, and write the maximum character count next to the comments textarea
+//Delete comments for a movie when the movie is removed from the list
 </script>
 </body>
 </html>
