@@ -207,6 +207,9 @@ function viewSavedMoviesList() {
 					savedMoviesString += savedComments;
 				}
 			}
+			else {
+				savedMoviesCommentsObj = {};
+			}
 			savedMoviesString += "</textarea> <button class='saveCommentsBtn' onclick='saveComments(&quot;" + imdbID + "&quot;);'>Save Comments</button> <span id='commentsStatus_" + imdbID + "' class='commentsStatus'></span></div></li>";
 		}
 		savedMoviesString += "</ol> <div class='clearFloats'></div>";
