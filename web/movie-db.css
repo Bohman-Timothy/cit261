@@ -1,6 +1,7 @@
 body {
 	font-family: serif, cursive, sans-serif;
 	max-width: 800px;
+	min-width: 420px;
 	background-color: rgb(216,220,255);
 }
 
@@ -10,18 +11,28 @@ body {
 	color: #861006;
 }
 
-.posterNoImg, .detailsPosterNoImg {
+.posterNoImg {
+	height: 64px;
+	float: left;
+	margin-right: 0.5em;
+}
+
+#detailsPosterNoImg {
 	height: 64px;
 }
 
 .poster {
 	height: 64px;
 	transition: height 0.75s;
+	float: left;
+	margin-right: 0.5em;
 }
 
 .poster:hover {
 	height: 300px;
 	transition: height 0.75s;
+	float: left;
+	margin-right: 0.5em;
 }
 
 #idDetailsPoster {
@@ -51,7 +62,8 @@ body {
 }
 
 #searchResultsList li, #savedMoviesList li {
-	margin-bottom: 1.5em;
+	padding-top: 1em;
+	clear: both;
 }
 
 .error {
@@ -63,12 +75,13 @@ body {
 #savedMovies {
 	border-top: 6px solid rgb(255,132,134);
 	border-left: 6px solid rgb(255,132,134);
-	padding-bottom: 0.25em;
+	padding-bottom: 1em;
 	background-color: rgb(255,202,206);
+	padding-right: 1em;
 }
 
 #savedMoviesList {
-	padding-top: 1.5em;
+	padding-top: 0.5em;
 }
 
 #listRenameOptions {
@@ -113,4 +126,52 @@ body {
 
 #movieDataString {
 	display: none;
+}
+
+.savedMovieComments {
+	float: right;
+}
+
+.savedMovieCommentsArea {
+	min-height: 3em;
+	min-width: 20em;
+	max-width: 28em;
+	max-height: 8em;
+	max-length: 500;
+	float: right;
+}
+
+.saveCommentsBtn {
+	float: right;
+	clear: right;
+}
+
+.clearFloats {
+	clear: both;
+}
+
+.commentsStatus {
+	font-weight: bold;
+	color: rgb(72,62,255);
+	float: right;
+	padding-right: 1em;
+}
+
+.cmntstat {
+	transition: display:none 5s;
+	animation-name: commentsSaved;
+	animation-duration: 5s;
+	animation-iteration-count: 1;
+}
+
+@keyframes commentsSaved {
+	0% {
+		display: inline;
+	}
+	90% {
+		display: inline;
+	}
+	100% {
+		display: none;
+	}
 }
