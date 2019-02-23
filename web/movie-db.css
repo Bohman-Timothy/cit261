@@ -72,6 +72,12 @@ body {
 	font-size: 1.4em;
 }
 
+.success {
+	color: rgb(20,150,20);
+	font-weight: bold;
+	font-size: 1.4em;
+}
+
 #savedMovies {
 	border-top: 6px solid rgb(255,132,134);
 	border-left: 6px solid rgb(255,132,134);
@@ -155,6 +161,15 @@ body {
 	color: rgb(72,62,255);
 	float: right;
 	padding-right: 1em;
+}
+
+.displayNone {
+	display: none;
+}
+
+.fadeOut {
+	opacity: 0;
+	transition: opacity 1s;
 }
 
 .cmntstat {

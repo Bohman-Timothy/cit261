@@ -128,8 +128,10 @@ function displaySearchResults(searchResultsObj, searchResultsPage, searchResults
 		searchResults += "<button onclick='searchTitle(" + (searchResultsPage + 1) + ");'>Next Page</button>";
 	}
 	searchResults += "</div>";
-	document.getElementById("searchResults").innerHTML = searchResults;
+	var searchResultsId = document.getElementById("searchResults");
+	searchResultsId.innerHTML = searchResults;
 	unhideSearchResults();
+	searchResultsId.scrollIntoView();
 }
 
 function searchID(imdbID) {
@@ -146,10 +148,10 @@ function displayIDResult(searchResultsObj) {
 	var movieDataString = JSON.stringify(searchResultsObj);
 	//console.log(movieDataString);
 	idResult += "<span id='movieDataString'>" + movieDataString + "</span></p>";
-	document.getElementById("moreDetails").innerHTML = idResult;
-	document.body.scrollTop = document.documentElement.scrollTop = 0;
-
 	var moreDetails = document.getElementById("moreDetails");
+	moreDetails.innerHTML = idResult;
+	moreDetails.scrollIntoView();
+
 	moreDetails.classList.add("topBottomBorders");
 }
 
@@ -160,16 +162,15 @@ function addMovie(imdbID) {
 	var savedMovieObj = JSON.parse(movieDataString);
 	//console.log("savedMovieObj: ", savedMovieObj);
 
+	var statusMessage = document.getElementById("statusMessage");
 	var isDuplicate = false;
 	for (var i = 0; i < fullListOfMoviesObj.movies.length; i++) {
 		if (fullListOfMoviesObj.movies[i].imdbID == savedMovieObj.imdbID)
 		{
 			console.log("It's a duplicate!");
 			isDuplicate = true;
-			var errorMessage = "<p class='error'>Error: This is already saved to your list.</p>";
-			var statusMessage = document.getElementById("statusMessage");
+			const errorMessage = "<p class='error'>Error: This is already saved to your list.</p>";
 			statusMessage.innerHTML = errorMessage;
-			statusMessage.scrollIntoView();
 			break;
 		}
 	}
@@ -177,7 +178,10 @@ function addMovie(imdbID) {
 		fullListOfMoviesObj.movies.push(savedMovieObj);
 		//console.log("fullListofMoviesObj: ", fullListOfMoviesObj);
 		saveCurrentMovieListData();
+		const successMessage = "<p class='success'>Successfully saved to your list.</p>";
+		statusMessage.innerHTML = successMessage;
 	}
+	statusMessage.scrollIntoView();
 }
 
 function viewSavedMoviesList() {
@@ -196,13 +200,13 @@ function viewSavedMoviesList() {
 		//console.log("savedMoviesString : ", savedMoviesString);
 		for (var i = 0; i < fullListOfMoviesObj.movies.length; i++) {
 			var imdbID = fullListOfMoviesObj.movies[i].imdbID;
-			savedMoviesString += "<li><img class='poster floatLeft' src='" + fullListOfMoviesObj.movies[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='savedMovieTitle'>" + fullListOfMoviesObj.movies[i].Title + "</span><br/> (" + fullListOfMoviesObj.movies[i].Year + ") [" + fullListOfMoviesObj.movies[i].Type + "] <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + imdbID + "&quot;);'>View more details</button> <button id='removeFromListBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='removeFromList' onclick='removeFromList(" + i + ");'>Remove</button><div  id='commentsSection_" + imdbID + "' class='savedMovieComments'>Comments: <textarea id='comments_" + imdbID + "' class='savedMovieCommentsArea'>";
+			savedMoviesString += "<li><img class='poster floatLeft' src='" + fullListOfMoviesObj.movies[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='savedMovieTitle'>" + fullListOfMoviesObj.movies[i].Title + "</span><br/> (" + fullListOfMoviesObj.movies[i].Year + ") [" + fullListOfMoviesObj.movies[i].Type + "] <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + imdbID + "&quot;);'>View more details</button> <button id='removeFromListBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='removeFromList' onclick='removeFromList(" + i + ", &quot;" + imdbID + "&quot;);'>Remove</button><div  id='commentsSection_" + imdbID + "' class='savedMovieComments'>Comments: <textarea id='comments_" + imdbID + "' class='savedMovieCommentsArea'>";
 			var savedMoviesCommentsString = localStorage.getItem("savedMoviesComments");
 			savedMoviesCommentsObj = JSON.parse(savedMoviesCommentsString);
 			var savedComments;
 			if (savedMoviesCommentsObj != null) {
 				savedComments = savedMoviesCommentsObj[imdbID];
-				console.log("saved comments: ", savedComments);
+				//console.log("saved comments: ", savedComments);
 				if (savedComments != null) {
 					savedMoviesString += savedComments;
 				}
@@ -227,7 +231,7 @@ function viewSavedMoviesList() {
 	savedMovies.scrollIntoView();
 }
 
-function removeFromList(i) {
+function removeFromList(i, imdbID) {
 	if (fullListOfMoviesObj.movies.length > i) {
 		fullListOfMoviesObj.movies.splice(i,1);
 		fullListOfMoviesString = JSON.stringify(fullListOfMoviesObj);
@@ -238,6 +242,8 @@ function removeFromList(i) {
 		localStorage.removeItem("fullListOfMovies");
 		console.log("Removed 'fullListOfMovies' from localStorage");
 	}
+	deleteComments(imdbID);
+
 	viewSavedMoviesList();
 }
 
@@ -296,31 +302,44 @@ function saveComments(imdbID) {
 	console.log(commentsText);
 	var emptyComments = false;
 	if (commentsText == "") {
-		delete savedMoviesCommentsObj[imdbID];
+		deleteComments(imdbID);
 		emptyComments = true;
 	}
 	else {
 		savedMoviesCommentsObj[imdbID] = commentsText;
+		console.log(savedMoviesCommentsObj);
+		var savedMoviesComments = JSON.stringify(savedMoviesCommentsObj);
+		localStorage.setItem("savedMoviesComments", savedMoviesComments);
 	}
-	console.log(savedMoviesCommentsObj);
-	var savedMoviesComments = JSON.stringify(savedMoviesCommentsObj);
-	localStorage.setItem("savedMoviesComments", savedMoviesComments);
 
 	//Display Success Message
 	commentsStatus = document.getElementById("commentsStatus_" + imdbID);
+	commentsStatus.classList.remove("displayNone", "fadeOut");
 	if (emptyComments == true) {
-		commentsStatus.innerHTML = "Comments deleted!"
+		commentsStatus.innerHTML = "Comments deleted!";
 	}
 	else {
 		commentsStatus.innerHTML = "Comments saved!";
 	}
+	setTimeout(function() {
+		commentsStatus.classList.add("fadeOut");
+		setTimeout(function() {
+			commentsStatus.classList.add("displayNone");
+		}, 1000);
+	}, 3000);
 }
 
+function deleteComments(imdbID) {
+	delete savedMoviesCommentsObj[imdbID];
+	console.log(savedMoviesCommentsObj);
+	var savedMoviesComments = JSON.stringify(savedMoviesCommentsObj);
+	localStorage.setItem("savedMoviesComments", savedMoviesComments);
+}
+
+//Potential to-do list:
 //Add button to show plot summary in "more details" section
-//Add ability to mark a movie as "owned" in the saved movies list
-//Add transition/transformation/animation to the comments' status message, to make it disappear after a few or several seconds
+//Add ability to rate a movie in the saved movies list
 //Add character limit to comments, and write the maximum character count next to the comments textarea
-//Delete comments for a movie when the movie is removed from the list
 </script>
 </body>
 </html>
