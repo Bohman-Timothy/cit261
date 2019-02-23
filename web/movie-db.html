@@ -18,9 +18,11 @@
 <!-- </form> -->
 <div id="moreDetails">
 </div>
-<div id="statusMessage">
+<div id="addStatusMessage">
 </div>
 <div id="searchResults">
+</div>
+<div id="removalStatus">
 </div>
 <div id="savedMovies">
 </div>
@@ -162,7 +164,7 @@ function addMovie(imdbID) {
 	var savedMovieObj = JSON.parse(movieDataString);
 	//console.log("savedMovieObj: ", savedMovieObj);
 
-	var statusMessage = document.getElementById("statusMessage");
+	var addStatusMessage = document.getElementById("addStatusMessage");
 	var isDuplicate = false;
 	for (var i = 0; i < fullListOfMoviesObj.movies.length; i++) {
 		if (fullListOfMoviesObj.movies[i].imdbID == savedMovieObj.imdbID)
@@ -170,7 +172,7 @@ function addMovie(imdbID) {
 			console.log("It's a duplicate!");
 			isDuplicate = true;
 			const errorMessage = "<p class='error'>Error: This is already saved to your list.</p>";
-			statusMessage.innerHTML = errorMessage;
+			addStatusMessage.innerHTML = errorMessage;
 			break;
 		}
 	}
@@ -179,9 +181,16 @@ function addMovie(imdbID) {
 		//console.log("fullListofMoviesObj: ", fullListOfMoviesObj);
 		saveCurrentMovieListData();
 		const successMessage = "<p class='success'>Successfully saved to your list.</p>";
-		statusMessage.innerHTML = successMessage;
+		addStatusMessage.innerHTML = successMessage;
 	}
-	statusMessage.scrollIntoView();
+	addStatusMessage.classList.remove("displayNone", "fadeOut");
+	addStatusMessage.scrollIntoView();
+	setTimeout(function() {
+		addStatusMessage.classList.add("fadeOut");
+		setTimeout(function() {
+			addStatusMessage.classList.add("displayNone");
+		}, 1000);
+	}, 3000);
 }
 
 function viewSavedMoviesList() {
@@ -227,8 +236,6 @@ function viewSavedMoviesList() {
 	savedMovies.innerHTML = savedMoviesString;
 	//console.log("savedMoviesString : ", savedMoviesString);
 	//console.log("savedMovies.innerHTML : ", savedMovies.innerHTML);
-
-	savedMovies.scrollIntoView();
 }
 
 function removeFromList(i, imdbID) {
@@ -246,6 +253,18 @@ function removeFromList(i, imdbID) {
 	deleteComments(imdbID);
 
 	viewSavedMoviesList();
+
+	var removalStatus = document.getElementById("removalStatus");
+	const successMessage = "<p class='success'>Successfully removed from your list.</p>";
+	removalStatus.innerHTML = successMessage;
+	removalStatus.classList.remove("displayNone", "fadeOut");
+	removalStatus.scrollIntoView();
+	setTimeout(function() {
+		removalStatus.classList.add("fadeOut");
+		setTimeout(function() {
+			removalStatus.classList.add("displayNone");
+		}, 1000);
+	}, 3000);
 }
 
 function saveCurrentMovieListData() {
