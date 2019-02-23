@@ -140,11 +140,11 @@ body {
 }
 
 .savedMovieCommentsArea {
-	min-height: 3em;
+	height: 3.5em;
+	min-height: 3.5em;
 	min-width: 20em;
 	max-width: 28em;
 	max-height: 8em;
-	max-length: 500;
 	float: right;
 }
 
