@@ -24,6 +24,7 @@ body {
 .poster {
 	height: 64px;
 	transition: height 0.75s;
+	transition-delay: 0.15s;
 	float: left;
 	margin-right: 0.5em;
 }
