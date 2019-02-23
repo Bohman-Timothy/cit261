@@ -168,7 +168,7 @@ function addMovie(imdbID) {
 	for (var i = 0; i < fullListOfMoviesObj.movies.length; i++) {
 		if (fullListOfMoviesObj.movies[i].imdbID == savedMovieObj.imdbID)
 		{
-			console.log("It's a duplicate!");
+			//console.log("It's a duplicate!");
 			isDuplicate = true;
 			const errorMessage = "<p class='error'>Error: This is already saved to your list.</p>";
 			addStatusMessage.innerHTML = errorMessage;
@@ -291,7 +291,7 @@ function saveNewListName() {
 	var noChange = false;
 	if (savedMoviesListName == newListName)
 	{
-		console.log("No change");
+		//console.log("No change");
 		noChange = true;
 		viewSavedMoviesList(); //Refresh view of list
 	}
@@ -322,9 +322,9 @@ function hideSearchResults() {
 }
 
 function saveComments(imdbID) {
-	console.log("comments' imdbID: ", imdbID);
+	//console.log("comments' imdbID: ", imdbID);
 	commentsText = document.getElementById("comments_" + imdbID).value;
-	console.log(commentsText);
+	//console.log(commentsText);
 	var emptyComments = false;
 	if (commentsText == "") {
 		deleteComments(imdbID);
@@ -332,7 +332,7 @@ function saveComments(imdbID) {
 	}
 	else {
 		savedMoviesCommentsObj[imdbID] = commentsText;
-		console.log(savedMoviesCommentsObj);
+		//console.log(savedMoviesCommentsObj);
 		var savedMoviesComments = JSON.stringify(savedMoviesCommentsObj);
 		localStorage.setItem("savedMoviesComments", savedMoviesComments);
 	}
