@@ -171,22 +171,3 @@ body {
 	opacity: 0;
 	transition: opacity 1s;
 }
-
-.cmntstat {
-	transition: display:none 5s;
-	animation-name: commentsSaved;
-	animation-duration: 5s;
-	animation-iteration-count: 1;
-}
-
-@keyframes commentsSaved {
-	0% {
-		display: inline;
-	}
-	90% {
-		display: inline;
-	}
-	100% {
-		display: none;
-	}
-}

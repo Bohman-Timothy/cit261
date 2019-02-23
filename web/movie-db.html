@@ -232,7 +232,7 @@ function viewSavedMoviesList() {
 }
 
 function removeFromList(i, imdbID) {
-	if (fullListOfMoviesObj.movies.length > i) {
+	if (fullListOfMoviesObj.movies.length > 1) {
 		fullListOfMoviesObj.movies.splice(i,1);
 		fullListOfMoviesString = JSON.stringify(fullListOfMoviesObj);
 		//console.log("fullListofMovies: ", fullListOfMoviesString);
@@ -240,6 +240,7 @@ function removeFromList(i, imdbID) {
 	}
 	else {
 		localStorage.removeItem("fullListOfMovies");
+		fullListOfMoviesObj = {movies:[]};
 		console.log("Removed 'fullListOfMovies' from localStorage");
 	}
 	deleteComments(imdbID);
@@ -331,7 +332,7 @@ function saveComments(imdbID) {
 
 function deleteComments(imdbID) {
 	delete savedMoviesCommentsObj[imdbID];
-	console.log(savedMoviesCommentsObj);
+	//console.log(savedMoviesCommentsObj);
 	var savedMoviesComments = JSON.stringify(savedMoviesCommentsObj);
 	localStorage.setItem("savedMoviesComments", savedMoviesComments);
 }
