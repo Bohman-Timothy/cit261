@@ -1,5 +1,6 @@
 body {
-	
+	min-width: 640px;
+	font-family: serif, sans-serif;
 }
 
 .border {
@@ -38,7 +39,15 @@ body {
 	border: 6px solid #00ff00;
 }
 
-.progressBar {
+.progressBarBackground {
+	display: block;
+	width: 600px;
+	height: 4em;
+	color: #ffcc00;
+	background-color: #aaaaaa;
+}
+
+#progressBar1 {
 	display: block;
 	width: 20px;
 	height: 4em;
@@ -48,17 +57,24 @@ body {
 	transition-timing-function: linear;
 }
 
-.progressBar:hover {
+#progressBar1:hover {
 	background-color: #6a5acd;
 	width: 600px;
 }
 
-.progressBarBackground {
+#downloadProgressBar {
 	display: block;
-	width: 600px;
+	width: 0px;
 	height: 4em;
 	color: #ffcc00;
-	background-color: #aaaaaa;
+	background-color: #888888;
+	transition: width 2s, background-color 2s;
+	transition-timing-function: linear;
+}
+
+#downloadProgressBar.downloadInProgress {
+	background-color: rgb(16,143,153);
+	width: 600px;
 }
 
 .blockSpace {
@@ -193,7 +209,7 @@ body {
 	}
 }
 
-.aniRainbow {
+.aniRainbowProgressBar {
 	width: 0px;
 	height: 4em;
 	color: purple;
@@ -203,4 +219,196 @@ body {
 	animation-timing-function: linear;
 	animation-fill-mode: forwards;
 	animation-delay: 2s;
+}
+
+.marginSpace {
+	margin-top: 60px;
+	margin-bottom: 60px;
+	margin-left: 60px;
+}
+
+.pinkSpinBox1 {
+	height: 50px;
+	width: 90px;
+	background-color: rgb(255,108,217);
+	color: rgb(240,196,0);
+	padding-top: 60px;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-bottom: 40px;
+}
+
+.spin1 {
+	animation-name: spin1;
+	animation-duration: 4s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+
+@keyframes spin1 {
+	0% {
+		background-color: rgb(255,108,217);
+		color: rgb(240,196,0);
+		transform: perspective(200px) rotateY(0deg);
+	}
+	12.5% {
+		background-color: rgb(231,112,255);
+		color: rgb(240,196,0);
+		transform: perspective(200px) rotateY(45deg);
+	}
+	25% {
+		background-color: rgb(185,126,255);
+		color: rgba(240,196,0,50%);
+		transform: perspective(200px) rotateY(90deg);
+	}
+	37.5% {
+		background-color: rgb(124,16,242);
+		color: #a0a0a0;
+		transform: perspective(200px) rotateY(135deg);
+	}
+	50% {
+		background-color: rgb(84,0,176);
+		color: #a0a0a0;
+		transform: perspective(200px) rotateY(180deg);
+	}
+	62.5% {
+		background-color: rgb(124,16,242);
+		color: #a0a0a0;
+		transform: perspective(200px) rotateY(225deg);
+	}
+	75% {
+		background-color: rgb(185,126,255);
+		color: #a0a0a0;
+		transform: perspective(200px) rotateY(270deg);
+	}
+	87.5% {
+		background-color: rgb(231,112,255);
+		color: rgb(240,196,0);
+		transform: perspective(200px) rotateY(315deg);
+	}
+	100% {
+		background-color: rgb(255,108,217);
+		color: rgb(240,196,0);
+		transform: perspective(200px) rotateY(360deg);
+	}
+}
+
+.pinkSpinBox2 {
+	height: 40px;
+	width: 130px;
+	background-color: rgb(255,108,217);
+	color: rgb(203,22,136);
+	padding-top: 60px;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-bottom: 40px;
+	border-radius: 40px;
+}
+
+.spin2 {
+	animation-name: spin2;
+	animation-duration: 4s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+
+@keyframes spin2 {
+	0% {
+		background-color: rgb(255,108,217);
+		color: rgb(203,22,136);
+		transform: perspective(200px) rotateX(0deg);
+	}
+	12.5% {
+		background-color: rgb(231,112,255);
+		color: rgb(203,22,136);
+		transform: perspective(200px) rotateX(45deg);
+	}
+	25% {
+		background-color: rgb(185,126,255);
+		color: rgba(203,22,136,50%);
+		transform: perspective(200px) rotateX(90deg);
+	}
+	37.5% {
+		background-color: rgb(124,16,242);
+		color: #a0a0a0;
+		transform: perspective(200px) rotateX(135deg);
+	}
+	50% {
+		background-color: rgb(84,0,176);
+		color: #a0a0a0;
+		transform: perspective(200px) rotateX(180deg);
+	}
+	62.5% {
+		background-color: rgb(124,16,242);
+		color: #a0a0a0;
+		transform: perspective(200px) rotateX(225deg);
+	}
+	75% {
+		background-color: rgb(185,126,255);
+		color: #a0a0a0;
+		transform: perspective(200px) rotateX(270deg);
+	}
+	87.5% {
+		background-color: rgb(231,112,255);
+		color: rgb(203,22,136);
+		transform: perspective(200px) rotateX(315deg);
+	}
+	100% {
+		background-color: rgb(255,108,217);
+		color: rgb(203,22,136);
+		transform: perspective(200px) rotateX(360deg);
+	}
+}
+
+#spinBtns {
+	float: left;
+	margin-right: 40px;
+}
+
+#pinkSpinBox2 {
+	float: left;
+}
+
+#startSpin {
+	background-color: rgb(10,156,54);
+	color: rgb(206,255,155);
+	padding: 8px;
+}
+
+#stopSpin {
+	background-color: rgb(134,0,60);
+	color: rgb(255,202,206);
+	padding: 8px;
+}
+
+#startDownload {
+	background-color: rgb(10,156,54);
+	color: rgb(206,255,155);
+	padding: 8px;
+}
+
+#cancelDownload {
+	background-color: rgb(134,0,60);
+	color: rgb(255,202,206);
+	padding: 8px;
+}
+
+#pauseDownload, #resumeDownload {
+	background-color: rgb(72,62,255);
+	color: rgb(199,240,255);
+	padding: 8px;
+}
+
+#clearDownload {
+	background-color: rgb(118,34,0);
+	color: rgb(255,219,183);
+	padding: 8px;
+}
+
+.displayNone {
+	display: none;
+}
+
+.clrFloats {
+	clear: both;
 }

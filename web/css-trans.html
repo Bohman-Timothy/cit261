@@ -17,7 +17,19 @@
 <p>Hover over the left side of the progress bar.</p>
 <p>Process is complete when the progress bar reaches the end.</p>
 <div class="progressBarBackground">
-<div class="progressBar"></div>
+<div id="progressBar1"></div>
+</div>
+<br/>
+<p>Download is complete when the progress bar reaches the end.</p>
+<div class="progressBarBackground">
+<div id="downloadProgressBar"></div>
+</div>
+<div id="downloadBtns">
+  <button id="startDownload" onclick="startDownload();">Start Download</button>
+  <button id="pauseDownload" class="displayNone" onclick="pauseDownload();">Pause Download</button>
+  <button id="resumeDownload" class="displayNone" onclick="resumeDownload();">Resume Download</button>
+  <button id="cancelDownload" class="displayNone" onclick="cancelDownload();">Cancel Download</button>
+  <button id="clearDownload" class="displayNone" onclick="clearDownload();">Clear Download</button>
 </div>
 <br/>
 <p>Pulsing warm and cool colors.</p>
@@ -32,9 +44,120 @@
 <br/>
 <p>Refresh the page to watch the rainbow progress bar in action.
 <div class="progressBarBackground">
-<div class="aniRainbow progressBar">
+<div class="aniRainbowProgressBar">
 Rainbow<br/>Progress
 </div>
 </div>
+<div class="marginSpace">
+  <div id="pinkSpinBox1" class="pinkSpinBox1 spin1">Auto-Spinner</div>
+</div>
+  <div id="spinBtns">
+    <button id="startSpin" onclick="startSpin();">Start Spin</button>
+    <button id="stopSpin" class="displayNone" onclick="stopSpin();">Stop Spin</button>
+  </div>
+<div class="marginSpace">
+  <div id="pinkSpinBox2" class="pinkSpinBox2">Semi-Auto Spinner</div>
+</div>
+<div class="clrFloats"></div>
+
+<script>
+function startSpin() {
+  var pinkSpinBox2 = document.getElementById("pinkSpinBox2");
+  pinkSpinBox2.classList.add("spin2");
+  document.getElementById("startSpin").classList.add("displayNone");
+  document.getElementById("stopSpin").classList.remove("displayNone");
+}
+
+function stopSpin() {
+  var pinkSpinBox2 = document.getElementById("pinkSpinBox2");
+  pinkSpinBox2.classList.remove("spin2");
+  document.getElementById("stopSpin").classList.add("displayNone");
+  document.getElementById("startSpin").classList.remove("displayNone");
+}
+
+const progressBarMaxWidth = "600px";
+var downloadProgressBar = document.getElementById("downloadProgressBar");
+downloadProgressBar.addEventListener("transitionend", function() {
+  var computedStyle = window.getComputedStyle(downloadProgressBar);
+  var endWidth = computedStyle.getPropertyValue('width');
+  if (endWidth == progressBarMaxWidth) {
+    endDownload();
+  }
+});
+
+function startDownload() {
+  var downloadProgressBar = document.getElementById("downloadProgressBar");
+  var startDownload = document.getElementById("startDownload");
+  var pauseDownload = document.getElementById("pauseDownload");
+  var resumeDownload = document.getElementById("resumeDownload");
+  var cancelDownload = document.getElementById("cancelDownload");
+
+  downloadProgressBar.classList.add("downloadInProgress");
+  startDownload.classList.add("displayNone");
+  pauseDownload.classList.remove("displayNone");
+  cancelDownload.classList.remove("displayNone");
+}
+
+function pauseDownload() {
+  var downloadProgressBar = document.getElementById("downloadProgressBar");
+  var pauseDownload = document.getElementById("pauseDownload");
+  var resumeDownload = document.getElementById("resumeDownload");
+
+  var computedStyle = window.getComputedStyle(downloadProgressBar);
+  var pausedWidth = computedStyle.getPropertyValue('width');
+  downloadProgressBar.style.width = pausedWidth;
+  var backgroundColor = computedStyle.getPropertyValue('background-color');
+  downloadProgressBar.style.backgroundColor = backgroundColor;
+
+  downloadProgressBar.classList.remove("downloadInProgress");
+  pauseDownload.classList.add("displayNone");
+  resumeDownload.classList.remove("displayNone");
+}
+
+function resumeDownload() {
+  var downloadProgressBar = document.getElementById("downloadProgressBar");
+  var pauseDownload = document.getElementById("pauseDownload");
+  var resumeDownload = document.getElementById("resumeDownload");
+  downloadProgressBar.removeAttribute("style");
+  downloadProgressBar.classList.add("downloadInProgress");
+  resumeDownload.classList.add("displayNone");
+  pauseDownload.classList.remove("displayNone");
+}
+
+function cancelDownload() {
+  var downloadProgressBar = document.getElementById("downloadProgressBar");
+  var startDownload = document.getElementById("startDownload");
+  var pauseDownload = document.getElementById("pauseDownload");
+  var resumeDownload = document.getElementById("resumeDownload");
+  var cancelDownload = document.getElementById("cancelDownload");
+
+  downloadProgressBar.removeAttribute("style");
+  downloadProgressBar.classList.remove("downloadInProgress");
+  pauseDownload.classList.add("displayNone");
+  resumeDownload.classList.add("displayNone");
+  cancelDownload.classList.add("displayNone");
+  startDownload.classList.remove("displayNone");
+}
+
+function endDownload() {
+  var pauseDownload = document.getElementById("pauseDownload");
+  var cancelDownload = document.getElementById("cancelDownload");
+  var clearDownload = document.getElementById("clearDownload");
+
+  pauseDownload.classList.add("displayNone");
+  cancelDownload.classList.add("displayNone");
+  clearDownload.classList.remove("displayNone");
+}
+
+function clearDownload() {
+  var downloadProgressBar = document.getElementById("downloadProgressBar");
+  var startDownload = document.getElementById("startDownload");
+  var clearDownload = document.getElementById("clearDownload");
+
+  downloadProgressBar.classList.remove("downloadInProgress");
+  clearDownload.classList.add("displayNone");
+  startDownload.classList.remove("displayNone");
+}
+</script>
 </body>
 </html>
