@@ -417,15 +417,15 @@ body {
 }
 
 .pinkSpinBox3 {
-	height: 40px;
-	width: 130px;
+	height: 50px;
+	width: 90px;
 	background-color: rgb(255,108,217);
 	color: rgb(203,22,136);
 	padding-top: 60px;
 	padding-left: 30px;
 	padding-right: 30px;
 	padding-bottom: 40px;
-	border-radius: 40px;
+	margin-left: 40px;
 }
 
 #spinBtns2A {
