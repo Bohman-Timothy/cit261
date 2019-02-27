@@ -51,28 +51,56 @@ Rainbow<br/>Progress
 <div class="marginSpace">
   <div id="pinkSpinBox1" class="pinkSpinBox1 spin1">Auto-Spinner</div>
 </div>
-  <div id="spinBtns">
-    <button id="startSpin" onclick="startSpin();">Start Spin</button>
-    <button id="stopSpin" class="displayNone" onclick="stopSpin();">Stop Spin</button>
-  </div>
+<div id="spinBtns2A">
+  <button id="startSpin2A" class="startSpin" onclick="startSpin2A();">Start Spin 1</button>
+  <button id="stopSpin2A" class="stopSpin displayNone" onclick="stopSpin2A();">Stop Spin 1</button>
+</div>
+<div id="spinBtns2B">
+  <button id="startSpin2B" class="startSpin" onclick="startSpin2B();">Start Spin 2</button>
+  <button id="stopSpin2B" class="stopSpin displayNone" onclick="stopSpin2B();">Stop Spin 2</button>
+</div>
 <div class="marginSpace">
   <div id="pinkSpinBox2" class="pinkSpinBox2">Semi-Auto Spinner</div>
 </div>
 <div class="clrFloats"></div>
+<div class="marginSpace">
+  <div id="pinkSpinBox3" class="pinkSpinBox3">Auto-Spinner</div>
+</div>
+<div class="clrFloats"></div>
 
 <script>
-function startSpin() {
+function startSpin2A() {
   var pinkSpinBox2 = document.getElementById("pinkSpinBox2");
-  pinkSpinBox2.classList.add("spin2");
-  document.getElementById("startSpin").classList.add("displayNone");
-  document.getElementById("stopSpin").classList.remove("displayNone");
+  pinkSpinBox2.classList.add("spin2A");
+  pinkSpinBox2.classList.remove("spin2B");
+  document.getElementById("startSpin2A").classList.add("displayNone");
+  document.getElementById("stopSpin2A").classList.remove("displayNone");
+  document.getElementById("stopSpin2B").classList.add("displayNone");
+  document.getElementById("startSpin2B").classList.remove("displayNone");
 }
 
-function stopSpin() {
+function stopSpin2A() {
   var pinkSpinBox2 = document.getElementById("pinkSpinBox2");
-  pinkSpinBox2.classList.remove("spin2");
-  document.getElementById("stopSpin").classList.add("displayNone");
-  document.getElementById("startSpin").classList.remove("displayNone");
+  pinkSpinBox2.classList.remove("spin2A");
+  document.getElementById("stopSpin2A").classList.add("displayNone");
+  document.getElementById("startSpin2A").classList.remove("displayNone");
+}
+
+function startSpin2B() {
+  var pinkSpinBox2 = document.getElementById("pinkSpinBox2");
+  pinkSpinBox2.classList.add("spin2B");
+  pinkSpinBox2.classList.remove("spin2A");
+  document.getElementById("startSpin2B").classList.add("displayNone");
+  document.getElementById("stopSpin2B").classList.remove("displayNone");
+  document.getElementById("stopSpin2A").classList.add("displayNone");
+  document.getElementById("startSpin2A").classList.remove("displayNone");
+}
+
+function stopSpin2B() {
+  var pinkSpinBox2 = document.getElementById("pinkSpinBox2");
+  pinkSpinBox2.classList.remove("spin2B");
+  document.getElementById("stopSpin2B").classList.add("displayNone");
+  document.getElementById("startSpin2B").classList.remove("displayNone");
 }
 
 const progressBarMaxWidth = "600px";

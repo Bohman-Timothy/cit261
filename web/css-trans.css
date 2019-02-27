@@ -305,77 +305,150 @@ body {
 	border-radius: 40px;
 }
 
-.spin2 {
-	animation-name: spin2;
+.spin2A {
+	animation-name: spin2A;
 	animation-duration: 4s;
 	animation-timing-function: linear;
 	animation-iteration-count: infinite;
 }
 
-@keyframes spin2 {
+@keyframes spin2A {
 	0% {
 		background-color: rgb(255,108,217);
 		color: rgb(203,22,136);
-		transform: perspective(200px) rotateX(0deg);
+		transform: perspective(200px) rotateX(0deg) scale(1.5);
 	}
 	12.5% {
 		background-color: rgb(231,112,255);
 		color: rgb(203,22,136);
-		transform: perspective(200px) rotateX(45deg);
+		transform: perspective(200px) rotateX(45deg) scale(1.25);
 	}
 	25% {
 		background-color: rgb(185,126,255);
 		color: rgba(203,22,136,50%);
-		transform: perspective(200px) rotateX(90deg);
+		transform: perspective(200px) rotateX(90deg) scale(1);
 	}
 	37.5% {
 		background-color: rgb(124,16,242);
 		color: #a0a0a0;
-		transform: perspective(200px) rotateX(135deg);
+		transform: perspective(200px) rotateX(135deg) scale(0.75);
 	}
 	50% {
 		background-color: rgb(84,0,176);
 		color: #a0a0a0;
-		transform: perspective(200px) rotateX(180deg);
+		transform: perspective(200px) rotateX(180deg) scale(0.5);
 	}
 	62.5% {
 		background-color: rgb(124,16,242);
 		color: #a0a0a0;
-		transform: perspective(200px) rotateX(225deg);
+		transform: perspective(200px) rotateX(225deg) scale(0.4);
 	}
 	75% {
 		background-color: rgb(185,126,255);
 		color: #a0a0a0;
-		transform: perspective(200px) rotateX(270deg);
+		transform: perspective(200px) rotateX(270deg) scale(0.8);
 	}
 	87.5% {
 		background-color: rgb(231,112,255);
 		color: rgb(203,22,136);
-		transform: perspective(200px) rotateX(315deg);
+		transform: perspective(200px) rotateX(315deg) scale(1.2);
 	}
 	100% {
 		background-color: rgb(255,108,217);
 		color: rgb(203,22,136);
-		transform: perspective(200px) rotateX(360deg);
+		transform: perspective(200px) rotateX(360deg) scale(1.5);
 	}
 }
 
-#spinBtns {
+.spin2B {
+	animation-name: spin2B;
+	animation-duration: 3s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+
+@keyframes spin2B {
+	0% {
+		background-color: rgb(255,108,217);
+		color: rgb(203,22,136);
+		transform: perspective(400px) rotateY(0deg) translate(120px) rotate(0deg);
+	}
+	12.5% {
+		background-color: rgb(231,112,255);
+		color: rgb(203,22,136);
+		transform: perspective(400px) rotateY(45deg) translate(120px) rotate(45deg);
+	}
+	25% {
+		background-color: rgb(185,126,255);
+		color: rgba(203,22,136,50%);
+		transform: perspective(400px) rotateY(90deg) translate(120px) rotate(90deg);
+	}
+	37.5% {
+		background-color: rgb(124,16,242);
+		color: #a0a0a0;
+		transform: perspective(400px) rotateY(135deg) translate(120px) rotate(135deg);
+	}
+	50% {
+		background-color: rgb(84,0,176);
+		color: #a0a0a0;
+		transform: perspective(400px) rotateY(180deg) translate(120px) rotate(180deg);
+	}
+	62.5% {
+		background-color: rgb(124,16,242);
+		color: #a0a0a0;
+		transform: perspective(400px) rotateY(225deg) translate(120px)
+		rotate(225deg);
+	}
+	75% {
+		background-color: rgb(185,126,255);
+		color: #a0a0a0;
+		transform: perspective(400px) rotateY(270deg) translate(120px) rotate(270deg);
+	}
+	87.5% {
+		background-color: rgb(231,112,255);
+		color: rgb(203,22,136);
+		transform: perspective(400px) rotateY(315deg) translate(120px) rotate(315deg);
+	}
+	100% {
+		background-color: rgb(255,108,217);
+		color: rgb(203,22,136);
+		transform: perspective(400px) rotateY(360deg) translate(120px) rotate(360deg);
+	}
+}
+
+.pinkSpinBox3 {
+	height: 40px;
+	width: 130px;
+	background-color: rgb(255,108,217);
+	color: rgb(203,22,136);
+	padding-top: 60px;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-bottom: 40px;
+	border-radius: 40px;
+}
+
+#spinBtns2A {
 	float: left;
-	margin-right: 40px;
+	margin-right: 10px;
+}
+
+#spinBtns2B {
+	float: left;
+	margin-right: 80px;
 }
 
 #pinkSpinBox2 {
 	float: left;
 }
 
-#startSpin {
+.startSpin {
 	background-color: rgb(10,156,54);
 	color: rgb(206,255,155);
 	padding: 8px;
 }
 
-#stopSpin {
+.stopSpin {
 	background-color: rgb(134,0,60);
 	color: rgb(255,202,206);
 	padding: 8px;
