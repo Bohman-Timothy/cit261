@@ -371,48 +371,48 @@ body {
 	0% {
 		background-color: rgb(255,108,217);
 		color: rgb(203,22,136);
-		transform: perspective(400px) rotateY(0deg) translate(120px) rotate(0deg);
+		transform: perspective(800px) rotateY(0deg) translate(120px) rotate(0deg);
 	}
 	12.5% {
 		background-color: rgb(231,112,255);
 		color: rgb(203,22,136);
-		transform: perspective(400px) rotateY(45deg) translate(120px) rotate(45deg);
+		transform: perspective(800px) rotateY(-45deg) translate(120px) rotate(45deg);
 	}
 	25% {
 		background-color: rgb(185,126,255);
 		color: rgba(203,22,136,50%);
-		transform: perspective(400px) rotateY(90deg) translate(120px) rotate(90deg);
+		transform: perspective(800px) rotateY(-90deg) translate(120px) rotate(90deg);
 	}
 	37.5% {
 		background-color: rgb(124,16,242);
 		color: #a0a0a0;
-		transform: perspective(400px) rotateY(135deg) translate(120px) rotate(135deg);
+		transform: perspective(800px) rotateY(-135deg) translate(120px) rotate(135deg);
 	}
 	50% {
 		background-color: rgb(84,0,176);
 		color: #a0a0a0;
-		transform: perspective(400px) rotateY(180deg) translate(120px) rotate(180deg);
+		transform: perspective(800px) rotateY(-180deg) translate(120px) rotate(180deg);
 	}
 	62.5% {
 		background-color: rgb(124,16,242);
 		color: #a0a0a0;
-		transform: perspective(400px) rotateY(225deg) translate(120px)
+		transform: perspective(800px) rotateY(-225deg) translate(120px)
 		rotate(225deg);
 	}
 	75% {
 		background-color: rgb(185,126,255);
 		color: #a0a0a0;
-		transform: perspective(400px) rotateY(270deg) translate(120px) rotate(270deg);
+		transform: perspective(800px) rotateY(-270deg) translate(120px) rotate(270deg);
 	}
 	87.5% {
 		background-color: rgb(231,112,255);
 		color: rgb(203,22,136);
-		transform: perspective(400px) rotateY(315deg) translate(120px) rotate(315deg);
+		transform: perspective(800px) rotateY(-315deg) translate(120px) rotate(315deg);
 	}
 	100% {
 		background-color: rgb(255,108,217);
 		color: rgb(203,22,136);
-		transform: perspective(400px) rotateY(360deg) translate(120px) rotate(360deg);
+		transform: perspective(800px) rotateY(-360deg) translate(120px) rotate(360deg);
 	}
 }
 
@@ -456,18 +456,6 @@ body {
 	100% {
 		transform: perspective(400px) rotateY(360deg) translate(160px) rotate(0deg);
 	}
-}
-
-.pinkSpinBox3 {
-	height: 50px;
-	width: 90px;
-	background-color: rgb(255,108,217);
-	color: rgb(203,22,136);
-	padding-top: 60px;
-	padding-left: 30px;
-	padding-right: 30px;
-	padding-bottom: 40px;
-	margin-left: 40px;
 }
 
 #spinBtns2A {
