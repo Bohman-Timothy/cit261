@@ -49,7 +49,7 @@ Rainbow<br/>Progress
 </div>
 </div>
 <div class="marginSpace">
-  <div id="pinkSpinBox1" class="pinkSpinBox1 spin1">Auto-Spinner</div>
+  <div id="spinBox1" class="pinkBox1 spin1">Auto-Spinner</div>
 </div>
 <div id="spinBtns2A">
   <button id="startSpin2A" class="startSpin" onclick="startSpin2A();">Start Spin 1</button>
@@ -60,19 +60,23 @@ Rainbow<br/>Progress
   <button id="stopSpin2B" class="stopSpin displayNone" onclick="stopSpin2B();">Stop Spin 2</button>
 </div>
 <div class="marginSpace">
-  <div id="pinkSpinBox2" class="pinkSpinBox2">Semi-Auto Spinner</div>
+  <div id="spinBox2" class="pinkBox2">Semi-Auto Spinner</div>
 </div>
 <div class="clrFloats"></div>
 <div class="marginSpace2">
   <p>A rainbow pinwheel</p><br/>
   <img id="rainbowFlowerSpinner" class="spin3" src="rainbow-flower.png" width="200">
 </div>
+<div class="marginSpace3">
+  <div id="skewBox" class="pinkBox1 spin4">Skewer</div>
+</div>
+
 
 <script>
 function startSpin2A() {
-  var pinkSpinBox2 = document.getElementById("pinkSpinBox2");
-  pinkSpinBox2.classList.add("spin2A");
-  pinkSpinBox2.classList.remove("spin2B");
+  var spinBox2 = document.getElementById("spinBox2");
+  spinBox2.classList.add("spin2A");
+  spinBox2.classList.remove("spin2B");
   document.getElementById("startSpin2A").classList.add("displayNone");
   document.getElementById("stopSpin2A").classList.remove("displayNone");
   document.getElementById("stopSpin2B").classList.add("displayNone");
@@ -80,16 +84,16 @@ function startSpin2A() {
 }
 
 function stopSpin2A() {
-  var pinkSpinBox2 = document.getElementById("pinkSpinBox2");
-  pinkSpinBox2.classList.remove("spin2A");
+  var spinBox2 = document.getElementById("spinBox2");
+  spinBox2.classList.remove("spin2A");
   document.getElementById("stopSpin2A").classList.add("displayNone");
   document.getElementById("startSpin2A").classList.remove("displayNone");
 }
 
 function startSpin2B() {
-  var pinkSpinBox2 = document.getElementById("pinkSpinBox2");
-  pinkSpinBox2.classList.add("spin2B");
-  pinkSpinBox2.classList.remove("spin2A");
+  var spinBox2 = document.getElementById("spinBox2");
+  spinBox2.classList.add("spin2B");
+  spinBox2.classList.remove("spin2A");
   document.getElementById("startSpin2B").classList.add("displayNone");
   document.getElementById("stopSpin2B").classList.remove("displayNone");
   document.getElementById("stopSpin2A").classList.add("displayNone");
@@ -97,8 +101,8 @@ function startSpin2B() {
 }
 
 function stopSpin2B() {
-  var pinkSpinBox2 = document.getElementById("pinkSpinBox2");
-  pinkSpinBox2.classList.remove("spin2B");
+  var spinBox2 = document.getElementById("spinBox2");
+  spinBox2.classList.remove("spin2B");
   document.getElementById("stopSpin2B").classList.add("displayNone");
   document.getElementById("startSpin2B").classList.remove("displayNone");
 }
