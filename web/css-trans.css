@@ -239,10 +239,6 @@ body {
 	margin-left: 200px;
 }
 
-.topMargin {
-	margin-top: 80px;
-}
-
 .pinkBox1 {
 	height: 50px;
 	width: 90px;
@@ -485,8 +481,7 @@ body {
 }
 
 #spinBox2 {
-	float: left;
-	margin-left: 60px;
+	margin-left: 100px;
 }
 
 .startSpin {
