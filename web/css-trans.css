@@ -18,7 +18,7 @@ body {
 	margin-left: 300px;
 }
 
-.stretchBlock {
+#stretchBlock {
 	display: block;
 	width: 7em;
 	height: 6em;
@@ -33,7 +33,7 @@ body {
 	border: 3px solid #00ff00;
 }
 
-.stretchBlock:hover {
+#stretchBlock:hover {
 	width: 24em;
 	height: 3em;
 	border: 6px solid #00ff00;
@@ -209,7 +209,7 @@ body {
 	}
 }
 
-.aniRainbowProgressBar {
+#aniRainbowProgressBar {
 	width: 0px;
 	height: 4em;
 	color: purple;
@@ -219,6 +219,11 @@ body {
 	animation-timing-function: linear;
 	animation-fill-mode: forwards;
 	animation-delay: 2s;
+}
+
+#rainbowProgressBarStatus, #stretchBlockMessage {
+	color: rgb(60,98,226);
+	font-weight: bold;
 }
 
 .marginSpace {

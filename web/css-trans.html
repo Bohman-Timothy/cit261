@@ -12,9 +12,10 @@
 <h1>CSS Transitions, Transformations, and Animations</h1>
 <h2><strong>Stretch Box</strong></h2>
 <p>Hover over the box.</p>
-<div class="stretchBlock">
+<div id="stretchBlock">
 <p>Stretch me. See what I can do. Then leave me alone.</p>
 </div>
+<p id="stretchBlockMessage"></p>
 <br/>
 <br/>
 <h2><strong>Progress Bar</strong></h2>
@@ -53,10 +54,11 @@
 <h2><strong>Rainbow Progress Bar</strong></h2>
 <p>Refresh the page to watch the rainbow progress bar in action.
 <div class="progressBarBackground">
-<div class="aniRainbowProgressBar">
+<div id="aniRainbowProgressBar">
 Rainbow<br/>Progress
 </div>
 </div>
+<p id="rainbowProgressBarStatus"></p>
 <br/>
 <br/>
 <h2><strong>Auto-Spinning Box</strong></h2>
@@ -205,6 +207,26 @@ function clearDownload() {
   clearDownload.classList.add("displayNone");
   startDownload.classList.remove("displayNone");
 }
+
+var rainbowProgressBar =
+ document.getElementById("aniRainbowProgressBar");
+rainbowProgressBar.addEventListener("animationend", function() {
+  var rainbowProgressBarStatus =
+   document.getElementById("rainbowProgressBarStatus");
+   rainbowProgressBarStatus.innerHTML = "Process finished!";
+});
+
+var stretchBlock = document.getElementById("stretchBlock");
+var stretchBlockMessage = document.getElementById("stretchBlockMessage");
+stretchBlock.addEventListener("mouseover", function() {
+  stretchBlockMessage.innerHTML = "Stretching...";
+})
+stretchBlock.addEventListener("mouseleave", function() {
+  stretchBlockMessage.innerHTML = "Contracting...";
+  setTimeout(function() {
+    stretchBlockMessage.innerHTML = "";
+  }, 2000);
+})
 </script>
 </body>
 </html>
