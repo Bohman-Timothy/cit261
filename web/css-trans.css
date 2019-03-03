@@ -222,8 +222,8 @@ body {
 }
 
 .marginSpace {
-	margin-top: 60px;
-	margin-bottom: 60px;
+	margin-top: 80px;
+	margin-bottom: 100px;
 	margin-left: 60px;
 }
 
@@ -234,9 +234,13 @@ body {
 }
 
 .marginSpace3 {
-	margin-top: 200px;
-	margin-bottom: 200px;
+	margin-top: 160px;
+	margin-bottom: 160px;
 	margin-left: 200px;
+}
+
+.topMargin {
+	margin-top: 80px;
 }
 
 .pinkBox1 {
@@ -482,6 +486,7 @@ body {
 
 #spinBox2 {
 	float: left;
+	margin-left: 60px;
 }
 
 .startSpin {
@@ -559,41 +564,41 @@ body {
 	12.5% {
 		background-color: rgba(190,76,33);
 		color: rgb(84,0,176);
-		transform: perspective(300px) rotateX(45deg) skewY(0deg) translate(0px,60px);
+		transform: perspective(300px) rotateX(-45deg) skewY(0deg) translate(0px,60px);
 	}
 	25% {
 		background-color: rgb(118,34,0);
 		color: rgba(84,0,176,50%);
-		transform: perspective(300px) rotateX(90deg) skewY(45deg) translate(0px,60px);
+		transform: perspective(300px) rotateX(-90deg) skewY(45deg) translate(0px,60px);
 	}
 	37.5% {
 		background-color: rgb(138,108,0);
 		color: rgb(16,88,0);
-		transform: perspective(300px) rotateX(135deg) skewY(0deg) translate(0px,60px);
+		transform: perspective(300px) rotateX(-135deg) skewY(0deg) translate(0px,60px);
 	}
 	50% {
 		background-color: rgb(240,196,38);
 		color: rgb(16,88,0);
-		transform: perspective(300px) rotateX(180deg) skewY(-45deg) translate(0px,60px);
+		transform: perspective(300px) rotateX(-180deg) skewY(-45deg) translate(0px,60px);
 	}
 	62.5% {
 		background-color: rgb(138,108,0);
 		color: rgb(16,88,0);
-		transform: perspective(300px) rotateX(225deg) skewY(0deg) translate(0px,60px);
+		transform: perspective(300px) rotateX(-225deg) skewY(0deg) translate(0px,60px);
 	}
 	75% {
 		background-color: rgb(118,34,0);
 		color: rgba(16,88,0,50%);
-		transform: perspective(300px) rotateX(270deg) skewY(45deg) translate(0px,60px);
+		transform: perspective(300px) rotateX(-270deg) skewY(45deg) translate(0px,60px);
 	}
 	87.5% {
 		background-color: rgb(190,76,33);
 		color: rgb(84,0,176);
-		transform: perspective(300px) rotateX(315deg) skewY(0deg) translate(0px,60px);
+		transform: perspective(300px) rotateX(-315deg) skewY(0deg) translate(0px,60px);
 	}
 	100% {
 		background-color: rgb(255,150,48);
 		color: rgb(84,0,176);
-		transform: perspective(300px) rotateX(360deg) skewY(-45deg) translate(0px,60px);
+		transform: perspective(300px) rotateX(-360deg) skewY(-45deg) translate(0px,60px);
 	}
 }
