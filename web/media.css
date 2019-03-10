@@ -1,5 +1,5 @@
 body {
-	font-family: Michroma, Verdana, "Times New Roman", serif;
+	font-family: Verdana, "Times New Roman", serif;
 	font-size: 1em;
 	color: rgb(118,34,0);
 	background-color: rgb(255,222,186);
@@ -20,8 +20,33 @@ body {
 	background-color: rgb(194,231,255);
 }
 
+button {
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 14px;
+	background-color: rgb(124,16,242);
+	color: rgb(231,216,255);
+	height: 28px;
+	border-left: 2px solid rgb(194,231,255);
+	border-top: 2px solid rgb(194,231,255);
+	border-right: 2px solid rgb(60,98,226);
+	border-bottom: 2px solid rgb(60,98,226);
+}
+
+button:active {
+	color: rgb(185,126,255);
+}
+
 .greyedOutBtn {
-	background-color: grey;
+	background-color: rgb(104,88,120);
+	color: rgb(144,128,160);
+	border-left: 2px solid rgb(200,200,200);
+	border-top: 2px solid rgb(200,200,200);
+	border-right: 2px solid grey;
+	border-bottom: 2px solid grey;
+}
+
+.greyedOutBtn:active {
+	color: rgb(64,48,80);
 }
 
 .hidden {
