@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Video, Audio, Canvas Examples</title>
+<link rel="stylesheet" href="media.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="content">
+<h1>Video, Audio, Canvas Examples</h1>
+<video id="cloudScenery" width=640 height=360 controls>
+  <source src="clouds-1154.mp4" type="video/mp4">
+  Your browser doesn't support the HTML 5 video tag.
+</video>
+<br/>
+<button id="playVideoBtn" onclick="playVideo();">Play</button>
+<button id="pauseVideoBtn" class="greyedOutBtn" onclick="pauseVideo();">Pause</button>
+<button id="stopVideoBtn" class="greyedOutBtn" onclick="stopVideo();">Stop</button>
+<br/>
+<div class="hidden">
+<br/>
+<audio id="motionsMusic" controls>
+  <source src="motions.mp3" type="audio/mp3">
+  Your browser doesn't support the HTML 5 audio tag.
+</audio>
+<br/>
+<button onclick="playAudio();">Play Audio</button>
+<button onclick="pauseAudio();">Pause Audio</button>
+</div>
+<br/>
+<canvas id="canvasDemo" width="169" height="36">Your browser doesn't support the HTML 5 canvas tag.</canvas>
+<p>The video and audio clips used are in the public domain.<br/>
+  Video is sourced from <a href="https://pixabay.com/videos/">Pixabay.com</a>, and music is sourced from <a href="https://freepd.com/">Freepd.com</a>.</p>
+</div>
+<script>
+const lengthOfFirstVideo = 57;
+
+function playVideo() {
+  var videoClip = document.getElementById("cloudScenery");
+  var audioClip = document.getElementById("motionsMusic");
+  if ((playCounter == 0) && (videoClip.currentTime == 0)) {
+    audioClip.currentTime = 0;
+  }
+  playAudio();
+  videoClip.play();
+}
+
+function pauseVideo() {
+  var videoClip = document.getElementById("cloudScenery");
+  videoClip.pause();
+  pauseAudio();
+}
+
+function stopVideo() {
+  var videoClip = document.getElementById("cloudScenery");
+  videoClip.pause();
+  videoClip.currentTime = 0;
+  stopAudio();
+  hideStopBtn();
+}
+
+function playAudio() {
+  var audioClip = document.getElementById("motionsMusic");
+  audioClip.play();
+}
+
+function pauseAudio() {
+  var audioClip = document.getElementById("motionsMusic");
+  audioClip.pause();
+}
+
+function stopAudio() {
+  var audioClip = document.getElementById("motionsMusic");
+  audioClip.pause();
+  audioClip.currentTime = 0;
+}
+
+var videoPlayer = document.getElementById("cloudScenery");
+playCounter = 0;
+videoPlayer.addEventListener("ended", function() {
+  if (playCounter == 0) {
+    videoPlayer.src = "cloud-9153.mp4";
+    ++playCounter;
+    playVideo();
+  }
+  else {
+    videoPlayer.src = "clouds-1154.mp4"
+    playCounter = 0;
+  }
+  unhidePlayBtn();
+  hidePauseBtn();
+  hideStopBtn();
+});
+
+videoPlayer.addEventListener("play", function() {
+  hidePlayBtn();
+  unhidePauseBtn();
+  unhideStopBtn();
+});
+
+videoPlayer.addEventListener("pause", function() {
+  unhidePlayBtn();
+  hidePauseBtn();
+});
+
+videoPlayer.addEventListener("seeked", function() {
+  var audioPlayer = document.getElementById("motionsMusic");
+  if (playCounter == 0) {
+    audioPlayer.currentTime = videoPlayer.currentTime;
+  }
+  else {
+    audioPlayer.currentTime = videoPlayer.currentTime + lengthOfFirstVideo;
+  }
+});
+
+function hidePlayBtn() {
+  var playVideoBtn = document.getElementById("playVideoBtn");
+  playVideoBtn.classList.add("greyedOutBtn");
+}
+
+function unhidePlayBtn() {
+  var playVideoBtn = document.getElementById("playVideoBtn");
+  playVideoBtn.classList.remove("greyedOutBtn");
+}
+
+function hidePauseBtn() {
+  var pauseVideoBtn = document.getElementById("pauseVideoBtn");
+  pauseVideoBtn.classList.add("greyedOutBtn");
+}
+
+function hideStopBtn() {
+  var stopVideoBtn = document.getElementById("stopVideoBtn");
+  stopVideoBtn.classList.add("greyedOutBtn");
+}
+
+function unhidePauseBtn() {
+  var pauseVideoBtn = document.getElementById("pauseVideoBtn");
+  pauseVideoBtn.classList.remove("greyedOutBtn");
+}
+
+function unhideStopBtn() {
+  var stopVideoBtn = document.getElementById("stopVideoBtn");
+  stopVideoBtn.classList.remove("greyedOutBtn");
+}
+
+const canvas = document.getElementById("canvasDemo");
+var ctxPlayBtn = ctxPlayTxt = ctxPauseBtn = ctxPauseTxt = ctxStopBtn = ctxStopTxt = canvas.getContext("2d");
+ctxPlayBtn.fillStyle = "rgb(124,16,242)";
+ctxPlayBtn.fillRect(5,5,45,26);
+ctxPlayTxt.font = "14px Verdana";
+ctxPlayTxt.fillStyle = "rgb(231,216,255)";
+ctxPlayTxt.fillText("Play",13,22);
+ctxPauseBtn.fillStyle = "rgb(100,0,45)";
+ctxPauseBtn.fillRect(55,5,57,26);
+ctxPauseTxt.font = "14px Verdana";
+ctxPauseTxt.fillStyle = "rgb(190,76,33)";
+ctxPauseTxt.fillText("Pause",63,22);
+ctxStopBtn.fillStyle = "rgb(100,0,45)";
+ctxStopBtn.fillRect(117,5,47,26);
+ctxStopTxt.font = "14px Verdana";
+ctxStopTxt.fillStyle = "rgb(190,76,33)";
+ctxStopTxt.fillText("Stop",124,22);
+</script>
+</body>
+</html>
