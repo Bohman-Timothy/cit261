@@ -29,7 +29,7 @@
 <button onclick="pauseAudio();">Pause Audio</button>
 </div>
 <br/>
-<canvas id="canvasDemo" width="169" height="36">Your browser doesn't support the HTML 5 canvas tag.</canvas>
+<canvas id="canvasDemo" width="320" height="240">Your browser doesn't support the HTML 5 canvas tag.</canvas>
 <p>The video and audio clips used are in the public domain.<br/>
   Video is sourced from <a href="https://pixabay.com/videos/">Pixabay.com</a>, and music is sourced from <a href="https://freepd.com/">Freepd.com</a>.</p>
 </div>
@@ -39,15 +39,21 @@ const lengthOfFirstVideo = 57;
 function playVideo() {
   var videoClip = document.getElementById("cloudScenery");
   var audioClip = document.getElementById("motionsMusic");
+
+  //Reset audio time to beginning in case it is still playing when the user presses play after the second video has ended
   if ((playCounter == 0) && (videoClip.currentTime == 0)) {
     audioClip.currentTime = 0;
   }
+
+  //Always play audio with the video
   playAudio();
   videoClip.play();
 }
 
 function pauseVideo() {
   var videoClip = document.getElementById("cloudScenery");
+
+  //Always pause both audio and video
   videoClip.pause();
   pauseAudio();
 }
@@ -56,6 +62,8 @@ function stopVideo() {
   var videoClip = document.getElementById("cloudScenery");
   videoClip.pause();
   videoClip.currentTime = 0;
+
+  //Always stop audio when video is stopped
   stopAudio();
   hideStopBtn();
 }
@@ -145,6 +153,7 @@ function unhideStopBtn() {
 }
 
 const canvas = document.getElementById("canvasDemo");
+/*
 var ctxPlayBtn = ctxPlayTxt = ctxPauseBtn = ctxPauseTxt = ctxStopBtn = ctxStopTxt = canvas.getContext("2d");
 ctxPlayBtn.fillStyle = "rgb(124,16,242)";
 ctxPlayBtn.fillRect(5,5,45,26);
@@ -161,6 +170,44 @@ ctxStopBtn.fillRect(117,5,47,26);
 ctxStopTxt.font = "14px Verdana";
 ctxStopTxt.fillStyle = "rgb(190,76,33)";
 ctxStopTxt.fillText("Stop",124,22);
+*/
+
+var ctx = canvas.getContext("2d");
+
+//Draw Pac-Man
+var boxRadius = canvas.height / 2;
+var radius = boxRadius * 0.45;
+ctx.beginPath();
+ctx.translate(boxRadius * 0.6, boxRadius);
+ctx.rotate(0.58);
+ctx.arc(0,0, radius, 0, 1*Math.PI);
+ctx.fillStyle = "rgb(240,196,38)";
+ctx.fill();
+ctx.beginPath();
+ctx.rotate(2);
+ctx.arc(0,0, radius, 0, 1*Math.PI);
+ctx.fillStyle = "rgb(240,196,38)";
+ctx.fill();
+
+//Draw pac-dots
+ctx.beginPath();
+ctx.rotate(3.7);
+ctx.translate(0,-12);
+ctx.fillStyle = "rgb(255,222,188)";
+ctx.fillRect(55,5,15,15);
+ctx.beginPath();
+ctx.translate(60,0);
+ctx.fillStyle = "rgb(255,222,188)";
+ctx.fillRect(55,5,15,15);
+
+//Draw power pellet
+var powerPelletRadius = radius / 2.75;
+ctx.beginPath();
+ctx.translate(134,12);
+ctx.arc(0,0, powerPelletRadius, 0, 2*Math.PI);
+ctx.fillStyle = "rgb(255,222,188)";
+ctx.fill();
+
 </script>
 </body>
 </html>

@@ -15,9 +15,9 @@ body {
 }
 
 #canvasDemo {
-	border: 1px solid rgb(99,192,255);
+	border: 3px solid rgb(99,192,255);
 	margin-top: 20px;
-	background-color: rgb(194,231,255);
+	background-color: rgb(32,32,32);
 }
 
 button {
