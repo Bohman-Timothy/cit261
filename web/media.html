@@ -61,10 +61,17 @@ function pauseVideo() {
 function stopVideo() {
   var videoClip = document.getElementById("cloudScenery");
   videoClip.pause();
+
+  //Reset the video player so it will start at the beginning of the first video when "Play" is pressed again
+  videoPlayer.src = "clouds-1154.mp4"
   videoClip.currentTime = 0;
+  playCounter = 0;
 
   //Always stop audio when video is stopped
   stopAudio();
+
+  unhidePlayBtn();
+  hidePauseBtn();
   hideStopBtn();
 }
 
@@ -93,12 +100,14 @@ videoPlayer.addEventListener("ended", function() {
     playVideo();
   }
   else {
+    //Reset the video player so it will start at the beginning of the first video when "Play" is pressed again
     videoPlayer.src = "clouds-1154.mp4"
     playCounter = 0;
+
+    unhidePlayBtn();
+    hidePauseBtn();
+    hideStopBtn();
   }
-  unhidePlayBtn();
-  hidePauseBtn();
-  hideStopBtn();
 });
 
 videoPlayer.addEventListener("play", function() {

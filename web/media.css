@@ -12,6 +12,11 @@ body {
 	padding-right: 20px;
 	margin-left: auto;
 	margin-right: auto;
+	border: 4px solid rgb(190,76,33);
+}
+
+#cloudScenery {
+	border: 3px solid rgb(99,192,255);
 }
 
 #canvasDemo {
