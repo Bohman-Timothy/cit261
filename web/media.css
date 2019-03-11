@@ -17,6 +17,7 @@ body {
 
 #cloudScenery {
 	border: 3px solid rgb(99,192,255);
+	background-color: rgb(26,90,126);
 }
 
 #canvasDemo {

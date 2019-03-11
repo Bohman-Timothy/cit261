@@ -9,7 +9,7 @@
 <body>
 <div id="content">
 <h1>Video, Audio, Canvas Examples</h1>
-<video id="cloudScenery" width=640 height=360 controls>
+<video id="cloudScenery" width=640 height=360>
   <source src="clouds-1154.mp4" type="video/mp4">
   Your browser doesn't support the HTML 5 video tag.
 </video>
@@ -17,6 +17,7 @@
 <button id="playVideoBtn" onclick="playVideo();">Play</button>
 <button id="pauseVideoBtn" class="greyedOutBtn" onclick="pauseVideo();">Pause</button>
 <button id="stopVideoBtn" class="greyedOutBtn" onclick="stopVideo();">Stop</button>
+<span id="videoTimer">Video length: 1:42</span>
 <br/>
 <div class="hidden">
 <br/>
@@ -34,7 +35,9 @@
   Video is sourced from <a href="https://pixabay.com/videos/">Pixabay.com</a>, and music is sourced from <a href="https://freepd.com/">Freepd.com</a>.</p>
 </div>
 <script>
-const lengthOfFirstVideo = 57;
+const lengthOfFirstVideo = 56.890167;
+const lengthOfSecondVideo = 45.086708
+const totalTime = lengthOfFirstVideo + lengthOfSecondVideo;
 
 function playVideo() {
   var videoClip = document.getElementById("cloudScenery");
@@ -130,6 +133,40 @@ videoPlayer.addEventListener("seeked", function() {
     audioPlayer.currentTime = videoPlayer.currentTime + lengthOfFirstVideo;
   }
 });
+
+videoPlayer.addEventListener("timeupdate", function() {
+  const videoTimer = document.getElementById("videoTimer");
+  var videoTimerText = "";
+  var currentTime, currentTimeText;
+  if (playCounter == 0) {
+    currentTime = videoPlayer.currentTime;
+  }
+  else {
+    currentTime = videoPlayer.currentTime + lengthOfFirstVideo;
+  }
+  currentTimeText = getTextRepresentationOfTime(currentTime);
+  totalTimeText = getTextRepresentationOfTime(totalTime);
+  videoTimerText += currentTimeText + " / " + totalTimeText;
+  videoTimer.innerHTML = videoTimerText;
+});
+
+function getTextRepresentationOfTime(timeLength) {
+  if (timeLength >= 60) {
+    if (timeLength < 70) {
+      timeText = "1:0" + (timeLength - 60).toFixed(2);
+    }
+    else {
+      timeText = "1:" + (timeLength - 60).toFixed(2);
+    }
+  }
+  else if (timeLength < 10) {
+    timeText = "0:0" + timeLength.toFixed(2);
+  }
+  else {
+    timeText = "0:" + timeLength.toFixed(2);
+  }
+  return timeText;
+}
 
 function hidePlayBtn() {
   var playVideoBtn = document.getElementById("playVideoBtn");
