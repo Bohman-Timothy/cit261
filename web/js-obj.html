@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JavaScript Objects</title>
+<link rel="stylesheet" href="js-obj.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="content">
+<h1>JavaScript Objects</h1>
+  <div id="characters">
+  </div>
+  <p>The creator of a book would be the author; the creator of a film would be the director, or the author of the screenplay, or perhaps in some cases the producer.</p>
+  <div id="addCharacter">
+    <p>Instructions: Enter a character and fill in the information fields below.</p>
+    <label>Character Name:<br/> <input type="text" id="name"></label><br/>
+    <label>Type of Media the Character Originally Appeared In (e.g. book, film):<br/> <input type="text" id="originalMedia"></label><br/>
+    <label>First Appearance in Media (Name of book, film, etc.):<br/> <input type="text" id="firstAppearance" style="width:30em;"></label><br/>
+    <label>Created By:<br/> <input type="text" id="createdBy"></label><br/>
+    <label>Played By:<br/> <input type="text" id="playedBy"></label><br/>
+    <label>Notes (Anything you want to say about the character):<br/> <textarea id="notes"></textarea></label>
+  </div>
+</div>
+<script>
+function character(name, originalMedia = null, firstAppearance = null, createdBy = null, playedBy = null) {
+  this.name = name;
+  this.firstAppearance = firstAppearance;
+  this.originalMedia = originalMedia;
+  this.playedBy = playedBy;
+  this.createdBy = createdBy;
+
+  this.info = function() {
+    var details = "<p>The character <em>" + this.name + "</em> first appeared in a " + this.originalMedia + " called <em>" + this.firstAppearance + "</em> created by " + this.createdBy + ".";
+    if (this.playedBy != null) {
+      details += " " + this.name + " was played by " + this.playedBy + ".";
+    }
+    details += "</p>";
+    return details;
+  }
+}
+var marty = new character("Marty McFly", "film", "Back to the Future", "Robert Zemeckis", "Michael J. Fox");
+var harry = new character("Harry Potter", "book", "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", "Daniel Radcliff");
+var luke = new character("Luke Skywalker", "film", "Star Wars", "George Lucas", "Mark Hamill");
+var characters = document.getElementById("characters");
+var charactersDetails = marty.info() + harry.info() + luke.info();
+characters.innerHTML = charactersDetails;
+
+//To do: create input form to add more characters; make it functional
+//To do: add ability to remove characters from the list
+//To do: save to localStorage
+//To do: read about inheritance and incorporate it
+</script>
+</body>
+</html>

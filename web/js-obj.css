@@ -1,0 +1,27 @@
+body {
+	font-family: Verdana, "Times New Roman", serif;
+	font-size: 1em;
+	color: rgb(118,34,0);
+	background-color: rgb(255,222,186);
+}
+
+#content {
+	min-width: 600px;
+	max-width: 1200px;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	border: 4px solid rgb(190,76,33);
+}
+
+textarea#notes {
+  width: 35em;
+  height: 12em;
+}
+
+#addCharacter {
+	border: 4px solid rgb(255,150,48);
+	padding: 12px;
+	margin-bottom: 20px;
+}
