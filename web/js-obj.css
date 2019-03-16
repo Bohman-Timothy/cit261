@@ -44,9 +44,6 @@ textarea#notes {
 	background-color: rgb(255,228,171);
 }
 
-#removeCharactersBtn, #addCharactersBtn {
-}
-
 .selected {
 	margin-left: 20px;
 	background-color: rgb(42,231,199);
@@ -54,7 +51,7 @@ textarea#notes {
 	padding-left: 8px;
 }
 
-#addCharacterStatusMessage, #removeCharacterStatusMessage {
+#addCharacterStatusMessage, #modifyCharacterListStatusMessage {
 	color: rgb(124,16,242);
 	font-weight: bold;
 }
@@ -65,7 +62,7 @@ button {
 	height: 28px;
 }
 
-button#addCharactersBtn {
+button#addCharactersBtn, button#addDefaultCharactersBtn {
 	background-color: rgb(124,16,242);
 	color: rgb(231,216,255);
 	border-left: 2px solid rgb(194,231,255);
@@ -74,13 +71,13 @@ button#addCharactersBtn {
 	border-bottom: 2px solid rgb(60,98,226);
 }
 
-button#addCharactersBtn:hover {
+button#addCharactersBtn:hover, button#addCharactersBtn:focus, button#addDefaultCharactersBtn:hover, button#addDefaultCharactersBtn:focus {
 	outline-style: solid;
 	outline-color: rgb(251,104,201);
 	outline-width: 3px;
 }
 
-button#addCharactersBtn:active {
+button#addCharactersBtn:active, button#addDefaultCharactersBtn:active {
 	color: rgb(99,192,255);
 	text-shadow: 2px 2px rgb(180,0,220);
 }
@@ -94,7 +91,7 @@ button#removeCharactersBtn {
 	border-bottom: 2px solid rgb(134,16,6);
 }
 
-button#removeCharactersBtn:hover {
+button#removeCharactersBtn:hover, button#removeCharactersBtn:focus {
 	outline-style: solid;
 	outline-color: rgb(180,0,220);
 	outline-width: 3px;
@@ -107,4 +104,9 @@ button#removeCharactersBtn:active {
 
 input, textarea {
 	margin-bottom: 1em;
+}
+
+input:focus, textarea:focus {
+	background-color: rgb(194,235,255);
+	border: 3px solid rgb(99,192,255);
 }

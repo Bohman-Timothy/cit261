@@ -13,20 +13,20 @@
     <h2>Fictional Characters</h2>
     <div id="characters">
     </div>
-    <p>Select a character's information in the above section by clicking on the paragraph.</p>
-    <button id="removeCharactersBtn" onclick="removeCharacters();">Remove Selected Characters' Information</button>
-    <p id="removeCharacterStatusMessage"></p>
+    <p>Select (or deselect) a character's information in the above section by clicking on the paragraph.</p>
+    <button id="removeCharactersBtn" onclick="removeCharacters();">Remove Selected Characters' Information</button> <button id="addDefaultCharactersBtn" onclick="addDefaultCharacters();">Add Default Characters' Information</button>
+    <p id="modifyCharacterListStatusMessage"></p>
   </div>
   <div id="addCharacter">
     <h2>Add a Character</h2>
     <p>Instructions: Add a character to the Fictional Characters section of this page by filling in the information fields below. You must enter at least the character's name and either their first appearance in media or who created them ("created by").</p>
     <p>The creator of a book would be the author; the creator of a film would be the director, or the author of the screenplay, or perhaps in some cases the producer.</p>
     <label>Character Name*:<br/> <input type="text" id="name"></label><br/>
-    <label>Type of Media the Character Originally Appeared In (e.g. book, film):<br/> <input type="text" id="originalMedia"></label><br/>
+    <label>Type of Media the Character Originally Appeared In (e.g. book, film, TV series):<br/> <input type="text" id="originalMedia"></label><br/>
     <label>First Appearance in Media (Name of book, film, etc.)**:<br/> <input type="text" id="firstAppearance" style="width:30em;"></label><br/>
     <label>Created By**:<br/> <input type="text" id="createdBy"></label><br/>
     <label>Played By (Actor):<br/> <input type="text" id="playedBy"></label><br/>
-    <label>Quote:<br/> <textarea id="quote"></textarea></label><br/>
+    <label>Memorable Quote by the Character (Don't type the quotation marks):<br/> <textarea id="quote"></textarea></label><br/>
     <label>Notes (Anything you want to say about the character):<br/> <textarea id="notes"></textarea></label><br/>
     <p>* A single asterisk is shown next to the required field.</p>
     <p>** Two asterisks are shown next to the fields that must have at least one of them filled in.</p>
@@ -81,42 +81,105 @@ function character(name, originalMedia = "story", firstAppearance = null, create
     }
     return details;
   }
+
   this.infoStyled = function() {
-    var details = "<p>The character <em>" + this.name + "</em> first appeared in a " + this.originalMedia;
-    if (this.firstAppearance != null) {
-      details += " called <em>" + this.firstAppearance;
+    var details = "The character <strong>" + this.name + "</strong>";
+    if ((this.originalMedia != "") || ((this.firstAppearance != null) && (this.firstAppearance != ""))) {
+      details += " first appeared in ";
     }
-    details += "</em> created by " + this.createdBy + ".";
-    if (this.playedBy != null) {
+    if (this.originalMedia != "") {
+      details += "a " + this.originalMedia;
+      if ((this.firstAppearance != null) && (this.firstAppearance != "")) {
+        details += " called <em>" + this.firstAppearance + "</em>";
+      }
+    }
+    else {
+      details += " <em>" + this.firstAppearance + "</em>";
+    }
+
+    if (this.createdBy != "") {
+      if (this.originalMedia != "") {
+        details += " created by " + this.createdBy + ".";
+      }
+      else {
+        details += " was created by " + this.createdBy + ".";
+      }
+    }
+    else {
+      details += ".";
+    }
+    if ((this.playedBy != null) && (this.playedBy != "")) {
       details += " " + this.name + " was played by " + this.playedBy + ".";
     }
-    if (this.quote != null) {
-      details += " " + this.name + " is remembered for saying, &quot;" + this.quote + "&quot;";
+    if ((this.quote != null) && (this.quote != "")) {
+      details += " " + this.name + " is remembered for saying, \"" + this.quote + "\"";
     }
-    details += "</p>";
+    if ((this.notes != null) && (this.notes != "")) {
+      details += " Notes about the character: " + this.notes;
+    }
     return details;
   }
 }
 
-//Example character information
-addCharacter("Marty McFly", "film", "Back to the Future", "Robert Zemeckis", "Michael J. Fox", "Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?");
-addCharacter("Luke Skywalker", "film", "Star Wars", "George Lucas", "Mark Hamill", "If there's a bright center to the universe, you're on the planet that it's farthest from.");
-addCharacter("Obi-Wan Kenobi", "film", "Star Wars", "George Lucas", "Alec Guinness", "In my experience, there's no such thing as luck.");
-addCharacter("Harry Potter", "book", "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", "Daniel Radcliff", "I think I can tell the wrong sort for myself, thanks.");
-addCharacter("Hermione Granger", "book", "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", "Emma Watson", "Now if you two don't mind, I'm going to bed before either of you come up with another clever idea to get us killed—or worse, expelled.");
-addCharacter("Samwise Gamgee", "book", "The Lord of the Rings: The Fellowship of the Ring", "J. R. R. Tolkien", "Sean Astin", "I heard a good deal about a ring, and a Dark Lord, and something about the end of the world, but... Please, Mr. Gandalf, sir, don't hurt me. Don't turn me into anything... unnatural.", "Sam carried Frodo when Frodo was too weak to walk.")
+var charactersString = localStorage.getItem("charactersString");
+console.log("charactersString: ", charactersString);
+var charactersObj = {characterData:[]};
+console.log("charactersObj: ", charactersObj);
+if (charactersString !== null) {
+	charactersObj = JSON.parse(charactersString);
+  console.log("charactersObj: ", charactersObj);
+}
+if ((charactersString === null) || (charactersObj.characterData.length === 0)) {
+  addDefaultCharacters();
+}
+else {
+  for (var i = 0; i < charactersObj.characterData.length; i++) {
+    addCharacterFromLocalStorage(charactersObj.characterData[i]);
+  }
+}
+for (var i = 0; i < charactersObj.characterData.length; i++) {
+  console.log(charactersObj.characterData[i]);
+}
+
+function addDefaultCharacters() {
+  //Example character information
+  addCharacter("Marty McFly", "film", "Back to the Future", "Robert Zemeckis", "Michael J. Fox", "Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?");
+  addCharacter("Luke Skywalker", "film", "Star Wars", "George Lucas", "Mark Hamill", "If there's a bright center to the universe, you're on the planet that it's farthest from.");
+  addCharacter("Obi-Wan Kenobi", "film", "Star Wars", "George Lucas", "Alec Guinness", "In my experience, there's no such thing as luck.", "Obi-Wan Kenobi is a Jedi Knight and Luke Skywalker's mentor.");
+  addCharacter("Harry Potter", "book", "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", "Daniel Radcliff", "I can't be a-a-a wizard. I mean, I'm just Harry, just Harry.");
+  addCharacter("Hermione Granger", "book", "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", "Emma Watson", "Now if you two don't mind, I'm going to bed before either of you come up with another clever idea to get us killed—or worse, expelled.");
+  addCharacter("Samwise Gamgee", "book", "The Lord of the Rings: The Fellowship of the Ring", "J. R. R. Tolkien", "Sean Astin", "I heard a good deal about a ring, and a Dark Lord, and something about the end of the world, but... Please, Mr. Gandalf, sir, don't hurt me. Don't turn me into anything... unnatural.", "Sam carried Frodo when Frodo was too weak to walk.");
+  addCharacter("Master Control Program", "film", "Tron", "Steven Lisberger", "David Warner", "End of line.");
+  document.getElementById("modifyCharacterListStatusMessage").innerHTML = "Added default characters.";
+}
+
+function addCharacterFromLocalStorage(savedCharacter) {
+  if (savedCharacter.name != "") {
+    newCharacter = new character(savedCharacter.name, savedCharacter.originalMedia, savedCharacter.firstAppearance, savedCharacter.createdBy, savedCharacter.playedBy, savedCharacter.quote, savedCharacter.notes);
+	}
+  addCharacterToPage(newCharacter);
+}
 
 function addCharacter(name, originalMedia, firstAppearance, createdBy, playedBy, quote, notes) {
   var newCharacter;
   if (name != "") {
-    var newCharacter = new character(name, originalMedia, firstAppearance, createdBy, playedBy, quote, notes);
-  	var characters = document.getElementById("characters");
-		var newP = document.createElement("p");
-		var node = document.createTextNode(newCharacter.infoBasic());
-		newP.appendChild(node);
-		newP.classList.add("character");
-		characters.appendChild(newP);
+    newCharacter = new character(name, originalMedia, firstAppearance, createdBy, playedBy, quote, notes);
+    charactersObj.characterData.push(newCharacter);
 	}
+  addCharacterToPage(newCharacter);
+  saveCharactersToLocalStorage();
+}
+
+function addCharacterToPage(newCharacter) {
+  var characters = document.getElementById("characters");
+  var newP = document.createElement("p");
+  /*console.log("newCharacter: ", newCharacter);
+  var newCharacterString = JSON.stringify(newCharacter);
+  console.log("newCharacterString: ", newCharacterString);*/
+  var node = document.createTextNode(newCharacter.infoBasic());
+  newP.appendChild(node);
+  newP.classList.add("character");
+  characters.appendChild(newP);
 }
 
 function addCharacterByForm() {
@@ -131,6 +194,7 @@ function addCharacterByForm() {
   if ((name != "") && ((createdBy != "") || (firstAppearance != ""))) {
     addCharacter(name, originalMedia, firstAppearance, createdBy, playedBy, quote, notes);
     statusMessage = "Successfully added character information.";
+    clearModifyCharacterListStatusMessage();
   }
   else {
     statusMessage = "Error: Please enter the required information.";
@@ -163,17 +227,51 @@ characters.addEventListener("click", function(e) {
 function removeCharacters() {
 	var characters = document.getElementById("characters");
 	var selectedCharacters = document.getElementsByClassName("selected");
+  var allCharacters = document.getElementsByClassName("character"); //document.getElementById("characters").children;
   var statusMessage;
   if (selectedCharacters.length != 0) {
     statusMessage = "Successfully removed " + selectedCharacters.length + " character(s).";
+  	for (var i = allCharacters.length - 1; i >= 0; i--) {
+      console.log("allCharacters[", i, "]:", allCharacters[i]);
+      if (allCharacters[i].classList.contains("selected")) {
+        characters.removeChild(allCharacters[i]);
+        removeCharacterFromLocalStorage(i);
+      }
+  	}
+    clearAddCharacterStatusMessage();
   }
   else {
     statusMessage = "Error: No character is selected.";
   }
-	for (var i = 0; i < selectedCharacters.length; i) {
-		characters.removeChild(selectedCharacters[i]);
+  document.getElementById("modifyCharacterListStatusMessage").innerHTML = statusMessage;
+}
+
+function saveCharactersToLocalStorage() {
+  var charactersString = JSON.stringify(charactersObj);
+	//console.log("charactersObj: ", charactersObj);
+	localStorage.setItem("charactersString", charactersString);
+}
+
+function removeCharacterFromLocalStorage(i) {
+	if (charactersObj.characterData.length > 1) {
+		charactersObj.characterData.splice(i,1);
+		charactersString = JSON.stringify(charactersObj);
+		console.log("charactersString: ", charactersString);
+		localStorage.setItem("charactersString", charactersString);
 	}
-  document.getElementById("removeCharacterStatusMessage").innerHTML = statusMessage;
+	else {
+		localStorage.removeItem("charactersString");
+		charactersObj = {characterData:[]};
+		console.log("Removed 'charactersObj' from localStorage");
+	}
+}
+
+function clearModifyCharacterListStatusMessage() {
+  document.getElementById("modifyCharacterListStatusMessage").innerHTML = "";
+}
+
+function clearAddCharacterStatusMessage() {
+  document.getElementById("addCharacterStatusMessage").innerHTML = "";
 }
 
 //To do: save to localStorage
