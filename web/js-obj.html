@@ -9,47 +9,167 @@
 <body>
 <div id="content">
 <h1>JavaScript Objects</h1>
-  <div id="characters">
+  <div id="charactersEnclosure">
+    <h2>Fictional Characters</h2>
+    <div id="characters">
+    </div>
+    <p>Select a character's information in the above section by clicking on the paragraph.</p>
+    <button id="removeCharactersBtn" onclick="removeCharacters();">Remove Selected Characters' Information</button>
   </div>
-  <p>The creator of a book would be the author; the creator of a film would be the director, or the author of the screenplay, or perhaps in some cases the producer.</p>
   <div id="addCharacter">
-    <p>Instructions: Enter a character and fill in the information fields below.</p>
-    <label>Character Name:<br/> <input type="text" id="name"></label><br/>
+    <h2>Add a Character</h2>
+    <p>Instructions: Add a character to the Fictional Characters section of this page by filling in the information fields below. You must enter at least the character's name and either their first appearance in media or who created them ("created by").</p>
+    <p>The creator of a book would be the author; the creator of a film would be the director, or the author of the screenplay, or perhaps in some cases the producer.</p>
+    <label>Character Name*:<br/> <input type="text" id="name"></label><br/>
     <label>Type of Media the Character Originally Appeared In (e.g. book, film):<br/> <input type="text" id="originalMedia"></label><br/>
-    <label>First Appearance in Media (Name of book, film, etc.):<br/> <input type="text" id="firstAppearance" style="width:30em;"></label><br/>
-    <label>Created By:<br/> <input type="text" id="createdBy"></label><br/>
-    <label>Played By:<br/> <input type="text" id="playedBy"></label><br/>
-    <label>Notes (Anything you want to say about the character):<br/> <textarea id="notes"></textarea></label>
+    <label>First Appearance in Media (Name of book, film, etc.)**:<br/> <input type="text" id="firstAppearance" style="width:30em;"></label><br/>
+    <label>Created By**:<br/> <input type="text" id="createdBy"></label><br/>
+    <label>Played By (Actor):<br/> <input type="text" id="playedBy"></label><br/>
+    <label>Quote:<br/> <textarea id="quote"></textarea></label><br/>
+    <label>Notes (Anything you want to say about the character):<br/> <textarea id="notes"></textarea></label><br/>
+    <button id="addCharactersBtn" onclick="addCharacterByForm();">Add Character</button>
+    <p>* A single asterisk is shown next to the required field.</p>
+    <p>** Two asterisks are shown next to the fields that must have at least one of them filled in.</p>
+    <p id="statusMessage"></p>
   </div>
 </div>
 <script>
-function character(name, originalMedia = null, firstAppearance = null, createdBy = null, playedBy = null) {
+function character(name, originalMedia = "story", firstAppearance = null, createdBy = "an individual", playedBy = null, quote = null, notes = null) {
   this.name = name;
-  this.firstAppearance = firstAppearance;
   this.originalMedia = originalMedia;
-  this.playedBy = playedBy;
+  this.firstAppearance = firstAppearance;
   this.createdBy = createdBy;
+  this.playedBy = playedBy;
+  this.quote = quote;
+  this.notes = notes;
 
-  this.info = function() {
-    var details = "<p>The character <em>" + this.name + "</em> first appeared in a " + this.originalMedia + " called <em>" + this.firstAppearance + "</em> created by " + this.createdBy + ".";
+  this.infoBasic = function() {
+    var details = "The character " + this.name;
+    if ((this.originalMedia != "") || ((this.firstAppearance != null) && (this.firstAppearance != ""))) {
+      details += " first appeared in ";
+    }
+    if (this.originalMedia != "") {
+      details += "a " + this.originalMedia;
+      if ((this.firstAppearance != null) && (this.firstAppearance != "")) {
+        details += " called " + this.firstAppearance;
+      }
+    }
+    else {
+      details += " " + this.firstAppearance;
+    }
+
+    if (this.createdBy != "") {
+      if (this.originalMedia != "") {
+        details += " created by " + this.createdBy + ".";
+      }
+      else {
+        details += " was created by " + this.createdBy + ".";
+      }
+    }
+    else {
+      details += ".";
+    }
+    if ((this.playedBy != null) && (this.playedBy != "")) {
+      details += " " + this.name + " was played by " + this.playedBy + ".";
+    }
+    if ((this.quote != null) && (this.quote != "")) {
+      details += " " + this.name + " is remembered for saying, \"" + this.quote + "\"";
+    }
+    if ((this.notes != null) && (this.notes != "")) {
+      details += " Notes about the character: " + this.notes;
+    }
+    return details;
+  }
+  this.infoStyled = function() {
+    var details = "<p>The character <em>" + this.name + "</em> first appeared in a " + this.originalMedia;
+    if (this.firstAppearance != null) {
+      details += " called <em>" + this.firstAppearance;
+    }
+    details += "</em> created by " + this.createdBy + ".";
     if (this.playedBy != null) {
       details += " " + this.name + " was played by " + this.playedBy + ".";
+    }
+    if (this.quote != null) {
+      details += " " + this.name + " is remembered for saying, &quot;" + this.quote + "&quot;";
     }
     details += "</p>";
     return details;
   }
 }
-var marty = new character("Marty McFly", "film", "Back to the Future", "Robert Zemeckis", "Michael J. Fox");
-var harry = new character("Harry Potter", "book", "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", "Daniel Radcliff");
-var luke = new character("Luke Skywalker", "film", "Star Wars", "George Lucas", "Mark Hamill");
-var characters = document.getElementById("characters");
-var charactersDetails = marty.info() + harry.info() + luke.info();
-characters.innerHTML = charactersDetails;
 
-//To do: create input form to add more characters; make it functional
-//To do: add ability to remove characters from the list
+addCharacter("Marty McFly", "film", "Back to the Future", "Robert Zemeckis", "Michael J. Fox", "Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?");
+addCharacter("Luke Skywalker", "film", "Star Wars", "George Lucas", "Mark Hamill", "If there's a bright center to the universe, you're on the planet that it's farthest from.");
+addCharacter("Obi-Wan Kenobi", "film", "Star Wars", "George Lucas", "Alec Guinness", "In my experience, there's no such thing as luck.");
+addCharacter("Harry Potter", "book", "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", "Daniel Radcliff", "I think I can tell the wrong sort for myself, thanks.");
+addCharacter("Hermione Granger", "book", "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", "Emma Watson", "Now if you two don't mind, I'm going to bed before either of you come up with another clever idea to get us killed—or worse, expelled.");
+addCharacter("Samwise Gamgee", "book", "The Lord of the Rings: The Fellowship of the Ring", "J. R. R. Tolkien", "Sean Astin", "I heard a good deal about a ring, and a Dark Lord, and something about the end of the world, but... Please, Mr. Gandalf, sir, don't hurt me. Don't turn me into anything... unnatural.", "Sam carried Frodo when Frodo was too weak to walk.")
+/*var characters = document.getElementById("characters");
+var charactersDetails = marty.infoStyled() + harry.infoStyled() + luke.infoStyled();
+characters.innerHTML = charactersDetails;*/
+
+function addCharacter(name, originalMedia, firstAppearance, createdBy, playedBy, quote, notes) {
+  var newCharacter;
+  if (name != "") {
+    var newCharacter = new character(name, originalMedia, firstAppearance, createdBy, playedBy, quote, notes);
+  	var characters = document.getElementById("characters");
+		var newP = document.createElement("p");
+		var node = document.createTextNode(newCharacter.infoBasic());
+		newP.appendChild(node);
+		newP.classList.add("character");
+		characters.appendChild(newP);
+	}
+}
+
+function addCharacterByForm() {
+  var name = document.getElementById("name").value;
+  var originalMedia = document.getElementById("originalMedia").value;
+  var firstAppearance = document.getElementById("firstAppearance").value;
+  var createdBy = document.getElementById("createdBy").value;
+  var playedBy = document.getElementById("playedBy").value;
+  var quote = document.getElementById("quote").value;
+  var notes = document.getElementById("notes").value;
+  var statusMessage;
+  if ((name != "") && ((createdBy != "") || (firstAppearance != ""))) {
+    addCharacter(name, originalMedia, firstAppearance, createdBy, playedBy, quote, notes);
+    statusMessage = "Successfully added character information.";
+  }
+  else {
+    statusMessage = "Error: Please enter the required information.";
+    if (name == "") {
+      statusMessage += " Missing character name.";
+    }
+    if ((createdBy == "") && (firstAppearance == "")) {
+      statusMessage += " Fill in 'Created By' or 'First Appearance in Media'.";
+    }
+  }
+  document.getElementById("statusMessage").innerHTML = statusMessage;
+}
+
+var characters = document.getElementById("characters");
+characters.addEventListener("click", function(e) {
+	console.log("function(e)");
+	if (e.target && (e.target.nodeName === "P")) {
+		console.log("target: character");
+		if (e.target.classList.contains("character")) {
+			if (e.target.classList.contains("selected")) {
+				e.target.classList.remove("selected");
+			}
+			else {
+				e.target.classList.add("selected");
+			}
+		}
+	}
+});
+
+function removeCharacters() {
+	var characters = document.getElementById("characters");
+	var selectedCharacters = document.getElementsByClassName("selected");
+	for (var i = 0; i < selectedCharacters.length; i) {
+		characters.removeChild(selectedCharacters[i]);
+	}
+}
+
 //To do: save to localStorage
-//To do: read about inheritance and incorporate it
 </script>
 </body>
 </html>

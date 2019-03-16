@@ -12,7 +12,11 @@ body {
 	padding-right: 20px;
 	margin-left: auto;
 	margin-right: auto;
-	border: 4px solid rgb(190,76,33);
+}
+
+textarea#quote {
+	width: 24em;
+	height: 8em;
 }
 
 textarea#notes {
@@ -24,4 +28,53 @@ textarea#notes {
 	border: 4px solid rgb(255,150,48);
 	padding: 12px;
 	margin-bottom: 20px;
+	margin-top: 20px;
+	background-color: rgb(255,228,171);
+}
+
+#characters {
+	background-color: rgb(198,255,227);
+	border: 4px solid rgb(85,230,110);
+	padding: 12px;
+}
+
+#charactersEnclosure {
+	border: 4px solid rgb(255,150,48);
+	padding: 12px;
+	background-color: rgb(255,228,171);
+}
+
+#removeCharactersBtn, #addCharactersBtn {
+}
+
+.selected {
+	margin-left: 20px;
+	background-color: rgb(42,231,199);
+	border-left: 4px solid rgb(16,143,153);
+	padding-left: 8px;
+}
+
+#statusMessage {
+	color: rgb(124,16,242);
+	font-weight: bold;
+}
+
+button {
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 14px;
+	background-color: rgb(124,16,242);
+	color: rgb(231,216,255);
+	height: 28px;
+	border-left: 2px solid rgb(194,231,255);
+	border-top: 2px solid rgb(194,231,255);
+	border-right: 2px solid rgb(60,98,226);
+	border-bottom: 2px solid rgb(60,98,226);
+}
+
+button:active {
+	color: rgb(185,126,255);
+}
+
+input, textarea {
+	margin-bottom: 1em;
 }
