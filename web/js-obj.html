@@ -15,6 +15,7 @@
     </div>
     <p>Select a character's information in the above section by clicking on the paragraph.</p>
     <button id="removeCharactersBtn" onclick="removeCharacters();">Remove Selected Characters' Information</button>
+    <p id="removeCharacterStatusMessage"></p>
   </div>
   <div id="addCharacter">
     <h2>Add a Character</h2>
@@ -27,10 +28,10 @@
     <label>Played By (Actor):<br/> <input type="text" id="playedBy"></label><br/>
     <label>Quote:<br/> <textarea id="quote"></textarea></label><br/>
     <label>Notes (Anything you want to say about the character):<br/> <textarea id="notes"></textarea></label><br/>
-    <button id="addCharactersBtn" onclick="addCharacterByForm();">Add Character</button>
     <p>* A single asterisk is shown next to the required field.</p>
     <p>** Two asterisks are shown next to the fields that must have at least one of them filled in.</p>
-    <p id="statusMessage"></p>
+    <button id="addCharactersBtn" onclick="addCharacterByForm();">Add Character</button>
+    <p id="addCharacterStatusMessage"></p>
   </div>
 </div>
 <script>
@@ -97,15 +98,13 @@ function character(name, originalMedia = "story", firstAppearance = null, create
   }
 }
 
+//Example character information
 addCharacter("Marty McFly", "film", "Back to the Future", "Robert Zemeckis", "Michael J. Fox", "Wait a minute. Wait a minute, Doc. Ah... Are you telling me that you built a time machine... out of a DeLorean?");
 addCharacter("Luke Skywalker", "film", "Star Wars", "George Lucas", "Mark Hamill", "If there's a bright center to the universe, you're on the planet that it's farthest from.");
 addCharacter("Obi-Wan Kenobi", "film", "Star Wars", "George Lucas", "Alec Guinness", "In my experience, there's no such thing as luck.");
 addCharacter("Harry Potter", "book", "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", "Daniel Radcliff", "I think I can tell the wrong sort for myself, thanks.");
 addCharacter("Hermione Granger", "book", "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", "Emma Watson", "Now if you two don't mind, I'm going to bed before either of you come up with another clever idea to get us killed—or worse, expelled.");
 addCharacter("Samwise Gamgee", "book", "The Lord of the Rings: The Fellowship of the Ring", "J. R. R. Tolkien", "Sean Astin", "I heard a good deal about a ring, and a Dark Lord, and something about the end of the world, but... Please, Mr. Gandalf, sir, don't hurt me. Don't turn me into anything... unnatural.", "Sam carried Frodo when Frodo was too weak to walk.")
-/*var characters = document.getElementById("characters");
-var charactersDetails = marty.infoStyled() + harry.infoStyled() + luke.infoStyled();
-characters.innerHTML = charactersDetails;*/
 
 function addCharacter(name, originalMedia, firstAppearance, createdBy, playedBy, quote, notes) {
   var newCharacter;
@@ -142,7 +141,7 @@ function addCharacterByForm() {
       statusMessage += " Fill in 'Created By' or 'First Appearance in Media'.";
     }
   }
-  document.getElementById("statusMessage").innerHTML = statusMessage;
+  document.getElementById("addCharacterStatusMessage").innerHTML = statusMessage;
 }
 
 var characters = document.getElementById("characters");
@@ -164,9 +163,17 @@ characters.addEventListener("click", function(e) {
 function removeCharacters() {
 	var characters = document.getElementById("characters");
 	var selectedCharacters = document.getElementsByClassName("selected");
+  var statusMessage;
+  if (selectedCharacters.length != 0) {
+    statusMessage = "Successfully removed " + selectedCharacters.length + " character(s).";
+  }
+  else {
+    statusMessage = "Error: No character is selected.";
+  }
 	for (var i = 0; i < selectedCharacters.length; i) {
 		characters.removeChild(selectedCharacters[i]);
 	}
+  document.getElementById("removeCharacterStatusMessage").innerHTML = statusMessage;
 }
 
 //To do: save to localStorage

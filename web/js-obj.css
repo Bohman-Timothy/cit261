@@ -54,7 +54,7 @@ textarea#notes {
 	padding-left: 8px;
 }
 
-#statusMessage {
+#addCharacterStatusMessage, #removeCharacterStatusMessage {
 	color: rgb(124,16,242);
 	font-weight: bold;
 }
@@ -62,17 +62,47 @@ textarea#notes {
 button {
 	font-family: Verdana, Arial, sans-serif;
 	font-size: 14px;
+	height: 28px;
+}
+
+button#addCharactersBtn {
 	background-color: rgb(124,16,242);
 	color: rgb(231,216,255);
-	height: 28px;
 	border-left: 2px solid rgb(194,231,255);
 	border-top: 2px solid rgb(194,231,255);
 	border-right: 2px solid rgb(60,98,226);
 	border-bottom: 2px solid rgb(60,98,226);
 }
 
-button:active {
-	color: rgb(185,126,255);
+button#addCharactersBtn:hover {
+	outline-style: solid;
+	outline-color: rgb(251,104,201);
+	outline-width: 3px;
+}
+
+button#addCharactersBtn:active {
+	color: rgb(99,192,255);
+	text-shadow: 2px 2px rgb(180,0,220);
+}
+
+button#removeCharactersBtn {
+	background-color: rgb(134,0,60);
+	color: rgb(255,202,206);
+	border-left: 2px solid rgb(255,132,134);
+	border-top: 2px solid rgb(255,132,134);
+	border-right: 2px solid rgb(134,16,6);
+	border-bottom: 2px solid rgb(134,16,6);
+}
+
+button#removeCharactersBtn:hover {
+	outline-style: solid;
+	outline-color: rgb(180,0,220);
+	outline-width: 3px;
+}
+
+button#removeCharactersBtn:active {
+	color: rgb(255,132,134);
+	text-shadow: 2px 2px rgb(203,22,136);
 }
 
 input, textarea {
