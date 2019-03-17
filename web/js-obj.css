@@ -48,7 +48,7 @@ input#originalMedia {
 }
 
 .selected {
-	margin-left: 20px;
+	margin-left: 8px;
 	background-color: rgb(42,231,199);
 	border-left: 4px solid rgb(16,143,153);
 	padding-left: 8px;
