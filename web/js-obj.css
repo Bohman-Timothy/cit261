@@ -14,14 +14,17 @@ body {
 	margin-right: auto;
 }
 
-textarea#quote {
-	width: 24em;
-	height: 8em;
+textarea#quote, textarea#notes {
+	width: 35em;
+	height: 12em;
 }
 
-textarea#notes {
-  width: 35em;
-  height: 12em;
+input#name, input#firstAppearance, input#createdBy, input#playedBy {
+	 width: 30em;
+}
+
+input#originalMedia {
+	width: 15em;
 }
 
 #addCharacter {
