@@ -1,0 +1,184 @@
+body {
+	font-family: serif, cursive, sans-serif;
+	max-width: 800px;
+	min-width: 420px;
+	background-color: rgb(216,220,255);
+}
+
+.resultsTitle, .savedMovieTitle {
+	font-weight: bold;
+	font-size: 1.2em;
+	color: #861006;
+}
+
+.posterNoImg {
+	height: 64px;
+	float: left;
+	margin-right: 0.5em;
+}
+
+#detailsPosterNoImg {
+	height: 64px;
+}
+
+.poster {
+	height: 64px;
+	transition: height 0.75s;
+	transition-delay: 0.15s;
+	float: left;
+	margin-right: 0.5em;
+}
+
+.poster:hover {
+	height: 300px;
+	transition: height 0.75s;
+	float: left;
+	margin-right: 0.5em;
+}
+
+#idDetailsPoster {
+	height: 400px
+}
+
+#idDetailsTitle {
+	color: #cb1688;
+	font-size: 1.6em;
+}
+
+#searchResults {
+	border-left: 6px solid rgb(240,196,0);
+	background-color: rgb(255,228,171);
+	padding-top: 1em;
+	display: none;
+	margin-bottom: 1.5em;
+	padding-bottom: 1.5em;
+}
+
+#searchResultsTop, #searchResultsBottom, #noResultsError {
+	padding-left: 1em;
+}
+
+#searchResultsTop h2 {
+	margin-top: 0;
+}
+
+#searchResultsList li, #savedMoviesList li {
+	padding-top: 1em;
+	clear: both;
+}
+
+.error {
+	color: rgb(210,40,40);
+	font-weight: bold;
+	font-size: 1.4em;
+}
+
+.success {
+	color: rgb(20,150,20);
+	font-weight: bold;
+	font-size: 1.4em;
+}
+
+#savedMovies {
+	border-top: 6px solid rgb(255,132,134);
+	border-left: 6px solid rgb(255,132,134);
+	padding-bottom: 1em;
+	background-color: rgb(255,202,206);
+	padding-right: 1em;
+}
+
+#savedMoviesList {
+	padding-top: 0.5em;
+}
+
+#listRenameOptions {
+	display: none;
+}
+
+#listNameSuggestions {
+	font-style: italic;
+}
+
+#savedMoviesListName {
+	margin-top: 0.75em;
+}
+
+#savedMoviesListNameAndOptions, #noSavedMoviesMessage {
+	margin-left: 1em;
+}
+
+#moreDetails {
+	margin-top: 1em;
+	max-width: 800px;
+	padding-bottom: 0.5em;
+	margin-bottom: 1.5em;
+}
+
+.topBottomBorders {
+	border-top: 6px solid rgb(16,143,153);
+	border-bottom: 6px solid rgb(16,143,153);
+	border-left: 6px solid rgb(16,143,153);
+	border-right: 6px solid rgb(16,143,153);
+	padding-left: 2em;
+	background-color: rgb(204,255,227);
+	background-color: rgb(199,240,255);
+}
+
+#addMovieBtn {
+	margin-top: 1em;
+}
+
+.viewDetailsBtn {
+}
+
+#movieDataString {
+	display: none;
+}
+
+.savedMovieComments {
+	float: right;
+}
+
+.savedMovieCommentsArea {
+	height: 3.5em;
+	min-height: 3.5em;
+	min-width: 20em;
+	max-width: 28em;
+	max-height: 8em;
+	float: right;
+}
+
+.saveCommentsBtn {
+	float: right;
+	clear: right;
+}
+
+.clearFloats {
+	clear: both;
+}
+
+.commentsStatus {
+	font-weight: bold;
+	color: rgb(72,62,255);
+	float: right;
+	padding-right: 1em;
+}
+
+.displayNone {
+	display: none;
+}
+
+.fadeOut {
+	opacity: 0;
+	transition: opacity 1s;
+}
+
+textarea:focus {
+	background-color: rgb(255,222,186);
+	border: 3px solid rgb(255,150,48);
+}
+
+input:focus {
+	background-color: rgb(255,192,235);
+	border: 3px solid rgb(203,22,136);
+}

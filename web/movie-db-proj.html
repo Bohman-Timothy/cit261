@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Movie Database Search and Save</title>
+<link rel="stylesheet" href="movie-db-proj.css" title="mdb-css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<h1>Movie Database Search and Save</h1>
+<!-- <form> -->
+<p>Search for your favorite movies or any other movies you are interested in.<br/> TV series and video games also appear in the results.</p>
+<p>All data is sourced from the <a href="https://www.imdb.com/">Internet Movie Database (IMDb)</a> using the <a href="https://www.omdbapi.com/">OMDb API (the Open Movie Database)</a>.</p>
+<label><strong>Title to search for:</strong><br/>
+<input type="text" id="searchTitle">
+</label>
+<button id="searchTitleBtn" onclick="searchTitle()">Search</button>
+<!-- </form> -->
+<div id="moreDetails">
+</div>
+<div id="addStatusMessage">
+</div>
+<div id="searchResults">
+</div>
+<div id="removalStatus">
+</div>
+<div id="savedMovies">
+</div>
+<script>
+const maxResultsRetrievable = 10; //Max number of results that can be retrieved at once
+const savedMoviesListNameDefault = "Saved Movies";
+var savedMoviesListName = localStorage.getItem("savedMoviesListName");
+if (savedMoviesListName == null) {
+	savedMoviesListName = savedMoviesListNameDefault;
+}
+var fullListOfMoviesString = localStorage.getItem("fullListOfMovies");
+var fullListOfMoviesObj;
+if (fullListOfMoviesString === null) {
+	fullListOfMoviesObj = {movies:[]};
+}
+else {
+	fullListOfMoviesObj = JSON.parse(fullListOfMoviesString);
+}
+	//console.log("fullListOfMoviesString: ", fullListOfMoviesString);
+	//console.log("fullListOfMoviesObj: ", fullListOfMoviesObj);
+var savedMoviesCommentsObj = {};
+	viewSavedMoviesList();
+
+function searchTitle(searchResultsPage = 1) {
+	var searchTitle = document.getElementById("searchTitle").value;
+	//console.log(searchTitle);
+	var searchText = "s=" + searchTitle;
+	var searchType = "s";
+	search(searchText, searchType, searchResultsPage);
+}
+
+function search (searchText, searchType, searchResultsPage = 1) {
+	var apiKey = "ece24955";
+	var page;
+	page = "&page=" + searchResultsPage;
+	//console.log(page);
+	var type = ""; //"&type=series"; //"&type=episode";
+	var url = "https://www.omdbapi.com/?" + searchText + type + page + "&apikey=" + apiKey;
+	var req = new XMLHttpRequest();
+	req.open("GET", url);
+	req.onreadystatechange = function() {
+		if ((this.readyState == 4) && (this.status == 200)) {
+			//console.log(searchText);
+			var searchResultsText = this.responseText;
+			var searchResultsObj = JSON.parse(searchResultsText);
+			/*console.log(searchResultsObj);
+			console.log(typeof(searchResultsObj));*/
+			if (searchType == "s") {
+				var moreDetails = document.getElementById("moreDetails");
+				moreDetails.innerHTML = "";
+				moreDetails.classList.remove("topBottomBorders");
+				if (searchResultsObj.Response == "False") {
+					//console.log("Failed to find movie");
+					var searchResults = document.getElementById("searchResults");
+					searchResults.innerHTML = "<h2 id='noResultsError'>No results found!</h2>";
+					searchResults.scrollIntoView();
+				}
+				else {
+					//console.log(searchResultsObj.Search.length);
+					displaySearchResults(searchResultsObj, searchResultsPage, searchResultsObj.totalResults);
+				}
+			}
+			else if (searchType == "i") {
+				displayIDResult(searchResultsObj);
+			}
+		}
+	};
+	req.send();
+}
+
+function displaySearchResults(searchResultsObj, searchResultsPage, searchResultsTotalResults) {
+	var searchResults = "<div id='searchResultsTop'><h2>Search Results</h2></div> <ol id='searchResultsList' start='" + (searchResultsPage * 10 - 9) + "'>";
+	for (var i = 0; i < searchResultsObj.Search.length; i++) {
+		var imdbID = searchResultsObj.Search[i].imdbID;
+		searchResults += "<li><img class='poster' src='" + searchResultsObj.Search[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='resultsTitle'>" + searchResultsObj.Search[i].Title + "</span><br/>" + "<strong>Type:</strong> " + searchResultsObj.Search[i].Type + "<br/>" + "<strong>Year:</strong> " + searchResultsObj.Search[i].Year + "<br/>" + "<strong>IMDb ID:</strong> " + "<span class='imdbID'>" + imdbID + "</span><br/> <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + imdbID + "&quot;);'>View More Details</button></li>";
+	}
+	searchResults += "</ol>";
+
+	var totalResultsPagesIntermediateCalculation = (Number(searchResultsTotalResults) / 10);
+	var lastSearchResultPageHasLessThanMaxRetrievableResultsOnIt = false;
+	if (((Number(searchResultsTotalResults) / 10) % 1) > 0) {
+		lastSearchResultPageHasLessThanMaxRetrievableResultsOnIt = true;
+	}
+	var searchResultsTotalPages;
+	if (lastSearchResultPageHasLessThanMaxRetrievableResultsOnIt) {
+		searchResultsTotalPages = (Math.trunc(totalResultsPagesIntermediateCalculation) + 1);
+	}
+	else {
+		searchResultsTotalPages = Math.trunc(totalResultsPagesIntermediateCalculation);
+	}
+
+	searchResults += "<div id='searchResultsBottom'><p>Page: " + searchResultsPage + " of " + searchResultsTotalPages + " (" + searchResultsTotalResults + " total ";
+	if (Number(searchResultsTotalResults) > 1) {
+		searchResults += "results)";
+	}
+	else {
+		searchResults += "result)";
+	}
+	searchResults += "</p>";
+	if (searchResultsPage > 1) {
+		searchResults += "<button onclick='searchTitle(" + (searchResultsPage - 1) + ");'>Previous Page</button> ";
+	}
+	if ((searchResultsObj.Search.length == maxResultsRetrievable) && (searchResultsPage < searchResultsTotalPages)) {
+		//Max number of results that can be retrieved at once
+		searchResults += "<button onclick='searchTitle(" + (searchResultsPage + 1) + ");'>Next Page</button>";
+	}
+	searchResults += "</div>";
+	var searchResultsId = document.getElementById("searchResults");
+	searchResultsId.innerHTML = searchResults;
+	unhideSearchResults();
+	searchResultsId.scrollIntoView();
+}
+
+function searchID(imdbID) {
+	//console.log(imdbID);
+	var searchText = "i=" + imdbID;
+	var searchType = "i";
+	search(searchText, searchType);
+}
+
+function displayIDResult(searchResultsObj) {
+	var idResult = "<h2 id='idDetailsTitle'>" + searchResultsObj.Title +"</h2><p>";
+	var imdbID = searchResultsObj.imdbID;
+	idResult += "<img id='idDetailsPoster' src='" + searchResultsObj.Poster + "' onerror='this.src=&quot;no-img.png&quot;; document.getElementById(&quot;idDetailsPoster&quot;).id=&quot;detailsPosterNoImg&quot;;'><br/>" + "<strong>Type:</strong> " + searchResultsObj.Type + "<br/>" + "<strong>Genre:</strong> " + searchResultsObj.Genre + "<br/>" + "<strong>Year:</strong> " + searchResultsObj.Year + "<br/>" + "<strong>Released:</strong> " + searchResultsObj.Released + "<br/>" + "<strong>Runtime:</strong> " + searchResultsObj.Runtime + "<br/>" + "<strong>Director:</strong> " + searchResultsObj.Director + "<br/>" + "<strong>Actors:</strong> " + searchResultsObj.Actors + "<br/>" + "<strong>IMDb ID:</strong> " + "<span class='imdbID'>" + imdbID + "</span><br/> <button id='addMovieBtn' onclick='addMovie(&quot;" + imdbID + "&quot;);'>Add Movie to List</button>";
+	var movieDataString = JSON.stringify(searchResultsObj);
+	//console.log(movieDataString);
+	idResult += "<span id='movieDataString'>" + movieDataString + "</span></p>";
+	var moreDetails = document.getElementById("moreDetails");
+	moreDetails.innerHTML = idResult;
+	moreDetails.classList.add("topBottomBorders");
+	moreDetails.scrollIntoView();
+}
+
+function addMovie(imdbID) {
+	//console.log("Add Movie: " + imdbID);
+	var movieDataString = document.getElementById("movieDataString").innerHTML;
+
+	var savedMovieObj = JSON.parse(movieDataString);
+	//console.log("savedMovieObj: ", savedMovieObj);
+
+	var addStatusMessage = document.getElementById("addStatusMessage");
+	var isDuplicate = false;
+	for (var i = 0; i < fullListOfMoviesObj.movies.length; i++) {
+		if (fullListOfMoviesObj.movies[i].imdbID == savedMovieObj.imdbID)
+		{
+			//console.log("It's a duplicate!");
+			isDuplicate = true;
+			const errorMessage = "<p class='error'>Error: This is already saved to your list.</p>";
+			addStatusMessage.innerHTML = errorMessage;
+			break;
+		}
+	}
+	if (isDuplicate == false) {
+		fullListOfMoviesObj.movies.push(savedMovieObj);
+		//console.log("fullListofMoviesObj: ", fullListOfMoviesObj);
+		saveCurrentMovieListData();
+		const successMessage = "<p class='success'>Successfully saved to your list.</p>";
+		addStatusMessage.innerHTML = successMessage;
+	}
+	addStatusMessage.classList.remove("displayNone", "fadeOut");
+	addStatusMessage.scrollIntoView();
+	setTimeout(function() {
+		addStatusMessage.classList.add("fadeOut");
+		setTimeout(function() {
+			addStatusMessage.classList.add("displayNone");
+		}, 1000);
+	}, 3000);
+}
+
+function viewSavedMoviesList() {
+	fullListOfMoviesString = localStorage.getItem("fullListOfMovies");
+	//console.log("fullListOfMoviesString: ", fullListOfMoviesString);
+	if (fullListOfMoviesString !== null) {
+		fullListOfMoviesObj = JSON.parse(fullListOfMoviesString);
+	}
+	//console.log("fullListOfMoviesObj: ", fullListOfMoviesObj);
+	var savedMovies = document.getElementById("savedMovies");
+	var savedMoviesString = "<div id='savedMoviesListNameAndOptions'><h2 id='savedMoviesListName'>";
+	savedMoviesString += savedMoviesListName;
+	savedMoviesString += "</h2> <div id='listRename'><button id='listRenameBtn' onclick='showListRenameOptions();'>Show List Renaming Options</button><span id='listRenameOptions'><input id='newListName' type='text'> <button onclick='saveNewListName();'>Save New List Name</button> <button onclick='resetListName();'>Reset to Default Name</button> <button onclick='closeRenameOptions();'>Cancel</button> <p>Suggestions: <span id='listNameSuggestions'>Favorite Movies / Movies to See / Movies Watched / Movies Owned</span></p></span></div></div> ";
+	if ((fullListOfMoviesObj != null) && (fullListOfMoviesObj.movies.length != 0)) {
+		savedMoviesString += "<ol id='savedMoviesList'>";
+		//console.log("savedMoviesString : ", savedMoviesString);
+		for (var i = 0; i < fullListOfMoviesObj.movies.length; i++) {
+			var imdbID = fullListOfMoviesObj.movies[i].imdbID;
+			savedMoviesString += "<li><img class='poster floatLeft' src='" + fullListOfMoviesObj.movies[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='savedMovieTitle'>" + fullListOfMoviesObj.movies[i].Title + "</span><br/> (" + fullListOfMoviesObj.movies[i].Year + ") [" + fullListOfMoviesObj.movies[i].Type + "] <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + imdbID + "&quot;);'>View More Details</button> <button id='removeFromListBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='removeFromList' onclick='removeFromList(" + i + ", &quot;" + imdbID + "&quot;);'>Remove</button><div  id='commentsSection_" + imdbID + "' class='savedMovieComments'>Comments: <textarea id='comments_" + imdbID + "' class='savedMovieCommentsArea'>";
+			var savedMoviesCommentsString = localStorage.getItem("savedMoviesComments");
+			savedMoviesCommentsObj = JSON.parse(savedMoviesCommentsString);
+			var savedComments;
+			if (savedMoviesCommentsObj != null) {
+				savedComments = savedMoviesCommentsObj[imdbID];
+				//console.log("saved comments: ", savedComments);
+				if (savedComments != null) {
+					savedMoviesString += savedComments;
+				}
+			}
+			else {
+				savedMoviesCommentsObj = {};
+			}
+			savedMoviesString += "</textarea> <button class='saveCommentsBtn' onclick='saveComments(&quot;" + imdbID + "&quot;);'>Save Comments</button> <span id='commentsStatus_" + imdbID + "' class='commentsStatus'></span></div></li>";
+		}
+		savedMoviesString += "</ol> <div class='clearFloats'></div>";
+		//savedMovies.innerHTML = savedMoviesString;
+		//console.log("savedMoviesString : ", savedMoviesString);
+		//console.log("savedMovies.innerHTML : ", savedMovies.innerHTML);
+	}
+	else {
+		savedMoviesString += "<p id='noSavedMoviesMessage'><em>No saved movies found</em></p>";
+	}
+	savedMovies.innerHTML = savedMoviesString;
+	//console.log("savedMoviesString : ", savedMoviesString);
+	//console.log("savedMovies.innerHTML : ", savedMovies.innerHTML);
+}
+
+function removeFromList(i, imdbID) {
+	if (fullListOfMoviesObj.movies.length > 1) {
+		fullListOfMoviesObj.movies.splice(i,1);
+		fullListOfMoviesString = JSON.stringify(fullListOfMoviesObj);
+		//console.log("fullListofMovies: ", fullListOfMoviesString);
+		localStorage.setItem("fullListOfMovies", fullListOfMoviesString);
+	}
+	else {
+		localStorage.removeItem("fullListOfMovies");
+		fullListOfMoviesObj = {movies:[]};
+		console.log("Removed 'fullListOfMovies' from localStorage");
+	}
+	deleteComments(imdbID);
+
+	viewSavedMoviesList();
+
+	var removalStatus = document.getElementById("removalStatus");
+	const successMessage = "<p class='success'>Successfully removed from your list.</p>";
+	removalStatus.innerHTML = successMessage;
+	removalStatus.classList.remove("displayNone", "fadeOut");
+	removalStatus.scrollIntoView();
+	setTimeout(function() {
+		removalStatus.classList.add("fadeOut");
+		setTimeout(function() {
+			removalStatus.classList.add("displayNone");
+		}, 1000);
+	}, 3000);
+}
+
+function saveCurrentMovieListData() {
+	var fullListOfMovies = JSON.stringify(fullListOfMoviesObj);
+	//console.log("fullListofMovies: ", fullListOfMovies);
+	localStorage.setItem("fullListOfMovies", fullListOfMovies);
+	localStorage.setItem("savedMoviesListName", savedMoviesListName);
+
+	viewSavedMoviesList(); //Refresh view of list
+}
+
+function showListRenameOptions() {
+	document.getElementById("listRenameBtn").style.display = "none";
+	document.getElementById("listRenameOptions").style.display = "inline";
+}
+
+function closeRenameOptions() {
+	document.getElementById("listRenameBtn").style.display = "inline";
+	document.getElementById("listRenameOptions").style.display = "none";
+}
+
+function saveNewListName() {
+	var newListName = document.getElementById("newListName").value;
+	//console.log(newListName);
+	var noChange = false;
+	if (savedMoviesListName == newListName)
+	{
+		//console.log("No change");
+		noChange = true;
+		viewSavedMoviesList(); //Refresh view of list
+	}
+	if (noChange == false) {
+		if ((newListName != "") && (newListName != savedMoviesListNameDefault)) {
+			savedMoviesListName = newListName;
+			//console.log("savedMoviesListName: ", savedMoviesListName);
+		}
+		else {
+			resetListName();
+		}
+		saveCurrentMovieListData();
+	}
+}
+
+function resetListName() {
+	savedMoviesListName = savedMoviesListNameDefault;
+	localStorage.removeItem("savedMoviesListName");
+	saveCurrentMovieListData();
+}
+
+function unhideSearchResults() {
+	document.getElementById("searchResults").style.display = "block";
+}
+
+function hideSearchResults() {
+	document.getElementById("searchResults").style.display = "none";
+}
+
+function saveComments(imdbID) {
+	//console.log("comments' imdbID: ", imdbID);
+	commentsText = document.getElementById("comments_" + imdbID).value;
+	//console.log(commentsText);
+	var emptyComments = false;
+	if (commentsText == "") {
+		deleteComments(imdbID);
+		emptyComments = true;
+	}
+	else {
+		savedMoviesCommentsObj[imdbID] = commentsText;
+		//console.log(savedMoviesCommentsObj);
+		var savedMoviesComments = JSON.stringify(savedMoviesCommentsObj);
+		localStorage.setItem("savedMoviesComments", savedMoviesComments);
+	}
+
+	//Display Success Message
+	commentsStatus = document.getElementById("commentsStatus_" + imdbID);
+	commentsStatus.classList.remove("displayNone", "fadeOut");
+	if (emptyComments == true) {
+		commentsStatus.innerHTML = "Comments deleted!";
+	}
+	else {
+		commentsStatus.innerHTML = "Comments saved!";
+	}
+	setTimeout(function() {
+		commentsStatus.classList.add("fadeOut");
+		setTimeout(function() {
+			commentsStatus.classList.add("displayNone");
+		}, 1000);
+	}, 3000);
+}
+
+function deleteComments(imdbID) {
+	delete savedMoviesCommentsObj[imdbID];
+	//console.log(savedMoviesCommentsObj);
+	var savedMoviesComments = JSON.stringify(savedMoviesCommentsObj);
+	localStorage.setItem("savedMoviesComments", savedMoviesComments);
+}
+
+//Potential to-do list:
+//Add button to show plot summary in "more details" section
+//Add ability to rate a movie in the saved movies list
+//Add character limit to comments, and write the maximum character count next to the comments textarea
+</script>
+</body>
+</html>
