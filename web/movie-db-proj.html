@@ -7,24 +7,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<h1>Movie Database Search and Save</h1>
-<!-- <form> -->
-<p>Search for your favorite movies or any other movies you are interested in.<br/> TV series and video games also appear in the results.</p>
-<p>All data is sourced from the <a href="https://www.imdb.com/">Internet Movie Database (IMDb)</a> using the <a href="https://www.omdbapi.com/">OMDb API (the Open Movie Database)</a>.</p>
-<label><strong>Title to search for:</strong><br/>
-<input type="text" id="searchTitle">
-</label>
-<button id="searchTitleBtn" onclick="searchTitle()">Search</button>
-<!-- </form> -->
-<div id="moreDetails">
-</div>
-<div id="addStatusMessage">
-</div>
-<div id="searchResults">
-</div>
-<div id="removalStatus">
-</div>
-<div id="savedMovies">
+<div id="movieDbSearchAndSave">
+	<h1>Movie Database Search and Save</h1>
+	<!-- <form> -->
+	<p>Search for your favorite movies or any other movies you are interested in.<br/> TV series and video games also appear in the results.</p>
+	<p>All data is sourced from the <a href="https://www.imdb.com/">Internet Movie Database (IMDb)</a> using the <a href="https://www.omdbapi.com/">OMDb API (the Open Movie Database)</a>.</p>
+	<label><strong>Title to search for:</strong><br/>
+	<input type="text" id="searchTitle">
+	</label>
+	<button id="searchTitleBtn" onclick="searchTitle()">Search</button>
+	<!-- </form> -->
+	<div id="moreDetails">
+	</div>
+	<div id="addStatusMessage">
+	</div>
+	<div id="searchResults">
+	</div>
+	<div id="removalStatus">
+	</div>
+	<div id="savedMovies">
+	</div>
 </div>
 <script>
 const maxResultsRetrievable = 10; //Max number of results that can be retrieved at once
@@ -44,7 +46,15 @@ else {
 	//console.log("fullListOfMoviesString: ", fullListOfMoviesString);
 	//console.log("fullListOfMoviesObj: ", fullListOfMoviesObj);
 var savedMoviesCommentsObj = {};
-	viewSavedMoviesList();
+viewSavedMoviesList();
+
+var searchBox = document.getElementById("searchTitle");
+searchBox.addEventListener("keyup", function(e) {
+	if (e.keyCode === 13) { //13 is "Enter" key
+		e.preventDefault();
+		document.getElementById("searchTitleBtn").click();
+	}
+});
 
 function searchTitle(searchResultsPage = 1) {
 	var searchTitle = document.getElementById("searchTitle").value;

@@ -46,8 +46,8 @@ body {
 }
 
 #searchResults {
-	border-left: 6px solid rgb(240,196,0);
-	background-color: rgb(255,228,171);
+	border-left: 6px solid rgb(240,196,38);
+	background-color: rgb(255,236,179);
 	padding-top: 1em;
 	display: none;
 	margin-bottom: 1.5em;
@@ -120,8 +120,7 @@ body {
 	border-left: 6px solid rgb(16,143,153);
 	border-right: 6px solid rgb(16,143,153);
 	padding-left: 2em;
-	background-color: rgb(204,255,227);
-	background-color: rgb(199,240,255);
+	background-color: rgb(194,235,255);
 }
 
 #addMovieBtn {
@@ -139,13 +138,22 @@ body {
 	float: right;
 }
 
-.savedMovieCommentsArea {
+textarea.savedMovieCommentsArea {
 	height: 3.5em;
 	min-height: 3.5em;
 	min-width: 20em;
 	max-width: 28em;
-	max-height: 8em;
+	max-height: 8.1em;
+	height: 3.5em;
 	float: right;
+	transition: height 0.75s;
+	transition-delay: 0.15s;
+}
+
+textarea.savedMovieCommentsArea:focus {
+	background-color: rgb(255,222,186);
+	border: 3px solid rgb(255,150,48);
+	height: 8.1em;
 }
 
 .saveCommentsBtn {
@@ -173,12 +181,11 @@ body {
 	transition: opacity 1s;
 }
 
-textarea:focus {
-	background-color: rgb(255,222,186);
-	border: 3px solid rgb(255,150,48);
+input#searchTitle {
+	width: 24em;
 }
 
-input:focus {
+input#searchTitle:focus {
 	background-color: rgb(255,192,235);
 	border: 3px solid rgb(203,22,136);
 }
