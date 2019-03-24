@@ -133,11 +133,11 @@ function displaySearchResults(searchResultsObj, searchResultsPage, searchResults
 	}
 	searchResults += "</p>";
 	if (searchResultsPage > 1) {
-		searchResults += "<button onclick='searchTitle(" + (searchResultsPage - 1) + ");'>Previous Page</button> ";
+		searchResults += "<button id='previousPageBtn' onclick='searchTitle(" + (searchResultsPage - 1) + ");'>Previous Page</button> ";
 	}
 	if ((searchResultsObj.Search.length == maxResultsRetrievable) && (searchResultsPage < searchResultsTotalPages)) {
 		//Max number of results that can be retrieved at once
-		searchResults += "<button onclick='searchTitle(" + (searchResultsPage + 1) + ");'>Next Page</button>";
+		searchResults += "<button id='nextPageBtn' onclick='searchTitle(" + (searchResultsPage + 1) + ");'>Next Page</button>";
 	}
 	searchResults += "</div>";
 	var searchResultsId = document.getElementById("searchResults");
@@ -212,13 +212,13 @@ function viewSavedMoviesList() {
 	var savedMovies = document.getElementById("savedMovies");
 	var savedMoviesString = "<div id='savedMoviesListNameAndOptions'><h2 id='savedMoviesListName'>";
 	savedMoviesString += savedMoviesListName;
-	savedMoviesString += "</h2> <div id='listRename'><button id='listRenameBtn' onclick='showListRenameOptions();'>Show List Renaming Options</button><span id='listRenameOptions'><input id='newListName' type='text'> <button onclick='saveNewListName();'>Save New List Name</button> <button onclick='resetListName();'>Reset to Default Name</button> <button onclick='closeRenameOptions();'>Cancel</button> <p>Suggestions: <span id='listNameSuggestions'>Favorite Movies / Movies to See / Movies Watched / Movies Owned</span></p></span></div></div> ";
+	savedMoviesString += "</h2> <div id='listRename'><button id='listRenameBtn' onclick='showListRenameOptions();'>Show List Renaming Options</button><span id='listRenameOptions'><input id='newListName' type='text'> <button id='saveNewListNameBtn' onclick='saveNewListName();'>Save New List Name</button><br/><button id='resetListNameBtn' onclick='resetListName();'>Reset to Default Name</button> <button id='cancelListRenameBtn' onclick='closeRenameOptions();'>Cancel</button> <p>Suggestions: <span id='listNameSuggestions'>Favorite Movies / Movies to See / Movies Watched / Movies Owned</span></p></span></div></div> ";
 	if ((fullListOfMoviesObj != null) && (fullListOfMoviesObj.movies.length != 0)) {
 		savedMoviesString += "<ol id='savedMoviesList'>";
 		//console.log("savedMoviesString : ", savedMoviesString);
 		for (var i = 0; i < fullListOfMoviesObj.movies.length; i++) {
 			var imdbID = fullListOfMoviesObj.movies[i].imdbID;
-			savedMoviesString += "<li><img class='poster floatLeft' src='" + fullListOfMoviesObj.movies[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='savedMovieTitle'>" + fullListOfMoviesObj.movies[i].Title + "</span><br/> (" + fullListOfMoviesObj.movies[i].Year + ") [" + fullListOfMoviesObj.movies[i].Type + "] <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + imdbID + "&quot;);'>View More Details</button> <button id='removeFromListBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='removeFromList' onclick='removeFromList(" + i + ", &quot;" + imdbID + "&quot;);'>Remove</button><div  id='commentsSection_" + imdbID + "' class='savedMovieComments'>Comments: <textarea id='comments_" + imdbID + "' class='savedMovieCommentsArea'>";
+			savedMoviesString += "<li><img class='poster floatLeft' src='" + fullListOfMoviesObj.movies[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='savedMovieTitle'>" + fullListOfMoviesObj.movies[i].Title + "</span><br/> (" + fullListOfMoviesObj.movies[i].Year + ") [" + fullListOfMoviesObj.movies[i].Type + "] <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + imdbID + "&quot;);'>View More Details</button> <button id='removeFromListBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='removeFromListBtn' onclick='removeFromList(" + i + ", &quot;" + imdbID + "&quot;);'>Remove</button><div  id='commentsSection_" + imdbID + "' class='savedMovieComments'>Comments: <textarea id='comments_" + imdbID + "' class='savedMovieCommentsArea'>";
 			var savedMoviesCommentsString = localStorage.getItem("savedMoviesComments");
 			savedMoviesCommentsObj = JSON.parse(savedMoviesCommentsString);
 			var savedComments;

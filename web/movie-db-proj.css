@@ -147,7 +147,6 @@ textarea.savedMovieCommentsArea {
 	height: 3.5em;
 	float: right;
 	transition: height 0.75s;
-	transition-delay: 0.15s;
 }
 
 textarea.savedMovieCommentsArea:focus {
@@ -181,11 +180,112 @@ textarea.savedMovieCommentsArea:focus {
 	transition: opacity 1s;
 }
 
-input#searchTitle {
+input#searchTitle, input#newListName {
 	width: 24em;
 }
 
 input#searchTitle:focus {
 	background-color: rgb(255,192,235);
 	border: 3px solid rgb(203,22,136);
+}
+
+button {
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 12px;
+	height: 25px;
+}
+
+button#addMovieBtn:disabled, button#addMovieBtn:disabled:hover, button#addMovieBtn:disabled:active {
+	background-color: rgb(164,164,164);
+	outline-style: none;
+	text-shadow: none;
+	color: rgb(128,128,128);
+	border-left: 2px solid rgb(200,200,200);
+	border-top: 2px solid rgb(200,200,200);
+	border-right: 2px solid rgb(128,128,128);
+	border-bottom: 2px solid rgb(128,128,128);
+}
+
+button#searchTitleBtn, button.viewDetailsBtn, button#cancelListRenameBtn {
+	background-color: rgb(16,143,153);
+	color: rgb(198,255,227);
+	border-left: 2px solid rgb(42,231,199);
+	border-top: 2px solid rgb(42,231,199);
+	border-right: 2px solid rgb(26,90,126);
+	border-bottom: 2px solid rgb(26,90,126);
+	text-shadow: 2px 2px rgb(26,90,126);
+}
+
+button#searchTitleBtn:hover, button#searchTitleBtn:focus, button.viewDetailsBtn:hover, button.viewDetailsBtn:focus, button#cancelListRenameBtn:hover, button#cancelListRenameBtn:focus {
+	outline-style: solid;
+	outline-color: rgb(180,0,220);
+	outline-width: 3px;
+}
+
+button#previousPageBtn, button#nextPageBtn {
+	background-color: rgb(200,200,200);
+	color: rgb(32,32,32);
+	border-left: 2px solid rgb(248,248,248);
+	border-top: 2px solid rgb(248,248,248);
+	border-right: 2px solid rgb(128,128,128);
+	border-bottom: 2px solid rgb(128,128,128);
+}
+
+button#previousPageBtn:hover, button#previousPageBtn:focus, button#nextPageBtn:hover, button#nextPageBtn:focus {
+	outline-style: solid;
+	outline-color: rgb(72,62,255);
+	outline-width: 3px;
+}
+
+button#addMovieBtn {
+	background-color: rgb(203,22,136);
+	color: rgb(255,192,235);
+	border-left: 2px solid rgb(255,112,221);
+	border-top: 2px solid rgb(255,112,221);
+	border-right: 2px solid rgb(134,0,60);
+	border-bottom: 2px solid rgb(134,0,60);
+	text-shadow: 2px 2px rgb(134,0,60);
+}
+
+
+button#addMovieBtn:hover, button#addMovieBtn:focus {
+	outline-style: solid;
+	outline-color: rgb(124,16,242);
+	outline-width: 3px;
+}
+
+/*button#addMovieBtn,*/ button#listRenameBtn, button.saveCommentsBtn, button#saveNewListNameBtn {
+	background-color: rgb(60,98,226);
+	color: rgb(231,216,255);
+	border-left: 2px solid rgb(194,231,255);
+	border-top: 2px solid rgb(194,231,255);
+	border-right: 2px solid rgb(36,24,170);
+	border-bottom: 2px solid rgb(36,24,170);	text-shadow: 2px 2px rgb(84,0,176);
+}
+
+/*button#addMovieBtn:hover, button#addMovieBtn:focus,*/ button#listRenameBtn:hover, button#listRenameBtn:focus, button.saveCommentsBtn:hover, button.saveCommentsBtn:focus, button#saveNewListNameBtn:hover, button#saveNewListNameBtn:focus {
+	outline-style: solid;
+	outline-color: rgb(203,22,136);
+	outline-width: 3px;
+}
+
+button.removeFromListBtn, button#resetListNameBtn {
+	background-color: rgb(210,40,40);
+	color: rgb(255,202,206);
+	border-left: 2px solid rgb(255,132,134);
+	border-top: 2px solid rgb(255,132,134);
+	border-right: 2px solid rgb(134,16,6);
+	border-bottom: 2px solid rgb(134,16,6);
+	text-shadow: 2px 2px rgb(134,16,6);
+}
+
+button.removeFromListBtn:hover, button.removeFromListBtn:focus, button#resetListNameBtn:hover, button#resetListNameBtn:focus {
+	outline-style: solid;
+	outline-color: rgb(134,0,60);
+	outline-width: 3px;
+}
+
+li.selectedToView {
+	transform: translate(30px, 0px);
+	outline: rgb(203,22,136);
 }
