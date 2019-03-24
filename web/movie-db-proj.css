@@ -52,6 +52,7 @@ body {
 	display: none;
 	margin-bottom: 1.5em;
 	padding-bottom: 1.5em;
+	padding-right: 1em;
 }
 
 #searchResultsTop, #searchResultsBottom, #noResultsError {
@@ -285,7 +286,25 @@ button.removeFromListBtn:hover, button.removeFromListBtn:focus, button#resetList
 	outline-width: 3px;
 }
 
-li.selectedToView {
+#savedMoviesList .selectedToView .dataAndBtns, #searchResultsList .selectedToView .searchResultData {
 	transform: translate(30px, 0px);
-	outline: rgb(203,22,136);
 }
+
+.selectedToView {
+	border: 4px dashed rgb(203,22,136);
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+}
+
+#savedMoviesList .selectedToView .dataAndBtns, #searchResultsList .selectedToView .searchResultData {
+	width: 90%;
+}
+
+.selectedToRemove {
+	transform: skewY(20deg);
+}
+
+/*.selectedToView .savedMovieComments {
+	transform: translate(-30px, 0px);
+}*/

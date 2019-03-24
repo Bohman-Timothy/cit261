@@ -107,7 +107,7 @@ function displaySearchResults(searchResultsObj, searchResultsPage, searchResults
 	var searchResults = "<div id='searchResultsTop'><h2>Search Results</h2></div> <ol id='searchResultsList' start='" + (searchResultsPage * 10 - 9) + "'>";
 	for (var i = 0; i < searchResultsObj.Search.length; i++) {
 		var imdbID = searchResultsObj.Search[i].imdbID;
-		searchResults += "<li><img class='poster' src='" + searchResultsObj.Search[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='resultsTitle'>" + searchResultsObj.Search[i].Title + "</span><br/>" + "<strong>Type:</strong> " + searchResultsObj.Search[i].Type + "<br/>" + "<strong>Year:</strong> " + searchResultsObj.Search[i].Year + "<br/>" + "<strong>IMDb ID:</strong> " + "<span class='imdbID'>" + imdbID + "</span><br/> <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + imdbID + "&quot;);'>View More Details</button></li>";
+		searchResults += "<li><div id='searchResultMovie_" + imdbID + "'><div class='searchResultData'><img class='poster' src='" + searchResultsObj.Search[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='resultsTitle'>" + searchResultsObj.Search[i].Title + "</span><br/>" + "<strong>Type:</strong> " + searchResultsObj.Search[i].Type + "<br/>" + "<strong>Year:</strong> " + searchResultsObj.Search[i].Year + "<br/>" + "<strong>IMDb ID:</strong> " + "<span class='imdbID'>" + imdbID + "</span><br/> <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='highlightSelectedMovie(&quot;" + imdbID + "&quot;, &quot;searchResultsList&quot;); searchID(&quot;" + imdbID + "&quot;);'>View More Details</button></div></div></li>";
 	}
 	searchResults += "</ol>";
 
@@ -218,7 +218,7 @@ function viewSavedMoviesList() {
 		//console.log("savedMoviesString : ", savedMoviesString);
 		for (var i = 0; i < fullListOfMoviesObj.movies.length; i++) {
 			var imdbID = fullListOfMoviesObj.movies[i].imdbID;
-			savedMoviesString += "<li><img class='poster floatLeft' src='" + fullListOfMoviesObj.movies[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='savedMovieTitle'>" + fullListOfMoviesObj.movies[i].Title + "</span><br/> (" + fullListOfMoviesObj.movies[i].Year + ") [" + fullListOfMoviesObj.movies[i].Type + "] <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='searchID(&quot;" + imdbID + "&quot;);'>View More Details</button> <button id='removeFromListBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='removeFromListBtn' onclick='removeFromList(" + i + ", &quot;" + imdbID + "&quot;);'>Remove</button><div  id='commentsSection_" + imdbID + "' class='savedMovieComments'>Comments: <textarea id='comments_" + imdbID + "' class='savedMovieCommentsArea'>";
+			savedMoviesString += "<li><div id='savedMovie_" + imdbID + "'><div class='dataAndBtns'><img class='poster floatLeft' src='" + fullListOfMoviesObj.movies[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='savedMovieTitle'>" + fullListOfMoviesObj.movies[i].Title + "</span><br/> (" + fullListOfMoviesObj.movies[i].Year + ") [" + fullListOfMoviesObj.movies[i].Type + "] <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='highlightSelectedMovie(&quot;" + imdbID + "&quot;, &quot;savedMoviesList&quot;); searchID(&quot;" + imdbID + "&quot;);'>View More Details</button> <button id='removeFromListBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='removeFromListBtn' onclick='removeFromList(" + i + ", &quot;" + imdbID + "&quot;);'>Remove</button></div><div  id='commentsSection_" + imdbID + "' class='savedMovieComments'>Comments: <textarea id='comments_" + imdbID + "' class='savedMovieCommentsArea'>";
 			var savedMoviesCommentsString = localStorage.getItem("savedMoviesComments");
 			savedMoviesCommentsObj = JSON.parse(savedMoviesCommentsString);
 			var savedComments;
@@ -232,7 +232,7 @@ function viewSavedMoviesList() {
 			else {
 				savedMoviesCommentsObj = {};
 			}
-			savedMoviesString += "</textarea> <button class='saveCommentsBtn' onclick='saveComments(&quot;" + imdbID + "&quot;);'>Save Comments</button> <span id='commentsStatus_" + imdbID + "' class='commentsStatus'></span></div></li>";
+			savedMoviesString += "</textarea> <button id='saveCommentsBtn_" + imdbID + "' class='saveCommentsBtn' onclick='saveComments(&quot;" + imdbID + "&quot;);'>Save Comments</button> <span id='commentsStatus_" + imdbID + "' class='commentsStatus'></span></div></div></li>";
 		}
 		savedMoviesString += "</ol> <div class='clearFloats'></div>";
 		//savedMovies.innerHTML = savedMoviesString;
@@ -369,6 +369,21 @@ function deleteComments(imdbID) {
 	//console.log(savedMoviesCommentsObj);
 	var savedMoviesComments = JSON.stringify(savedMoviesCommentsObj);
 	localStorage.setItem("savedMoviesComments", savedMoviesComments);
+}
+
+function highlightSelectedMovie(imdbID, listType) {
+	var selectedMovies = document.getElementsByClassName("selectedToView");
+	for (var i = selectedMovies.length - 1; i >= 0; i--) {
+		selectedMovies[i].classList.remove("selectedToView");
+	}
+	if (listType === "savedMoviesList") {
+		var selectedMovie = document.getElementById("savedMovie_" + imdbID);
+		selectedMovie.classList.add("selectedToView");
+	}
+	else if (listType === "searchResultsList") {
+		var selectedMovie = document.getElementById("searchResultMovie_" + imdbID);
+		selectedMovie.classList.add("selectedToView");
+	}
 }
 
 //Potential to-do list:
