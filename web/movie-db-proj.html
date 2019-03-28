@@ -9,14 +9,12 @@
 <body>
 <div id="movieDbSearchAndSave">
 	<h1>Movie Database Search and Save</h1>
-	<!-- <form> -->
 	<p>Search for your favorite movies or any other movies you are interested in.<br/> TV series and video games also appear in the results.</p>
 	<p>All data is sourced from the <a href="https://www.imdb.com/">Internet Movie Database (IMDb)</a> using the <a href="https://www.omdbapi.com/">OMDb API (the Open Movie Database)</a>.</p>
 	<label><strong>Title to search for:</strong><br/>
 	<input type="text" id="searchTitle">
 	</label>
 	<button id="searchTitleBtn" onclick="searchTitle()">Search</button>
-	<!-- </form> -->
 	<div id="moreDetails">
 	</div>
 	<div id="addStatusMessage">
@@ -162,8 +160,12 @@ function displayIDResult(searchResultsObj) {
 	idResult += "<span id='movieDataString'>" + movieDataString + "</span></p>";
 	var moreDetails = document.getElementById("moreDetails");
 	moreDetails.innerHTML = idResult;
-	moreDetails.classList.add("topBottomBorders");
-	moreDetails.scrollIntoView();
+	moreDetails.classList.add("topBottomBorders", "stretchToAppear");
+	document.getElementById("searchTitle").scrollIntoView();
+	setTimeout(function() {
+		moreDetails.classList.remove("stretchToAppear");
+	}, 500);
+
 }
 
 function addMovie(imdbID) {
@@ -397,8 +399,7 @@ function highlightSelectedMovie(imdbID, listType) {
 	}
 }
 
-//To do: background flash on a newly added movie in the list (animation)
-//To do: animate when the "more details" section appears, either by stretching downward from the top or turning like a page into place.
+//To do: background color flash (fade in, fade out) on a newly added movie in the list (animation)
 //Potential to-do list:
 //Add button to show plot summary in "more details" section
 //Add ability to rate a movie in the saved movies list
