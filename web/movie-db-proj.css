@@ -3,6 +3,8 @@ body {
 	max-width: 800px;
 	min-width: 420px;
 	background-color: rgb(216,220,255);
+  margin-left: auto;
+	margin-right: auto;
 }
 
 .resultsTitle, .savedMovieTitle {
@@ -207,7 +209,7 @@ button#addMovieBtn:disabled, button#addMovieBtn:disabled:hover, button#addMovieB
 	border-bottom: 2px solid rgb(128,128,128);
 }
 
-button#searchTitleBtn, button.viewDetailsBtn, button#cancelListRenameBtn {
+button#searchTitleBtn, button.viewDetailsBtn, button#listRenameBtn, button#cancelListRenameBtn {
 	background-color: rgb(16,143,153);
 	color: rgb(198,255,227);
 	border-left: 2px solid rgb(42,231,199);
@@ -217,7 +219,7 @@ button#searchTitleBtn, button.viewDetailsBtn, button#cancelListRenameBtn {
 	text-shadow: 2px 2px rgb(26,90,126);
 }
 
-button#searchTitleBtn:hover, button#searchTitleBtn:focus, button.viewDetailsBtn:hover, button.viewDetailsBtn:focus, button#cancelListRenameBtn:hover, button#cancelListRenameBtn:focus {
+button#searchTitleBtn:hover, button#searchTitleBtn:focus, button.viewDetailsBtn:hover, button.viewDetailsBtn:focus, button#listRenameBtn:hover, button#listRenameBtn:focus, button#cancelListRenameBtn:hover, button#cancelListRenameBtn:focus {
 	outline-style: solid;
 	outline-color: rgb(180,0,220);
 	outline-width: 3px;
@@ -255,7 +257,7 @@ button#addMovieBtn:hover, button#addMovieBtn:focus {
 	outline-width: 3px;
 }
 
-/*button#addMovieBtn,*/ button#listRenameBtn, button.saveCommentsBtn, button#saveNewListNameBtn {
+/*button#addMovieBtn,*/ button.saveCommentsBtn, button#saveNewListNameBtn {
 	background-color: rgb(60,98,226);
 	color: rgb(231,216,255);
 	border-left: 2px solid rgb(194,231,255);
@@ -264,7 +266,7 @@ button#addMovieBtn:hover, button#addMovieBtn:focus {
 	border-bottom: 2px solid rgb(36,24,170);	text-shadow: 2px 2px rgb(84,0,176);
 }
 
-/*button#addMovieBtn:hover, button#addMovieBtn:focus,*/ button#listRenameBtn:hover, button#listRenameBtn:focus, button.saveCommentsBtn:hover, button.saveCommentsBtn:focus, button#saveNewListNameBtn:hover, button#saveNewListNameBtn:focus {
+/*button#addMovieBtn:hover, button#addMovieBtn:focus,*/ button.saveCommentsBtn:hover, button.saveCommentsBtn:focus, button#saveNewListNameBtn:hover, button#saveNewListNameBtn:focus {
 	outline-style: solid;
 	outline-color: rgb(203,22,136);
 	outline-width: 3px;
@@ -301,10 +303,21 @@ button.removeFromListBtn:hover, button.removeFromListBtn:focus, button#resetList
 	width: 90%;
 }
 
-.selectedToRemove {
-	transform: skewY(20deg);
+.slideAndFade {
+	animation-name: slideAndFade;
+	animation-duration: 0.5s;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+	opacity: 1;
 }
 
-/*.selectedToView .savedMovieComments {
-	transform: translate(-30px, 0px);
-}*/
+@keyframes slideAndFade {
+	0% {
+		opacity: 1;
+		transform: translateX(0px);
+	}
+	100% {
+		opacity: 0;
+		transform: translateX(-800px);
+	}
+}

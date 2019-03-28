@@ -248,32 +248,43 @@ function viewSavedMoviesList() {
 }
 
 function removeFromList(i, imdbID) {
-	if (fullListOfMoviesObj.movies.length > 1) {
-		fullListOfMoviesObj.movies.splice(i,1);
-		fullListOfMoviesString = JSON.stringify(fullListOfMoviesObj);
-		//console.log("fullListofMovies: ", fullListOfMoviesString);
-		localStorage.setItem("fullListOfMovies", fullListOfMoviesString);
-	}
-	else {
-		localStorage.removeItem("fullListOfMovies");
-		fullListOfMoviesObj = {movies:[]};
-		console.log("Removed 'fullListOfMovies' from localStorage");
-	}
-	deleteComments(imdbID);
-
-	viewSavedMoviesList();
-
-	var removalStatus = document.getElementById("removalStatus");
-	const successMessage = "<p class='success'>Successfully removed from your list.</p>";
-	removalStatus.innerHTML = successMessage;
-	removalStatus.classList.remove("displayNone", "fadeOut");
-	removalStatus.scrollIntoView();
+	slideAndFade(imdbID);
 	setTimeout(function() {
-		removalStatus.classList.add("fadeOut");
+		if (fullListOfMoviesObj.movies.length > 1) {
+			fullListOfMoviesObj.movies.splice(i,1);
+			fullListOfMoviesString = JSON.stringify(fullListOfMoviesObj);
+			//console.log("fullListofMovies: ", fullListOfMoviesString);
+			localStorage.setItem("fullListOfMovies", fullListOfMoviesString);
+		}
+		else {
+			localStorage.removeItem("fullListOfMovies");
+			fullListOfMoviesObj = {movies:[]};
+			console.log("Removed 'fullListOfMovies' from localStorage");
+		}
+		deleteComments(imdbID);
+
+		viewSavedMoviesList();
+
+		var removalStatus = document.getElementById("removalStatus");
+		const successMessage = "<p class='success'>Successfully removed from your list.</p>";
+		removalStatus.innerHTML = successMessage;
+		removalStatus.classList.remove("displayNone", "fadeOut");
+		removalStatus.scrollIntoView();
 		setTimeout(function() {
-			removalStatus.classList.add("displayNone");
-		}, 1000);
-	}, 3000);
+			removalStatus.classList.add("fadeOut");
+			setTimeout(function() {
+				removalStatus.classList.add("displayNone");
+			}, 1000);
+		}, 3000);
+	}, 550);
+}
+
+function slideAndFade(imdbID) {
+	var movieToRemove = document.getElementById("savedMovie_" + imdbID).parentElement;
+	movieToRemove.classList.add("slideAndFade");
+	setTimeout(function() {
+		movieToRemove.classList.add("displayNone");
+	}, 500);
 }
 
 function saveCurrentMovieListData() {
@@ -386,6 +397,8 @@ function highlightSelectedMovie(imdbID, listType) {
 	}
 }
 
+//To do: background flash on a newly added movie in the list (animation)
+//To do: animate when the "more details" section appears, either by stretching downward from the top or turning like a page into place.
 //Potential to-do list:
 //Add button to show plot summary in "more details" section
 //Add ability to rate a movie in the saved movies list
