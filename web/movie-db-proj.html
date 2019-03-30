@@ -322,7 +322,7 @@ function saveNewListName() {
 	if ((savedMoviesListName === newListName)||(newListName === "")||(!/\S/.test(newListName)))
 	//Checks that there is more than just whitespace and that the typed name is not already set as the list name
 	{
-		console.log("No change");
+		//console.log("No change");
 		noChange = true;
 		viewSavedMoviesList(); //Refresh view of list
 		displayListNameNotChangedStatusMsg();
@@ -362,7 +362,7 @@ function resetListName() {
 	if (savedMoviesListName === savedMoviesListNameDefault)
 	//Checks that there is a difference between the current list name and the default list name
 	{
-		console.log("No change");
+		//console.log("No change");
 		viewSavedMoviesList(); //Refresh view of list
 	}
 	else {
