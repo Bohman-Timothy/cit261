@@ -21,7 +21,7 @@
 	</div>
 	<div id="searchResults">
 	</div>
-	<div id="removalStatus">
+	<div id="savedMoviesListStatus">
 	</div>
 	<div id="savedMovies">
 	</div>
@@ -46,6 +46,7 @@ else {
 var savedMoviesCommentsObj = {};
 viewSavedMoviesList();
 
+//Pressing Enter key submits typed text for title search
 var searchBox = document.getElementById("searchTitle");
 searchBox.addEventListener("keyup", function(e) {
 	if (e.keyCode === 13) { //13 is "Enter" key
@@ -214,7 +215,7 @@ function viewSavedMoviesList() {
 	var savedMovies = document.getElementById("savedMovies");
 	var savedMoviesString = "<div id='savedMoviesListNameAndOptions'><h2 id='savedMoviesListName'>";
 	savedMoviesString += savedMoviesListName;
-	savedMoviesString += "</h2> <div id='listRename'><button id='listRenameBtn' onclick='showListRenameOptions();'>Show List Renaming Options</button><span id='listRenameOptions'><input id='newListName' type='text'> <button id='saveNewListNameBtn' onclick='saveNewListName();'>Save New List Name</button><br/><button id='resetListNameBtn' onclick='resetListName();'>Reset to Default Name</button> <button id='cancelListRenameBtn' onclick='closeRenameOptions();'>Cancel</button> <p>Suggestions: <span id='listNameSuggestions'>Favorite Movies / Movies to See / Movies Watched / Movies Owned</span></p></span></div></div> ";
+	savedMoviesString += "</h2> <div id='listRename'><button id='listRenameBtn' onclick='showListRenameOptions();'>Show List Renaming Options</button><span id='listRenameOptions'><input id='newListName' type='text'> <button id='saveNewListNameBtn' onclick='saveNewListName();'>Save New List Name</button><br/><button id='resetListNameBtn' onclick='resetListName();'>Reset to Default Name</button> <button id='cancelListRenameBtn' onclick='closeRenameOptions(); displayListNameNotChangedStatusMsg();'>Cancel</button> <p>Suggestions: <span id='listNameSuggestions'>Favorite Movies / Movies to See / Movies Watched / Movies Owned</span></p></span></div></div> ";
 	if ((fullListOfMoviesObj != null) && (fullListOfMoviesObj.movies.length != 0)) {
 		savedMoviesString += "<ol id='savedMoviesList'>";
 		//console.log("savedMoviesString : ", savedMoviesString);
@@ -252,6 +253,7 @@ function viewSavedMoviesList() {
 function removeFromList(i, imdbID) {
 	slideAndFade(imdbID);
 	setTimeout(function() {
+	//Delay the actual removal of the item data from the list until the animation depicting the removal of the item has finished
 		if (fullListOfMoviesObj.movies.length > 1) {
 			fullListOfMoviesObj.movies.splice(i,1);
 			fullListOfMoviesString = JSON.stringify(fullListOfMoviesObj);
@@ -267,21 +269,15 @@ function removeFromList(i, imdbID) {
 
 		viewSavedMoviesList();
 
-		var removalStatus = document.getElementById("removalStatus");
+		var savedMoviesListStatus = document.getElementById("savedMoviesListStatus");
 		const successMessage = "<p class='success'>Successfully removed from your list.</p>";
-		removalStatus.innerHTML = successMessage;
-		removalStatus.classList.remove("displayNone", "fadeOut");
-		removalStatus.scrollIntoView();
-		setTimeout(function() {
-			removalStatus.classList.add("fadeOut");
-			setTimeout(function() {
-				removalStatus.classList.add("displayNone");
-			}, 1000);
-		}, 3000);
+		savedMoviesListStatus.innerHTML = successMessage;
+		displaySavedMoviesListStatus();
 	}, 550);
 }
 
 function slideAndFade(imdbID) {
+//Animation of the selected item being swiped off to the left of the list and fading to nothing, then closing the gap left behind
 	var movieToRemove = document.getElementById("savedMovie_" + imdbID).parentElement;
 	movieToRemove.classList.add("slideAndFade");
 	setTimeout(function() {
@@ -301,6 +297,17 @@ function saveCurrentMovieListData() {
 function showListRenameOptions() {
 	document.getElementById("listRenameBtn").style.display = "none";
 	document.getElementById("listRenameOptions").style.display = "inline";
+
+	//Pressing Enter key saves typed name for movie list
+	var newListName = document.getElementById("newListName");
+	newListName.addEventListener("keyup", function(e) {
+		//console.log("key pressed");
+		if (e.keyCode === 13) { //13 is "Enter" key
+			//console.log("Enter pressed");
+			e.preventDefault();
+			document.getElementById("saveNewListNameBtn").click();
+		}
+	});
 }
 
 function closeRenameOptions() {
@@ -312,28 +319,62 @@ function saveNewListName() {
 	var newListName = document.getElementById("newListName").value;
 	//console.log(newListName);
 	var noChange = false;
-	if (savedMoviesListName == newListName)
+	if ((savedMoviesListName === newListName)||(newListName === "")||(!/\S/.test(newListName)))
+	//Checks that there is more than just whitespace and that the typed name is not already set as the list name
 	{
-		//console.log("No change");
+		console.log("No change");
 		noChange = true;
 		viewSavedMoviesList(); //Refresh view of list
+		displayListNameNotChangedStatusMsg();
 	}
-	if (noChange == false) {
-		if ((newListName != "") && (newListName != savedMoviesListNameDefault)) {
-			savedMoviesListName = newListName;
-			//console.log("savedMoviesListName: ", savedMoviesListName);
-		}
-		else {
-			resetListName();
-		}
+	if (noChange === false) {
+		savedMoviesListName = newListName;
+		//console.log("savedMoviesListName: ", savedMoviesListName);
 		saveCurrentMovieListData();
+		var savedMoviesListStatus = document.getElementById("savedMoviesListStatus");
+		const statusMessage = "<p class='success'>List name successfully changed.</p>";
+		savedMoviesListStatus.innerHTML = statusMessage;
+		displaySavedMoviesListStatus();
 	}
 }
 
+function displayListNameNotChangedStatusMsg() {
+	var savedMoviesListStatus = document.getElementById("savedMoviesListStatus");
+	const statusMessage = "<p class='neutral'>List name not changed.</p>";
+	savedMoviesListStatus.innerHTML = statusMessage;
+	displaySavedMoviesListStatus();
+}
+
+function displaySavedMoviesListStatus() {
+	//Universal function to show the hidden Saved Movies list status message section and make it fade away and hidden again after a few seconds
+	var savedMoviesListStatus = document.getElementById("savedMoviesListStatus");
+	savedMoviesListStatus.classList.remove("displayNone", "fadeOut");
+	savedMoviesListStatus.scrollIntoView();
+	setTimeout(function() {
+		savedMoviesListStatus.classList.add("fadeOut");
+		setTimeout(function() {
+			savedMoviesListStatus.classList.add("displayNone");
+		}, 1000);
+	}, 3000);
+}
+
 function resetListName() {
-	savedMoviesListName = savedMoviesListNameDefault;
-	localStorage.removeItem("savedMoviesListName");
-	saveCurrentMovieListData();
+	if (savedMoviesListName === savedMoviesListNameDefault)
+	//Checks that there is a difference between the current list name and the default list name
+	{
+		console.log("No change");
+		viewSavedMoviesList(); //Refresh view of list
+	}
+	else {
+		savedMoviesListName = savedMoviesListNameDefault;
+		localStorage.removeItem("savedMoviesListName");
+		saveCurrentMovieListData();
+	}
+	//Display success message
+	var savedMoviesListStatus = document.getElementById("savedMoviesListStatus");
+	const statusMessage = "<p class='success'>List name reset to default name.</p>";
+	savedMoviesListStatus.innerHTML = statusMessage;
+	displaySavedMoviesListStatus();
 }
 
 function unhideSearchResults() {
