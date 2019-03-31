@@ -198,7 +198,7 @@ function addMovie(imdbID) {
 		addStatusMessage.innerHTML = successMessage;
 		setTimeout(function() {
 			displayAddMovieStatusMessage();
-		}, 3100);
+		}, 1600);
 	}
 	else {
 		displayAddMovieStatusMessage();
@@ -225,7 +225,7 @@ function highlightAddedMovie() {
 	addedMovie.scrollIntoView();
 	setTimeout(function() {
 		addedMovie.classList.remove("highlightMovieAnimation");
-	}, 3100);
+	}, 1600);
 }
 
 function viewSavedMoviesList() {
@@ -296,7 +296,7 @@ function removeFromList(i, imdbID) {
 		const successMessage = "<p class='success'>Successfully removed from your list.</p>";
 		savedMoviesListStatus.innerHTML = successMessage;
 		displaySavedMoviesListStatus();
-	}, 550);
+	}, 350);
 }
 
 function slideAndFade(imdbID) {
@@ -467,7 +467,9 @@ function clearSelectedMovie() {
 	}
 }
 
-//To do: background color flash (fade in, fade out) on a newly added movie in the list (animation)
+//To do: Give warning message when search field is empty when submitted
+//To do: Utilize DOM manipulation instead of refreshing the entire list with every update
+//To do: Move "View More Details" button (in Search Results) from the bottom to the right
 //Potential to-do list:
 //Add button to show plot summary in "more details" section
 //Add ability to rate a movie in the saved movies list
