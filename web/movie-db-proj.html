@@ -83,6 +83,7 @@ function search (searchText, searchType, searchResultsPage = 1) {
 				var moreDetails = document.getElementById("moreDetails");
 				moreDetails.innerHTML = "";
 				moreDetails.classList.remove("topBottomBorders");
+				clearSelectedMovie();
 				if (searchResultsObj.Response == "False") {
 					//console.log("Failed to find movie");
 					var searchResults = document.getElementById("searchResults");
@@ -192,9 +193,20 @@ function addMovie(imdbID) {
 		fullListOfMoviesObj.movies.push(savedMovieObj);
 		//console.log("fullListofMoviesObj: ", fullListOfMoviesObj);
 		saveCurrentMovieListData();
+		highlightAddedMovie();
 		const successMessage = "<p class='success'>Successfully saved to your list.</p>";
 		addStatusMessage.innerHTML = successMessage;
+		setTimeout(function() {
+			displayAddMovieStatusMessage();
+		}, 3100);
 	}
+	else {
+		displayAddMovieStatusMessage();
+	}
+}
+
+function displayAddMovieStatusMessage() {
+	var addStatusMessage = document.getElementById("addStatusMessage");
 	addStatusMessage.classList.remove("displayNone", "fadeOut");
 	addStatusMessage.scrollIntoView();
 	setTimeout(function() {
@@ -203,6 +215,17 @@ function addMovie(imdbID) {
 			addStatusMessage.classList.add("displayNone");
 		}, 1000);
 	}, 3000);
+}
+
+function highlightAddedMovie() {
+	var addedMoviePositionInList = fullListOfMoviesObj.movies.length - 1;
+	var addedMovieImdbID = fullListOfMoviesObj.movies[addedMoviePositionInList].imdbID;
+	var addedMovie = document.getElementById("savedMovie_" + addedMovieImdbID);
+	addedMovie.classList.add("highlightMovieAnimation");
+	addedMovie.scrollIntoView();
+	setTimeout(function() {
+		addedMovie.classList.remove("highlightMovieAnimation");
+	}, 3100);
 }
 
 function viewSavedMoviesList() {
@@ -426,10 +449,7 @@ function deleteComments(imdbID) {
 }
 
 function highlightSelectedMovie(imdbID, listType) {
-	var selectedMovies = document.getElementsByClassName("selectedToView");
-	for (var i = selectedMovies.length - 1; i >= 0; i--) {
-		selectedMovies[i].classList.remove("selectedToView");
-	}
+	clearSelectedMovie();
 	if (listType === "savedMoviesList") {
 		var selectedMovie = document.getElementById("savedMovie_" + imdbID);
 		selectedMovie.classList.add("selectedToView");
@@ -437,6 +457,13 @@ function highlightSelectedMovie(imdbID, listType) {
 	else if (listType === "searchResultsList") {
 		var selectedMovie = document.getElementById("searchResultMovie_" + imdbID);
 		selectedMovie.classList.add("selectedToView");
+	}
+}
+
+function clearSelectedMovie() {
+	var selectedMovies = document.getElementsByClassName("selectedToView");
+	for (var i = selectedMovies.length - 1; i >= 0; i--) {
+		selectedMovies[i].classList.remove("selectedToView");
 	}
 }
 

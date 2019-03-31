@@ -299,6 +299,30 @@ button.removeFromListBtn:hover, button.removeFromListBtn:focus, button#resetList
 	outline-width: 3px;
 }
 
+.highlightMovieAnimation {
+	background-color: rgb(255,150,48);
+	height: 100%;
+	width: 98%;
+	overflow: auto;
+	padding: 10px;
+	animation-name: highlightMovieAnimation;
+	animation-duration: 1s;
+	animation-iteration-count: 3;
+	animation-timing-function: ease;
+}
+
+@keyframes highlightMovieAnimation {
+	0% {
+		background-color: rgb(255,150,48);
+	}
+	50% {
+		background-color: rgb(190,76,33);
+	}
+	100% {
+		background-color: rgb(255,150,48);
+	}
+}
+
 #savedMoviesList .selectedToView .dataAndBtns, #searchResultsList .selectedToView .searchResultData {
 	transform: translate(30px, 0px);
 }
