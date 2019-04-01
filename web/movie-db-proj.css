@@ -23,7 +23,11 @@ body {
 .resultsTitle, .savedMovieTitle {
 	font-weight: bold;
 	font-size: 1.2em;
-	color: #861006;
+	color: rgb(134,0,60);
+}
+
+#searchResultsTitle {
+	color: rgb(134,0,60);
 }
 
 .posterNoImg {
@@ -122,6 +126,7 @@ body {
 
 #savedMoviesListName {
 	margin-top: 0.75em;
+	color: rgb(134,0,60);
 }
 
 #savedMoviesListNameAndOptions, #noSavedMoviesMessage {
