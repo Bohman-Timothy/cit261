@@ -15,6 +15,8 @@
 	<input type="text" id="searchTitle">
 	</label>
 	<button id="searchTitleBtn" onclick="searchTitle()">Search</button>
+	<div id="searchTitleStatus">
+	</div>
 	<div id="moreDetails">
 	</div>
 	<div id="addStatusMessage">
@@ -58,9 +60,32 @@ searchBox.addEventListener("keyup", function(e) {
 function searchTitle(searchResultsPage = 1) {
 	var searchTitle = document.getElementById("searchTitle").value;
 	//console.log(searchTitle);
-	var searchText = "s=" + searchTitle;
-	var searchType = "s";
-	search(searchText, searchType, searchResultsPage);
+	if (!/\S/.test(searchTitle)) {
+		//String is empty or contains only spaces and/or line breaks
+		//console.log("Empty search");
+		var searchTitleStatus = document.getElementById("searchTitleStatus");
+		searchTitleStatus.innerHTML = "<p class='error'>Error: Empty search submitted</p>";
+		displayStatusMessage(searchTitleStatus);
+	}
+	else {
+		//String contains text besides spaces and line breaks
+		var searchText = "s=" + searchTitle;
+		var searchType = "s";
+		search(searchText, searchType, searchResultsPage);
+	}
+}
+
+
+function displayStatusMessage(statusMessage) {
+//Universal status message display-and-fade operation for any status message anywhere on the page (any ID); message appears, and after a few seconds, fades away and hides the containing div
+	statusMessage.classList.remove("displayNone", "fadeOut");
+	statusMessage.scrollIntoView();
+	setTimeout(function() {
+		statusMessage.classList.add("fadeOut");
+		setTimeout(function() {
+			statusMessage.classList.add("displayNone");
+		}, 1000);
+	}, 3000);
 }
 
 function search (searchText, searchType, searchResultsPage = 1) {
@@ -107,7 +132,7 @@ function displaySearchResults(searchResultsObj, searchResultsPage, searchResults
 	var searchResults = "<div id='searchResultsTop'><h2>Search Results</h2></div> <ol id='searchResultsList' start='" + (searchResultsPage * 10 - 9) + "'>";
 	for (var i = 0; i < searchResultsObj.Search.length; i++) {
 		var imdbID = searchResultsObj.Search[i].imdbID;
-		searchResults += "<li><div id='searchResultMovie_" + imdbID + "'><div class='searchResultData'><img class='poster' src='" + searchResultsObj.Search[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='resultsTitle'>" + searchResultsObj.Search[i].Title + "</span><br/>" + "<strong>Type:</strong> " + searchResultsObj.Search[i].Type + "<br/>" + "<strong>Year:</strong> " + searchResultsObj.Search[i].Year + "<br/>" + "<strong>IMDb ID:</strong> " + "<span class='imdbID'>" + imdbID + "</span><br/> <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='highlightSelectedMovie(&quot;" + imdbID + "&quot;, &quot;searchResultsList&quot;); searchID(&quot;" + imdbID + "&quot;);'>View More Details</button></div></div></li>";
+		searchResults += "<li><div id='searchResultMovie_" + imdbID + "'><div class='searchResultData'><img class='poster' src='" + searchResultsObj.Search[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='resultsTitle'>" + searchResultsObj.Search[i].Title + "</span><br/>" + "(" + searchResultsObj.Search[i].Year + ") " + "[" + searchResultsObj.Search[i].Type + "]<br/>" + "<button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='highlightSelectedMovie(&quot;" + imdbID + "&quot;, &quot;searchResultsList&quot;); searchID(&quot;" + imdbID + "&quot;);'>View More Details</button></div></div></li>";
 	}
 	searchResults += "</ol>";
 
@@ -156,7 +181,7 @@ function searchID(imdbID) {
 function displayIDResult(searchResultsObj) {
 	var idResult = "<h2 id='idDetailsTitle'>" + searchResultsObj.Title +"</h2><p>";
 	var imdbID = searchResultsObj.imdbID;
-	idResult += "<img id='idDetailsPoster' src='" + searchResultsObj.Poster + "' onerror='this.src=&quot;no-img.png&quot;; document.getElementById(&quot;idDetailsPoster&quot;).id=&quot;detailsPosterNoImg&quot;;'><br/>" + "<strong>Type:</strong> " + searchResultsObj.Type + "<br/>" + "<strong>Genre:</strong> " + searchResultsObj.Genre + "<br/>" + "<strong>Year:</strong> " + searchResultsObj.Year + "<br/>" + "<strong>Released:</strong> " + searchResultsObj.Released + "<br/>" + "<strong>Runtime:</strong> " + searchResultsObj.Runtime + "<br/>" + "<strong>Director:</strong> " + searchResultsObj.Director + "<br/>" + "<strong>Actors:</strong> " + searchResultsObj.Actors + "<br/>" + "<strong>IMDb ID:</strong> " + "<span class='imdbID'>" + imdbID + "</span><br/> <button id='addMovieBtn' onclick='addMovie(&quot;" + imdbID + "&quot;);'>Add Movie to List</button>";
+	idResult += "<img id='idDetailsPoster' src='" + searchResultsObj.Poster + "' onerror='this.src=&quot;no-img.png&quot;; document.getElementById(&quot;idDetailsPoster&quot;).id=&quot;detailsPosterNoImg&quot;;'><br/>" + "<strong>Type:</strong> " + searchResultsObj.Type + "<br/>" + "<strong>Genre:</strong> " + searchResultsObj.Genre + "<br/>" + "<strong>Year:</strong> " + searchResultsObj.Year + "<br/>" + "<strong>Released:</strong> " + searchResultsObj.Released + "<br/>" + "<strong>Runtime:</strong> " + searchResultsObj.Runtime + "<br/>" + "<strong>Rated:</strong> " + searchResultsObj.Rated + "<br/>" + "<strong>Director:</strong> " + searchResultsObj.Director + "<br/>" + "<strong>Actors:</strong> " + searchResultsObj.Actors + "<br/>" + "<strong>IMDb ID:</strong> " + "<span class='imdbID'>" + imdbID + "</span><br/> <button id='addMovieBtn' onclick='addMovie(&quot;" + imdbID + "&quot;);'>Add Movie to List</button>";
 	var movieDataString = JSON.stringify(searchResultsObj);
 	//console.log(movieDataString);
 	idResult += "<span id='movieDataString'>" + movieDataString + "</span></p>";
@@ -197,24 +222,12 @@ function addMovie(imdbID) {
 		const successMessage = "<p class='success'>Successfully saved to your list.</p>";
 		addStatusMessage.innerHTML = successMessage;
 		setTimeout(function() {
-			displayAddMovieStatusMessage();
+			displayStatusMessage(addStatusMessage);
 		}, 1600);
 	}
 	else {
-		displayAddMovieStatusMessage();
+		displayStatusMessage(addStatusMessage);
 	}
-}
-
-function displayAddMovieStatusMessage() {
-	var addStatusMessage = document.getElementById("addStatusMessage");
-	addStatusMessage.classList.remove("displayNone", "fadeOut");
-	addStatusMessage.scrollIntoView();
-	setTimeout(function() {
-		addStatusMessage.classList.add("fadeOut");
-		setTimeout(function() {
-			addStatusMessage.classList.add("displayNone");
-		}, 1000);
-	}, 3000);
 }
 
 function highlightAddedMovie() {
@@ -295,7 +308,7 @@ function removeFromList(i, imdbID) {
 		var savedMoviesListStatus = document.getElementById("savedMoviesListStatus");
 		const successMessage = "<p class='success'>Successfully removed from your list.</p>";
 		savedMoviesListStatus.innerHTML = successMessage;
-		displaySavedMoviesListStatus();
+		displayStatusMessage(savedMoviesListStatus);
 	}, 350);
 }
 
@@ -357,7 +370,7 @@ function saveNewListName() {
 		var savedMoviesListStatus = document.getElementById("savedMoviesListStatus");
 		const statusMessage = "<p class='success'>List name successfully changed.</p>";
 		savedMoviesListStatus.innerHTML = statusMessage;
-		displaySavedMoviesListStatus();
+		displayStatusMessage(savedMoviesListStatus);
 	}
 }
 
@@ -365,20 +378,7 @@ function displayListNameNotChangedStatusMsg() {
 	var savedMoviesListStatus = document.getElementById("savedMoviesListStatus");
 	const statusMessage = "<p class='neutral'>List name not changed.</p>";
 	savedMoviesListStatus.innerHTML = statusMessage;
-	displaySavedMoviesListStatus();
-}
-
-function displaySavedMoviesListStatus() {
-	//Universal function to show the hidden Saved Movies list status message section and make it fade away and hidden again after a few seconds
-	var savedMoviesListStatus = document.getElementById("savedMoviesListStatus");
-	savedMoviesListStatus.classList.remove("displayNone", "fadeOut");
-	savedMoviesListStatus.scrollIntoView();
-	setTimeout(function() {
-		savedMoviesListStatus.classList.add("fadeOut");
-		setTimeout(function() {
-			savedMoviesListStatus.classList.add("displayNone");
-		}, 1000);
-	}, 3000);
+	displayStatusMessage(savedMoviesListStatus);
 }
 
 function resetListName() {
@@ -397,7 +397,7 @@ function resetListName() {
 	var savedMoviesListStatus = document.getElementById("savedMoviesListStatus");
 	const statusMessage = "<p class='success'>List name reset to default name.</p>";
 	savedMoviesListStatus.innerHTML = statusMessage;
-	displaySavedMoviesListStatus();
+	displayStatusMessage(savedMoviesListStatus);
 }
 
 function unhideSearchResults() {
@@ -468,9 +468,10 @@ function clearSelectedMovie() {
 }
 
 //To do: Give warning message when search field is empty when submitted
-//To do: Utilize DOM manipulation instead of refreshing the entire list with every update
-//To do: Move "View More Details" button (in Search Results) from the bottom to the right
 //Potential to-do list:
+//Utilize DOM manipulation instead of refreshing the entire list with every update
+//Add option to reverse the display order of the Saved Movies list
+//Add option to display only 30 (or so) movies at a time in the Saved Movies list, with ability to cycle through the other pages of the list
 //Add button to show plot summary in "more details" section
 //Add ability to rate a movie in the saved movies list
 //Add character limit to comments, and write the maximum character count next to the comments textarea

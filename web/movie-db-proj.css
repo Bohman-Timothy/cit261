@@ -83,22 +83,21 @@ body {
 	clear: both;
 }
 
+.error, .success, .neutral {
+	font-weight: bold;
+	font-size: 2em;
+}
+
 .error {
 	color: rgb(210,40,40);
-	font-weight: bold;
-	font-size: 1.8em;
 }
 
 .success {
 	color: rgb(0,106,24);
-	font-weight: bold;
-	font-size: 1.8em;
 }
 
 .neutral {
 	color: rgb(71,57,0);
-	font-weight: bold;
-	font-size: 1.8em;
 }
 
 #savedMovies {
