@@ -276,9 +276,9 @@ function viewSavedMoviesList() {
 	var savedMoviesString = "<div id='savedMoviesListNameAndOptions'><h2 id='savedMoviesListName'>";
 	savedMoviesString += savedMoviesListName;
 	savedMoviesString += "</h2> <div id='listRename'><button id='listRenameBtn' onclick='showListRenameOptions();'>Show List Renaming Options</button><span id='listRenameOptions'><input id='newListName' type='text'> <button id='saveNewListNameBtn' onclick='saveNewListName(); closeRenameOptions();'>Save New List Name</button><br/><button id='resetListNameBtn' onclick='resetListName(); closeRenameOptions();'>Reset to Default Name</button> <button id='cancelListRenameBtn' onclick='closeRenameOptions(); displayListNameNotChangedStatusMsg();'>Cancel</button> <p>Suggestions: <span id='listNameSuggestions'>Favorite Movies / Movies to See / Movies Watched / Movies Owned</span></p></span></div></div> ";
+	savedMoviesString += "<ol id='savedMoviesList'>";
+	//console.log("savedMoviesString : ", savedMoviesString);
 	if ((fullListOfMoviesObj != null) && (fullListOfMoviesObj.movies.length != 0)) {
-		savedMoviesString += "<ol id='savedMoviesList'>";
-		//console.log("savedMoviesString : ", savedMoviesString);
 		for (var i = 0; i < fullListOfMoviesObj.movies.length; i++) {
 			var imdbID = fullListOfMoviesObj.movies[i].imdbID;
 			savedMoviesString += "<li><div id='savedMovie_" + imdbID + "'><div class='dataAndBtns'><img class='poster floatLeft' src='" + fullListOfMoviesObj.movies[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='savedMovieTitle'>" + fullListOfMoviesObj.movies[i].Title + "</span><br/> (" + fullListOfMoviesObj.movies[i].Year + ") [" + fullListOfMoviesObj.movies[i].Type + "] <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='highlightSelectedMovie(&quot;" + imdbID + "&quot;, &quot;savedMoviesList&quot;); searchID(&quot;" + imdbID + "&quot;);'>View More Details</button> <button id='removeFromListBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='removeFromListBtn' onclick='removeFromList(&quot;" + imdbID + "&quot;);'>Remove</button></div><div  id='commentsSection_" + imdbID + "' class='savedMovieComments'>Comments: <textarea id='comments_" + imdbID + "' class='savedMovieCommentsArea'>";
@@ -297,14 +297,8 @@ function viewSavedMoviesList() {
 			}
 			savedMoviesString += "</textarea> <button id='saveCommentsBtn_" + imdbID + "' class='saveCommentsBtn' onclick='saveComments(&quot;" + imdbID + "&quot;);'>Save Comments</button> <span id='commentsStatus_" + imdbID + "' class='commentsStatus'></span></div></div></li>";
 		}
-		savedMoviesString += "</ol> <div class='clearFloats'></div>";
-		//savedMovies.innerHTML = savedMoviesString;
-		//console.log("savedMoviesString : ", savedMoviesString);
-		//console.log("savedMovies.innerHTML : ", savedMovies.innerHTML);
 	}
-	else {
-		savedMoviesString += "<p id='noSavedMoviesMessage'><em>No saved movies found</em></p>";
-	}
+	savedMoviesString += "</ol> <div class='clearFloats'></div>";
 	savedMovies.innerHTML = savedMoviesString;
 	//console.log("savedMoviesString : ", savedMoviesString);
 	//console.log("savedMovies.innerHTML : ", savedMovies.innerHTML);
