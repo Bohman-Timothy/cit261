@@ -57,6 +57,17 @@ searchBox.addEventListener("keyup", function(e) {
 	}
 });
 
+//Pressing Enter key saves typed name for movie list
+var newListName = document.getElementById("newListName");
+newListName.addEventListener("keyup", function(e) {
+	//console.log("key pressed");
+	if (e.keyCode === 13) { //13 is "Enter" key
+		//console.log("Enter pressed");
+		e.preventDefault();
+		document.getElementById("saveNewListNameBtn").click();
+	}
+});
+
 function searchTitle(searchResultsPage = 1) {
 	var searchTitle = document.getElementById("searchTitle").value;
 	//console.log(searchTitle);
@@ -85,7 +96,7 @@ function displayStatusMessage(statusMessage) {
 		setTimeout(function() {
 			statusMessage.classList.add("displayNone");
 		}, 1000);
-	}, 3000);
+	}, 1500);
 }
 
 function search (searchText, searchType, searchResultsPage = 1) {
@@ -218,6 +229,7 @@ function addMovie(imdbID) {
 		fullListOfMoviesObj.movies.push(savedMovieObj);
 		//console.log("fullListofMoviesObj: ", fullListOfMoviesObj);
 		saveCurrentMovieListData();
+		addMovieToSavedMoviesHtmlList();
 		highlightAddedMovie();
 		const successMessage = "<p class='success'>Successfully saved to your list.</p>";
 		addStatusMessage.innerHTML = successMessage;
@@ -228,6 +240,18 @@ function addMovie(imdbID) {
 	else {
 		displayStatusMessage(addStatusMessage);
 	}
+}
+
+function addMovieToSavedMoviesHtmlList() {
+  var savedMoviesList = document.getElementById("savedMoviesList");
+  var newLi = document.createElement("li");
+	var i = fullListOfMoviesObj.movies.length - 1;
+	var imdbID = fullListOfMoviesObj.movies[i].imdbID;
+	var savedMoviesString = "<div id='savedMovie_" + imdbID + "'><div class='dataAndBtns'><img class='poster floatLeft' src='" + fullListOfMoviesObj.movies[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='savedMovieTitle'>" + fullListOfMoviesObj.movies[i].Title + "</span><br/> (" + fullListOfMoviesObj.movies[i].Year + ") [" + fullListOfMoviesObj.movies[i].Type + "] <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='highlightSelectedMovie(&quot;" + imdbID + "&quot;, &quot;savedMoviesList&quot;); searchID(&quot;" + imdbID + "&quot;);'>View More Details</button> <button id='removeFromListBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='removeFromListBtn' onclick='removeFromList(&quot;" + imdbID + "&quot;);'>Remove</button></div><div  id='commentsSection_" + imdbID + "' class='savedMovieComments'>Comments: <textarea id='comments_" + imdbID + "' class='savedMovieCommentsArea'>";
+	//No comments inserted for a newly added movie
+	savedMoviesString += "</textarea> <button id='saveCommentsBtn_" + imdbID + "' class='saveCommentsBtn' onclick='saveComments(&quot;" + imdbID + "&quot;);'>Save Comments</button> <span id='commentsStatus_" + imdbID + "' class='commentsStatus'></span></div></div>";
+  newLi.innerHTML = savedMoviesString;
+  savedMoviesList.appendChild(newLi);
 }
 
 function highlightAddedMovie() {
@@ -251,13 +275,13 @@ function viewSavedMoviesList() {
 	var savedMovies = document.getElementById("savedMovies");
 	var savedMoviesString = "<div id='savedMoviesListNameAndOptions'><h2 id='savedMoviesListName'>";
 	savedMoviesString += savedMoviesListName;
-	savedMoviesString += "</h2> <div id='listRename'><button id='listRenameBtn' onclick='showListRenameOptions();'>Show List Renaming Options</button><span id='listRenameOptions'><input id='newListName' type='text'> <button id='saveNewListNameBtn' onclick='saveNewListName();'>Save New List Name</button><br/><button id='resetListNameBtn' onclick='resetListName();'>Reset to Default Name</button> <button id='cancelListRenameBtn' onclick='closeRenameOptions(); displayListNameNotChangedStatusMsg();'>Cancel</button> <p>Suggestions: <span id='listNameSuggestions'>Favorite Movies / Movies to See / Movies Watched / Movies Owned</span></p></span></div></div> ";
+	savedMoviesString += "</h2> <div id='listRename'><button id='listRenameBtn' onclick='showListRenameOptions();'>Show List Renaming Options</button><span id='listRenameOptions'><input id='newListName' type='text'> <button id='saveNewListNameBtn' onclick='saveNewListName(); closeRenameOptions();'>Save New List Name</button><br/><button id='resetListNameBtn' onclick='resetListName(); closeRenameOptions();'>Reset to Default Name</button> <button id='cancelListRenameBtn' onclick='closeRenameOptions(); displayListNameNotChangedStatusMsg();'>Cancel</button> <p>Suggestions: <span id='listNameSuggestions'>Favorite Movies / Movies to See / Movies Watched / Movies Owned</span></p></span></div></div> ";
 	if ((fullListOfMoviesObj != null) && (fullListOfMoviesObj.movies.length != 0)) {
 		savedMoviesString += "<ol id='savedMoviesList'>";
 		//console.log("savedMoviesString : ", savedMoviesString);
 		for (var i = 0; i < fullListOfMoviesObj.movies.length; i++) {
 			var imdbID = fullListOfMoviesObj.movies[i].imdbID;
-			savedMoviesString += "<li><div id='savedMovie_" + imdbID + "'><div class='dataAndBtns'><img class='poster floatLeft' src='" + fullListOfMoviesObj.movies[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='savedMovieTitle'>" + fullListOfMoviesObj.movies[i].Title + "</span><br/> (" + fullListOfMoviesObj.movies[i].Year + ") [" + fullListOfMoviesObj.movies[i].Type + "] <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='highlightSelectedMovie(&quot;" + imdbID + "&quot;, &quot;savedMoviesList&quot;); searchID(&quot;" + imdbID + "&quot;);'>View More Details</button> <button id='removeFromListBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='removeFromListBtn' onclick='removeFromList(" + i + ", &quot;" + imdbID + "&quot;);'>Remove</button></div><div  id='commentsSection_" + imdbID + "' class='savedMovieComments'>Comments: <textarea id='comments_" + imdbID + "' class='savedMovieCommentsArea'>";
+			savedMoviesString += "<li><div id='savedMovie_" + imdbID + "'><div class='dataAndBtns'><img class='poster floatLeft' src='" + fullListOfMoviesObj.movies[i].Poster + "' onerror='this.src=&quot;no-img.png&quot;; this.classList=&quot;posterNoImg&quot;;'> <span class='savedMovieTitle'>" + fullListOfMoviesObj.movies[i].Title + "</span><br/> (" + fullListOfMoviesObj.movies[i].Year + ") [" + fullListOfMoviesObj.movies[i].Type + "] <button id='viewDetailsBtn_" + imdbID + "' class='viewDetailsBtn' onclick='highlightSelectedMovie(&quot;" + imdbID + "&quot;, &quot;savedMoviesList&quot;); searchID(&quot;" + imdbID + "&quot;);'>View More Details</button> <button id='removeFromListBtn_" + fullListOfMoviesObj.movies[i].imdbID + "' class='removeFromListBtn' onclick='removeFromList(&quot;" + imdbID + "&quot;);'>Remove</button></div><div  id='commentsSection_" + imdbID + "' class='savedMovieComments'>Comments: <textarea id='comments_" + imdbID + "' class='savedMovieCommentsArea'>";
 			var savedMoviesCommentsString = localStorage.getItem("savedMoviesComments");
 			savedMoviesCommentsObj = JSON.parse(savedMoviesCommentsString);
 			var savedComments;
@@ -286,8 +310,9 @@ function viewSavedMoviesList() {
 	//console.log("savedMovies.innerHTML : ", savedMovies.innerHTML);
 }
 
-function removeFromList(i, imdbID) {
-	slideAndFade(imdbID);
+function removeFromList(imdbID) {
+	var movieToRemove = slideAndFade(imdbID);
+	var i = findIdOfMovieToRemove(imdbID);
 	setTimeout(function() {
 	//Delay the actual removal of the item data from the list until the animation depicting the removal of the item has finished
 		if (fullListOfMoviesObj.movies.length > 1) {
@@ -302,14 +327,25 @@ function removeFromList(i, imdbID) {
 			console.log("Removed 'fullListOfMovies' from localStorage");
 		}
 		deleteComments(imdbID);
-
-		viewSavedMoviesList();
+		var savedMoviesList = document.getElementById("savedMoviesList");
+		savedMoviesList.removeChild(movieToRemove);
 
 		var savedMoviesListStatus = document.getElementById("savedMoviesListStatus");
 		const successMessage = "<p class='success'>Successfully removed from your list.</p>";
 		savedMoviesListStatus.innerHTML = successMessage;
 		displayStatusMessage(savedMoviesListStatus);
 	}, 350);
+}
+
+function findIdOfMovieToRemove(imdbID) {
+	var i;
+	for (i = 0; i < fullListOfMoviesObj.movies.length; i++) {
+		if (fullListOfMoviesObj.movies[i].imdbID === imdbID) {
+			console.log("imdbID ", imdbID, " is i=", i);
+			break;
+		}
+	}
+	return i;
 }
 
 function slideAndFade(imdbID) {
@@ -319,6 +355,7 @@ function slideAndFade(imdbID) {
 	setTimeout(function() {
 		movieToRemove.classList.add("displayNone");
 	}, 500);
+	return movieToRemove;
 }
 
 function saveCurrentMovieListData() {
@@ -326,24 +363,11 @@ function saveCurrentMovieListData() {
 	//console.log("fullListofMovies: ", fullListOfMovies);
 	localStorage.setItem("fullListOfMovies", fullListOfMovies);
 	localStorage.setItem("savedMoviesListName", savedMoviesListName);
-
-	viewSavedMoviesList(); //Refresh view of list
 }
 
 function showListRenameOptions() {
 	document.getElementById("listRenameBtn").style.display = "none";
 	document.getElementById("listRenameOptions").style.display = "inline";
-
-	//Pressing Enter key saves typed name for movie list
-	var newListName = document.getElementById("newListName");
-	newListName.addEventListener("keyup", function(e) {
-		//console.log("key pressed");
-		if (e.keyCode === 13) { //13 is "Enter" key
-			//console.log("Enter pressed");
-			e.preventDefault();
-			document.getElementById("saveNewListNameBtn").click();
-		}
-	});
 }
 
 function closeRenameOptions() {
@@ -354,24 +378,27 @@ function closeRenameOptions() {
 function saveNewListName() {
 	var newListName = document.getElementById("newListName").value;
 	//console.log(newListName);
-	var noChange = false;
 	if ((savedMoviesListName === newListName)||(newListName === "")||(!/\S/.test(newListName)))
 	//Checks that there is more than just whitespace and that the typed name is not already set as the list name
 	{
 		//console.log("No change");
-		noChange = true;
-		viewSavedMoviesList(); //Refresh view of list
 		displayListNameNotChangedStatusMsg();
 	}
-	if (noChange === false) {
+	else {
 		savedMoviesListName = newListName;
 		//console.log("savedMoviesListName: ", savedMoviesListName);
 		saveCurrentMovieListData();
+		updateListName(); //Refresh view of list name
 		var savedMoviesListStatus = document.getElementById("savedMoviesListStatus");
 		const statusMessage = "<p class='success'>List name successfully changed.</p>";
 		savedMoviesListStatus.innerHTML = statusMessage;
 		displayStatusMessage(savedMoviesListStatus);
 	}
+}
+
+function updateListName() {
+	var savedMoviesListNameId = document.getElementById("savedMoviesListName");
+	savedMoviesListNameId.innerHTML = savedMoviesListName;
 }
 
 function displayListNameNotChangedStatusMsg() {
@@ -382,16 +409,13 @@ function displayListNameNotChangedStatusMsg() {
 }
 
 function resetListName() {
-	if (savedMoviesListName === savedMoviesListNameDefault)
+	if (savedMoviesListName !== savedMoviesListNameDefault)
 	//Checks that there is a difference between the current list name and the default list name
 	{
-		//console.log("No change");
-		viewSavedMoviesList(); //Refresh view of list
-	}
-	else {
 		savedMoviesListName = savedMoviesListNameDefault;
 		localStorage.removeItem("savedMoviesListName");
 		saveCurrentMovieListData();
+		updateListName(); //Refresh view of list name
 	}
 	//Display success message
 	var savedMoviesListStatus = document.getElementById("savedMoviesListStatus");
@@ -438,7 +462,7 @@ function saveComments(imdbID) {
 		setTimeout(function() {
 			commentsStatus.classList.add("displayNone");
 		}, 1000);
-	}, 3000);
+	}, 1500);
 }
 
 function deleteComments(imdbID) {
@@ -468,7 +492,6 @@ function clearSelectedMovie() {
 }
 
 //Potential to-do list:
-//Utilize DOM manipulation instead of refreshing the entire list with every update
 //Add option to reverse the display order of the Saved Movies list
 //Add option to display only 30 (or so) movies at a time in the Saved Movies list, with ability to cycle through the other pages of the list
 //Add button to show plot summary in "more details" section
